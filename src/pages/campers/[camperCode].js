@@ -1,8 +1,8 @@
+const { default: CamperDetail } = require("@/components/campers/CamperDetail")
+
 const CamperOverview = () => {
   return (
-    <div>
-      <h1>Camper Account Overview</h1>
-    </div>
+    <CamperDetail />
   )
 }
 

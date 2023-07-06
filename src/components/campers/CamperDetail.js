@@ -1,8 +1,12 @@
+import Card from "../UI/Card"
+import AccountSummary from "../overview/AccountSummary"
+
 const CamperDetail = () => {
   return (
-    <div>
+    <Card>
       <h1>Camper Detail</h1>
-    </div>
+      <AccountSummary />
+    </Card>
   )
 }
 

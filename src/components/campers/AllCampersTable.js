@@ -17,8 +17,8 @@ const AllCampersTable = props => {
         </tr>
       </thead>
       <tbody>
-        {posts.map((camper) => (
-          <CamperRow />
+        {campers.map((camper) => (
+          <CamperRow key={camper.accountId} camper={camper}/>
         ))}
       </tbody>
     </table>

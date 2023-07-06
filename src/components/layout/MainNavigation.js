@@ -12,6 +12,7 @@ const MainNavigation = () => {
         <ul>
           <li><Link href="/">Enter Code</Link></li>
           <li><Link href="/campers">All Campers</Link></li>
+          <li><Link href="/">All Transactions</Link></li>
         </ul>
       </nav>
     </header>
