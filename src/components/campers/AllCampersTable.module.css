@@ -1,0 +1,27 @@
+.allCampersTable {
+  border-collapse: collapse;
+  width: 75%;
+}
+
+.allCampersTable th, 
+.allCampersTable td {
+  border: 1px solid black;
+  padding: 8px;
+}
+
+.allCampersTable th {
+  background-color: gray;
+  font-weight: bold;
+}
+
+.allCampersTable tr:nth-child(odd) {
+  background-color: lightgray;
+}
+
+.allCampersTable tr:nth-child(even) {
+  background-color: gray;
+}
+
+.allCampersTable tr:hover {
+  background-color: white;
+}
