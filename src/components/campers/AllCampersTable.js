@@ -1,6 +1,9 @@
 import styles from './AllCampersTable.module.css'
+import CamperRow from './CamperRow';
 
-const AllCampersTable = () => {
+
+const AllCampersTable = props => {
+  const { campers } = props
   return (
     <table className={styles.allCampersTable}>
       <caption>
@@ -14,21 +17,9 @@ const AllCampersTable = () => {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>10001</td>
-          <td>Billy Bob McDoogle</td>
-          <td>€50.00</td>
-        </tr>
-        <tr>
-          <td>10002</td>
-          <td>Boaty McBoatFace</td>
-          <td>€25.00</td>
-        </tr>
-        <tr>
-          <td>10003</td>
-          <td>Grainne Griffin</td>
-          <td>€11.75</td>
-        </tr>
+        {posts.map((camper) => (
+          <CamperRow />
+        ))}
       </tbody>
     </table>
   );
