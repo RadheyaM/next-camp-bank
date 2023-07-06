@@ -1,0 +1,34 @@
+.enterCodeForm {
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  padding: 0.5rem;
+  gap: 0.5rem;
+}
+
+.labelWrapper {
+  padding: 1.5rem;
+}
+
+.clearWrapper {
+  padding: 0.5rem;
+}
+
+.codeInput {
+  font-size: 2rem;
+}
+
+/* errorP {
+  font-size: 1rem;
+  color: darkred;
+  padding: 0;
+  margin: 0;
+} */
