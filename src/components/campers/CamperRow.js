@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 const CamperRow = (props) => {
-  const { accountId, name, balance } = props.camper;
+  const { accountId, name, startingBalance } = props.camper;
   const linkPath = `/campers/${accountId}`;
   return (
     <tr>
@@ -9,7 +9,7 @@ const CamperRow = (props) => {
         <Link href={linkPath}>{accountId}</Link>
       </td>
       <td>{name}</td>
-      <td>{balance}</td>
+      <td>{startingBalance.$numberDecimal}</td>
     </tr>
   );
 };

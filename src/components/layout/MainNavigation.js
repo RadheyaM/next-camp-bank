@@ -8,7 +8,7 @@ const MainNavigation = () => {
       <Link href="/">
         <Logo />
       </Link>
-      <nav class="navbar">
+      <nav>
         <ul>
           <li><Link href="/">Enter Code</Link></li>
           <li><Link href="/campers">All Campers</Link></li>

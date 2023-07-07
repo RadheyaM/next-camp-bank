@@ -4,6 +4,7 @@ import CamperRow from './CamperRow';
 
 const AllCampersTable = props => {
   const { campers } = props
+  console.log("from AllCampers", campers)
   return (
     <table className={styles.allCampersTable}>
       <caption>
