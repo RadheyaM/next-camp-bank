@@ -3,21 +3,30 @@
   width: 75%;
 }
 
-.transactionTable th {
+.transactionTable th, 
+.transactionTable td {
   border: 1px solid black;
   padding: 8px;
+}
+
+.transactionTable th {
   background-color: gray;
   font-weight: bold;
 }
 
-  .transactionTable tr:nth-child(odd) {
-    background-color: lightgray;
-  }
-  
-  .transactionTable tr:nth-child(even) {
-    background-color: gray;
-  }
-  
-  .transactionTable tr:hover {
-    background-color: white;
-  }
+.transactionTable tr:nth-child(odd) {
+  background-color: lightgray;
+}
+
+.transactionTable tr:nth-child(even) {
+  background-color: gray;
+}
+
+.transactionTable tr:hover {
+  background-color: white;
+}
+
+.noData {
+  text-align: center;
+  column-span: 100%;
+}

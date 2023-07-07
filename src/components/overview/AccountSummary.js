@@ -11,7 +11,7 @@ const AccountSummary = props => {
       <h3>{camper.accountId}</h3>
       <h3>{camper.name}</h3>
       <h3>{camper.startingBalance.$numberDecimal}</h3>
-      <TransactionsTable />
+      <TransactionsTable camperTrans={props.camperTrans}/>
     </Card>
   )
 }

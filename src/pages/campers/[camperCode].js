@@ -6,9 +6,9 @@ if (process.env.NODE_ENV !== "production") {
 import { MongoClient } from "mongodb";
 
 const CamperOverview = (props) => {
-  const { camper } = props
+  const { camper, camperTrans } = props
   return (
-    <CamperDetail camper={camper}/>
+    <CamperDetail camper={camper} camperTrans={camperTrans}/>
   )
 }
 
@@ -19,12 +19,13 @@ export const getStaticProps = async (context) => {
   const camperId = params.camperCode
   const mongoClient = new MongoClient(process.env.CONNECTION);
 
-  const data = await mongoClient.db().collection("Campers").findOne({accountId: camperId});
-  console.log("We got the data!", data)
-
+  const accountData = await mongoClient.db().collection("Campers").findOne({accountId: camperId});
+  const transactionData = await mongoClient.db().collection("Transactions").find({accountId: camperId}).toArray();
+  console.log("CAMPERTRANS", transactionData)
   return {
     props: {
-      camper: JSON.parse(JSON.stringify(data))
+      camper: JSON.parse(JSON.stringify(accountData)),
+      camperTrans: JSON.parse(JSON.stringify(transactionData)),
     }
   }
 };
