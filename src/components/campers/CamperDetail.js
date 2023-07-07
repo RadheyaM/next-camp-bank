@@ -1,9 +1,9 @@
 import Card from "../UI/Card"
 import AccountSummary from "../overview/AccountSummary"
 
-const CamperDetail = () => {
+const CamperDetail = props => {
   return (
-    <AccountSummary />
+    <AccountSummary camper={props.camper}/>
   )
 }
 

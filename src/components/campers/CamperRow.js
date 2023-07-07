@@ -9,7 +9,7 @@ const CamperRow = (props) => {
         <Link href={linkPath}>{accountId}</Link>
       </td>
       <td>{name}</td>
-      <td>{startingBalance.$numberDecimal}</td>
+      <td>€{startingBalance.$numberDecimal}</td>
     </tr>
   );
 };
