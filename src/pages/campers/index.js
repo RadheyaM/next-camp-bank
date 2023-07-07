@@ -1,4 +1,5 @@
 import AllCampersTable from "@/components/campers/AllCampersTable"
+import Card from "@/components/UI/Card";
 
 const DUMMY_DATA = [
   {
@@ -69,6 +70,7 @@ const DUMMY_DATA = [
 const Campers = (props) => {
   return (
     <AllCampersTable campers={DUMMY_DATA}/>
+
   );
 };
 

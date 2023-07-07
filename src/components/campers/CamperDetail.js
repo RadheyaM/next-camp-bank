@@ -3,10 +3,7 @@ import AccountSummary from "../overview/AccountSummary"
 
 const CamperDetail = () => {
   return (
-    <Card>
-      <h1>Camper Detail</h1>
-      <AccountSummary />
-    </Card>
+    <AccountSummary />
   )
 }
 
