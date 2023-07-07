@@ -1,5 +1,5 @@
-import styles from './AllCampersTable.module.css'
 import CamperRow from './CamperRow';
+import Table from '../UI/Table';
 
 
 const AllCampersTable = props => {
@@ -7,7 +7,7 @@ const AllCampersTable = props => {
   console.log("from AllCampers", campers)
   console.log("from AllCampers TRans", camperTrans)
   return (
-    <table className={styles.allCampersTable}>
+    <Table>
       <caption>
         <h2>All Campers</h2>
       </caption>
@@ -23,7 +23,7 @@ const AllCampersTable = props => {
           <CamperRow key={camper.accountId} camper={camper}/>
         ))}
       </tbody>
-    </table>
+    </Table>
   );
 };
 

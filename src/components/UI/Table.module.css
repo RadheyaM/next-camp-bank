@@ -1,0 +1,32 @@
+.myTable {
+  border-collapse: collapse;
+  width: 75%;
+}
+
+.myTable th, 
+.myTable td {
+  border: 1px solid black;
+  padding: 8px;
+}
+
+.myTable th {
+  background-color: gray;
+  font-weight: bold;
+}
+
+.myTable tr:nth-child(odd) {
+  background-color: lightgray;
+}
+
+.myTable tr:nth-child(even) {
+  background-color: gray;
+}
+
+.myTable tr:hover {
+  background-color: white;
+}
+
+.noData {
+  text-align: center;
+  column-span: 100%;
+}

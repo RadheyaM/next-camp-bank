@@ -8,7 +8,7 @@ const TransactionRow = props => {
       <td>{dateTimeStamp}</td>
       <td>{type}</td>
       <td>{category}</td>
-      <td>{amount.$numberDecimal}</td>
+      <td>€{amount.$numberDecimal}</td>
     </tr>
   )
 };

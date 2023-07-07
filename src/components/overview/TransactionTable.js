@@ -1,12 +1,13 @@
 import TransactionRow from './TransactionRow';
 import styles from './TransactionTable.module.css'
+import Table from '../UI/Table';
 
 const TransactionsTable = props => {
   const { camperTrans } = props
   console.log(camperTrans)
   if (camperTrans.length < 1 ) {
     return (
-      <table className={styles.transactionTable}>
+      <Table className={styles.transactionTable}>
         <caption><h2>Account Transactions</h2></caption>
         <thead>
           <tr>
@@ -18,11 +19,11 @@ const TransactionsTable = props => {
           </tr>
         </thead>
         <tbody><tr><td className={styles.noData} colSpan={5}>No Transaction to Display Yet.</td></tr></tbody>
-      </table>
+      </Table>
     )
   }
   return (
-    <table className={styles.transactionTable}>
+    <Table className={styles.transactionTable}>
       <caption><h2>Account Transactions</h2></caption>
       <thead>
         <tr>
@@ -38,7 +39,7 @@ const TransactionsTable = props => {
           <TransactionRow key={trans._id} trans={trans}/>
         ))}
       </tbody> 
-    </table>
+    </Table>
   )
 }
 
