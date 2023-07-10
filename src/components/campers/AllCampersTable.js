@@ -4,8 +4,8 @@ import Table from '../UI/Table';
 
 const AllCampersTable = props => {
   const { campers, camperTrans } = props
-  console.log("from AllCampers", campers)
-  console.log("from AllCampers TRans", camperTrans)
+  // console.log("from AllCampers", campers)
+  // console.log("from AllCampers TRans", camperTrans)
   return (
     <Table>
       <caption>

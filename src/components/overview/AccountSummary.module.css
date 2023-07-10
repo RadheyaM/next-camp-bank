@@ -1,0 +1,8 @@
+.accountDetails {
+  display: flex;
+  flex-direction: row;
+}
+
+.accountDetails h3 {
+  padding: 3rem;
+}

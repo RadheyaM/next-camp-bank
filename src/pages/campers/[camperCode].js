@@ -21,11 +21,10 @@ export const getStaticProps = async (context) => {
 
   const accountData = await mongoClient.db().collection("Campers").findOne({accountId: camperId});
   const transactionData = await mongoClient.db().collection("Transactions").find({accountId: camperId}).toArray();
-  console.log("CAMPERTRANS", transactionData)
   return {
     props: {
       camper: JSON.parse(JSON.stringify(accountData)),
-      camperTrans: JSON.parse(JSON.stringify(transactionData)),
+      camperTrans: JSON.parse(JSON.stringify(transactionData))
     }
   }
 };

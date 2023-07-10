@@ -4,7 +4,7 @@ import Card from "../UI/Card";
 
 const AllTransactionsTable = (props) => {
   const { allTrans } = props
-  console.log("CAMPERTRANS", allTrans)
+  // console.log("CAMPERTRANS", allTrans)
   return (
     <Card>
       <Table>
@@ -20,7 +20,7 @@ const AllTransactionsTable = (props) => {
         </thead>
         <tbody>
           {allTrans.map((trans) => (
-            <AllTransRows trans={trans} />
+            <AllTransRows key={trans._id} trans={trans} />
           ))}
         </tbody>
       </Table>

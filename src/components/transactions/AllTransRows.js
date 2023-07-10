@@ -7,7 +7,7 @@ const AllTransRows = props => {
       <td>{dateTimeStamp}</td>
       <td>{type}</td>
       <td>{category}</td>
-      <td>{amount.$numberDecimal}</td>
+      <td>{amount}</td>
     </tr>
   )
 }

@@ -14,7 +14,7 @@ export const getStaticProps = async (context) => {
   const mongoClient = new MongoClient(process.env.CONNECTION);
 
   const data = await mongoClient.db().collection("Campers").find().toArray();
-  console.log("We got the data!", data)
+  // console.log("We got the data!", data)
 
   return {
     props: {
