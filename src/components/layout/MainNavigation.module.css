@@ -1,7 +1,11 @@
 .header {
   background-color: lightgrey;
-  padding: 4rem;
+  padding: 2rem 4rem 4rem 4rem;
   text-align: center;
+}
+
+.header h1 {
+  padding-bottom: 3rem;
 }
 
 .header a{
@@ -11,6 +15,7 @@
 }
 
 .header a:hover {
+  text-decoration: underline;
   color: rgb(196, 113, 11)
 }
 
@@ -25,4 +30,12 @@
 
 .navLinkBar a {
   color: black;
+  background-color: lightblue;
+  padding: 1rem;
+  border-radius: 10%;
+}
+
+.navLinkBar a:hover {
+  color: white;
+  background-color: orange;
 }
