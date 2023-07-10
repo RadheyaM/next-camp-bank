@@ -41,6 +41,10 @@
   width: 100px;
 }
 
+.submitBtn:hover {
+  cursor: pointer;
+}
+
 /* errorP {
   font-size: 1rem;
   color: darkred;

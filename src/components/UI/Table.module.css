@@ -1,6 +1,8 @@
 .myTable {
   border-collapse: collapse;
   width: 75%;
+  height: 25%;
+  text-align: center;
 }
 
 .myTable th, 

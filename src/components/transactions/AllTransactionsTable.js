@@ -8,6 +8,7 @@ const AllTransactionsTable = (props) => {
   return (
     <Card>
       <Table>
+        <caption><h2>All Transactions</h2></caption>
         <thead>
           <tr>
             <th>Camper Code</th>
