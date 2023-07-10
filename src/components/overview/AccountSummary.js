@@ -37,13 +37,17 @@ const AccountSummary = (props) => {
   };
 
   const currentBalance = startingBalance + transactionBalance(deposits, payments)
+  const formattedCurrentBalance = currentBalance.toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'EUR',
+  })
   return (
     <Card>
       <h2>Account Details</h2>
       <Card className={styles.accountDetails}>
         <h3>{camper.accountId}</h3>
         <h3>{camper.name}</h3>
-        <h3>€ {currentBalance}</h3>
+        <h3>{formattedCurrentBalance}</h3>
       </Card>
       <TransactionsTable camperTrans={props.camperTrans} />
     </Card>
