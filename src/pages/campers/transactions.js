@@ -2,7 +2,7 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 import AllTransactionsTable from "@/components/transactions/AllTransactionsTable";
-import { MongoClient } from "mongodb";
+import { getAllTransactions } from "../api/campers";
 
 const Transactions = props => {
   return (
@@ -15,12 +15,10 @@ const Transactions = props => {
 export default Transactions
 
 export const getStaticProps = async (context) => {
-  const mongoClient = new MongoClient(process.env.CONNECTION);
-
-  const transactionData = await mongoClient.db().collection("Transactions").find().toArray();
+  const transactionData = await getAllTransactions()
   return {
     props: {
-      allTrans: JSON.parse(JSON.stringify(transactionData))
+      allTrans: transactionData
     }
   }
 };

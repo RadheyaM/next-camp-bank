@@ -10,16 +10,16 @@ const NewTransForm = (props) => {
   const inputHandler = (identifier, event) => {
     if (identifier === "deposit") {
       setEnteredDeposit(event.target.value);
-      console.log(event.target.value)
+      console.log(event.target.value);
     } else if (identifier === "book") {
       setEnteredBook(event.target.value);
-      console.log(event.target.value)
+      console.log(event.target.value);
     } else if (identifier === "tuckshop") {
       setEnteredTuckshop(event.target.value);
-      console.log(event.target.value)
+      console.log(event.target.value);
     } else {
       setEnteredWithdrawal(event.target.value.toString());
-      console.log(event.target.value)
+      console.log(event.target.value);
     }
   };
   const submitHandler = (event) => {
@@ -34,8 +34,8 @@ const NewTransForm = (props) => {
         dateTimeStamp: new Date(),
         type: "deposit",
         category: "n/a",
-        amount: enteredDeposit.toString()
-      }
+        amount: enteredDeposit.toString(),
+      };
     }
     if (enteredBook !== "" && enteredBook !== 0) {
       bookTransaction = {
@@ -43,8 +43,8 @@ const NewTransForm = (props) => {
         dateTimeStamp: new Date(),
         type: "payment",
         category: "book",
-        amount: enteredBook.toString()
-      }
+        amount: enteredBook.toString(),
+      };
     }
     if (enteredTuckshop !== "" && enteredTuckshop !== 0) {
       tuckTransaction = {
@@ -52,8 +52,8 @@ const NewTransForm = (props) => {
         dateTimeStamp: new Date(),
         type: "payment",
         category: "tuck",
-        amount: enteredTuckshop.toString()
-      }
+        amount: enteredTuckshop.toString(),
+      };
     }
     if (enteredWithdrawal !== "" && enteredWithdrawal !== 0) {
       withdrawalTransaction = {
@@ -61,19 +61,19 @@ const NewTransForm = (props) => {
         dateTimeStamp: new Date(),
         type: "payment",
         category: "tuck",
-        amount: enteredTuckshop.toString()
-      }
+        amount: enteredTuckshop.toString(),
+      };
     }
-    console.log("deposit: ", depositTransaction);
-    console.log("book: ", bookTransaction);
-    console.log("tuck: ", tuckTransaction);
-    console.log("withdrawal: ", withdrawalTransaction);
-    setEnteredDeposit("")
-    setEnteredBook("")
-    setEnteredTuckshop("")
-    setEnteredWithdrawal("")
+    // console.log("deposit: ", depositTransaction);
+    // console.log("book: ", bookTransaction);
+    // console.log("tuck: ", tuckTransaction);
+    // console.log("withdrawal: ", withdrawalTransaction);
+    setEnteredDeposit("");
+    setEnteredBook("");
+    setEnteredTuckshop("");
+    setEnteredWithdrawal("");
   };
-  
+
   return (
     <form onSubmit={submitHandler} className={styles.newTransForm}>
       <h2>Create Transactions</h2>
