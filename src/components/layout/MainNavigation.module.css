@@ -11,25 +11,18 @@
 }
 
 .header a:hover {
-  text-decoration: underline;
-  color: darkorange
+  color: rgb(196, 113, 11)
 }
 
 .navLinkBar {
   list-style: none;
   display: flex;
   flex-direction: row;
-  gap: 2rem;
+  gap: 3rem;
   justify-content: center;
   align-items: center;
 }
 
 .navLinkBar a {
   color: black;
-}
-
-.navLinkBar a:hover {
-  color: white;
-  background-color: darkblue;
-  padding: 1rem;
 }
