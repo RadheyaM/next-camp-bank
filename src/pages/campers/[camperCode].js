@@ -3,7 +3,8 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 
-import { getCamper, getCamperTransactions } from "./../api/campers";
+import { getCamperTransactions } from "./../api/campers";
+import { getCamper } from "./../api/campers/[camperCode]"
 
 const CamperOverview = (props) => {
   const { camper, camperTrans } = props;

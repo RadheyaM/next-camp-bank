@@ -1,0 +1,37 @@
+.newCamperForm {
+  text-align: center;
+  padding: 2rem;
+}
+
+.newCamperForm .inputs{
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.newCamperForm .inputs div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.newCamperForm .inputs label {
+  padding-bottom: 0.5rem;
+}
+
+.newCamperForm .inputs input {
+  font-size: 2rem;
+}
+
+.newCamperForm .submitBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.newCamperForm .submitBtn button {
+  padding: 1rem;
+}

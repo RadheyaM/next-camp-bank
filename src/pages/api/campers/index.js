@@ -3,17 +3,6 @@ if (process.env.NODE_ENV !== "production") {
 }
 import { MongoClient } from "mongodb";
 
-export const getCamper = async (camperId) => {
-  const mongoClient = new MongoClient(process.env.CONNECTION);
-
-  const data = await mongoClient
-    .db("Campers")
-    .collection("Campers")
-    .findOne({ accountId: camperId });
-
-  return JSON.parse(JSON.stringify(data));
-};
-
 export const getCamperTransactions = async (camperId) => {
   const mongoClient = new MongoClient(process.env.CONNECTION);
 
@@ -51,18 +40,19 @@ export const getAllCampers = async () => {
 };
 
 const Handler = async (req, res) => {
-  const camperData = await getCamper();
-  const camperTransData = await getCamperTransactions();
-  const getAllTransactions = await getAllTransactions();
-  const getAllCampers = await getAllCampers();
-  res
-    .status(200)
-    .json({
+  if (req.method === "GET") {
+    const camperTransData = await getCamperTransactions();
+    const getAllTransactions = await getAllTransactions();
+    const getAllCampers = await getAllCampers();
+    res.status(200).json({
       campers: camperData,
       CamperTransactions: camperTransData,
       allTransactions: getAllTransactions,
-      allCampers: getAllCampers
+      allCampers: getAllCampers,
     });
+  } else if (req.method === "POST") {
+    // expect a new camper to be sent with the request.
+  }
 };
 
 export default Handler;
