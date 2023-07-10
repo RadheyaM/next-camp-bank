@@ -1,5 +1,6 @@
 .enterCodeForm {
-  height: 200px;
+  height: 400px;
+  width: 75%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,6 +13,13 @@
   width: fit-content;
   padding: 0.5rem;
   gap: 0.5rem;
+  width: 100%;
+}
+
+.inputWrapper label {
+  font-size: 2rem;
+  text-align: center;
+  padding-bottom: 2rem;
 }
 
 .labelWrapper {
@@ -24,6 +32,13 @@
 
 .codeInput {
   font-size: 2rem;
+  text-align: center;
+}
+
+.submitBtn {
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  width: 100px;
 }
 
 /* errorP {

@@ -19,10 +19,10 @@ const ScanCamperCode = () => {
       <form onSubmit={submitHandler} className={styles.enterCodeForm}>
         <div className={styles.inputWrapper}>
           <label htmlFor='code-input'>Scan or Enter Code Manually</label>
-          <input id='code-input' className={styles.codeInput} type="text" onChange={codeInputHandler}/>
+          <input autoFocus={true} id='code-input' className={styles.codeInput} type="text" onChange={codeInputHandler}/>
         </div>
-        <div className={styles.inputWrapper}>
-          <button type="submit">Find</button>
+        <div>
+          <button className={styles.submitBtn} type="submit">Find</button>
         </div>
       </form>
     </Card>
