@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-
+import NewTransForm from "@/components/forms/NewTransForm";
 import TransactionsTable from "./TransactionTable";
 import styles from "./AccountSummary.module.css";
 import Card from "../UI/Card";
@@ -36,8 +36,8 @@ const AccountSummary = (props) => {
     return sum1 - sum2;
   };
 
-  const currentBalance = startingBalance + transactionBalance(deposits, payments)
-  const formattedCurrentBalance = currentBalance.toLocaleString('en-US', {
+  const currentAccountBalance = startingBalance + transactionBalance(deposits, payments)
+  const formattedCurrentAccountBalance = currentAccountBalance.toLocaleString('en-US', {
     style: 'currency',
     currency: 'EUR',
   })
@@ -47,8 +47,9 @@ const AccountSummary = (props) => {
       <Card className={styles.accountDetails}>
         <h3>{camper.accountId}</h3>
         <h3>{camper.name}</h3>
-        <h3>{formattedCurrentBalance}</h3>
+        <h3>{formattedCurrentAccountBalance}</h3>
       </Card>
+      <NewTransForm />
       <TransactionsTable camperTrans={props.camperTrans} />
     </Card>
   );

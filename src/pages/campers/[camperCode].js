@@ -1,4 +1,3 @@
-
 const { default: CamperDetail } = require("@/components/campers/CamperDetail")
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
