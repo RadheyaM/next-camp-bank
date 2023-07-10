@@ -1,4 +1,27 @@
-.newTransForm{
+.newTransForm {
+  text-align: center;
+}
+
+.newTransForm .inputs{
   display: flex;
   gap: 0.5rem;
+  padding: 1rem 0;
+}
+
+.newTransForm .inputs div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.newTransForm .inputs label {
+  padding-right: 0.5rem;
+}
+
+.newTransForm .submitBtn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
 }
