@@ -1,15 +1,14 @@
 import Link from "next/link";
-
-import Logo from "./Logo";
+import styles from "./MainNavigation.module.css"
 
 const MainNavigation = () => {
   return (
-    <header>
+    <header className={styles.header}>
       <Link href="/">
-        <Logo />
+        <h1>Carry On Camping!</h1>
       </Link>
       <nav>
-        <ul>
+        <ul className={styles.navLinkBar}>
           <li><Link href="/">Enter Code</Link></li>
           <li><Link href="/campers" replace>All Campers</Link></li>
           <li><Link href="/campers/transactions" replace>All Transactions</Link></li>
