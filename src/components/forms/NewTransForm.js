@@ -24,10 +24,50 @@ const NewTransForm = (props) => {
   };
   const submitHandler = (event) => {
     event.preventDefault();
-    console.log("deposit: ", enteredDeposit);
-    console.log("book: ", enteredBook);
-    console.log("tuck: ", enteredTuckshop);
-    console.log("withdrawal: ", enteredWithdrawal);
+    let depositTransaction = {};
+    let bookTransaction = {};
+    let tuckTransaction = {};
+    let withdrawalTransaction = {};
+    if (enteredDeposit !== "" && enteredDeposit !== 0) {
+      depositTransaction = {
+        accountId: "This will be taken from url",
+        dateTimeStamp: new Date(),
+        type: "deposit",
+        category: "n/a",
+        amount: enteredDeposit.toString()
+      }
+    }
+    if (enteredBook !== "" && enteredBook !== 0) {
+      bookTransaction = {
+        accountId: "This will be taken from url",
+        dateTimeStamp: new Date(),
+        type: "payment",
+        category: "book",
+        amount: enteredBook.toString()
+      }
+    }
+    if (enteredTuckshop !== "" && enteredTuckshop !== 0) {
+      tuckTransaction = {
+        accountId: "This will be taken from url",
+        dateTimeStamp: new Date(),
+        type: "payment",
+        category: "tuck",
+        amount: enteredTuckshop.toString()
+      }
+    }
+    if (enteredWithdrawal !== "" && enteredWithdrawal !== 0) {
+      withdrawalTransaction = {
+        accountId: "This will be taken from url",
+        dateTimeStamp: new Date(),
+        type: "payment",
+        category: "tuck",
+        amount: enteredTuckshop.toString()
+      }
+    }
+    console.log("deposit: ", depositTransaction);
+    console.log("book: ", bookTransaction);
+    console.log("tuck: ", tuckTransaction);
+    console.log("withdrawal: ", withdrawalTransaction);
     setEnteredDeposit("")
     setEnteredBook("")
     setEnteredTuckshop("")
