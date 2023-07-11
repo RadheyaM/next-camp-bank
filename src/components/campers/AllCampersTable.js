@@ -3,7 +3,8 @@ import Table from '../UI/Table';
 
 
 const AllCampersTable = props => {
-  const { campers, camperTrans } = props
+  const { campers, query } = props
+  const apiData = query.data.data.campers
   // console.log("from AllCampers", campers)
   // console.log("from AllCampers TRans", camperTrans)
   return (
@@ -19,7 +20,7 @@ const AllCampersTable = props => {
         </tr>
       </thead>
       <tbody>
-        {campers.map((camper) => (
+        {apiData.map((camper) => (
           <CamperRow key={camper.accountId} camper={camper}/>
         ))}
       </tbody>

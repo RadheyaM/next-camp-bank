@@ -16,12 +16,10 @@ export const getAllCampers = async () => {
 };
 
 const Handler = async (req, res) => {
-  if (req.method === "GET") {
-    const getAllCampers = await getAllCampers();
-    res.status(200).json({
-      allCampers: getAllCampers,
-    });
-  }
+  const allCampersData = await getAllCampers();
+  res.status(200).json({
+    campers: allCampersData,
+  });
 };
 
 export default Handler;
