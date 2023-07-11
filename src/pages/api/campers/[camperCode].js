@@ -14,12 +14,23 @@ export const getCamper = async (camperId) => {
   return JSON.parse(JSON.stringify(data));
 };
 
-const Handler = async(req, res) => {
+export const addCamper = async (camper) => {
+  const mongoClient = new MongoClient(process.env.CONNECTION);
+
+  const response = await mongoClient
+    .db("campers")
+    .collection("campers")
+    .insertOne(camper);
+
+  return response.insertedId;
+};
+
+const Handler = async (req, res) => {
   const camper = await getCamper(req.query.camperCode);
   if (!camper) {
     res.status(404).json("big badaboom");
   } else {
-    res.status(200).json({camper: camper});
+    res.status(200).json({ camper: camper });
   }
 };
 

@@ -39,6 +39,17 @@ export const getAllCampers = async () => {
   return JSON.parse(JSON.stringify(data));
 };
 
+export const addCamper = async (camper) => {
+  const mongoClient = new MongoClient(process.env.CONNECTION);
+
+  const response = await mongoClient
+    .db("Campers")
+    .collection("Campers")
+    .insertOne(camper);
+
+  return response.insertedId;
+};
+
 const Handler = async (req, res) => {
   if (req.method === "GET") {
     const camperTransData = await getCamperTransactions();
@@ -51,7 +62,14 @@ const Handler = async (req, res) => {
       allCampers: getAllCampers,
     });
   } else if (req.method === "POST") {
-    // expect a new camper to be sent with the request.
+    const camper = {
+      accountId: req.body.accountId,
+      name: req.body.name,
+      startingBalance: req.body.startingBalance
+    }
+    const insertedId = await addCamper(camper);
+    res.revalidate('/campers')
+    res.status(200).json(insertedId);
   }
 };
 

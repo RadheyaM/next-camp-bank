@@ -35,6 +35,11 @@ export const getStaticPaths = async () => {
       { params: { camperCode: "10002" } },
       { params: { camperCode: "10003" } },
       { params: { camperCode: "10004" } },
+      { params: { camperCode: "10005" } },
+      { params: { camperCode: "10006" } },
+      { params: { camperCode: "10007" } },
+      { params: { camperCode: "10008" } },
+      { params: { camperCode: "10009" } },
     ],
     fallback: false,
   };
