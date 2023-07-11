@@ -8,13 +8,13 @@ const NewCamperForm = props => {
   const inputHandler = (identifier, event) => {
     if (identifier === "accountId") {
       setEnteredAccountId(event.target.value);
-      console.log(event.target.value);
+      // console.log(event.target.value);
     } else if (identifier === "name") {
       setEnteredName(event.target.value);
-      console.log(event.target.value);
+      // console.log(event.target.value);
     } else {
       setEnteredStartingBalance(event.target.value)
-      console.log(event.target.value);
+      // console.log(event.target.value);
     }
   };
   
@@ -25,11 +25,12 @@ const NewCamperForm = props => {
       name: enteredName,
       startingBalance: enteredStartingBalance
     }
-    console.log("CamperData: ", camperData)
-    // props.onAdd(camperData);
+    // console.log("CamperData: ", camperData)
+    props.onAdd(camperData);
     setEnteredAccountId("")
     setEnteredName("")
     setEnteredStartingBalance("")
+    // redirect to new customer account overview...
   }
 
 
@@ -43,9 +44,9 @@ const NewCamperForm = props => {
             id="accountId"
             type="text"
             required={true}
-            placeholder='5 digit code'
             autoFocus={true}
             onChange={(event) => {inputHandler("accountId", event)}}
+            value={enteredAccountId}
           />
         </div>
         <div>
@@ -54,17 +55,18 @@ const NewCamperForm = props => {
             id="name"
             type="text"
             required={true}
-            placeholder='<firstname>, <lastname>'
             onChange={(event) => {inputHandler("name", event)}}
+            value={enteredName}
           />
         </div>
         <div>
           <label htmlFor="startingBalance">Starting Balance (if any)</label>
           <input
             id="startingBalance"
-            type="number"
+            type="text"
             placeholder='0.00'
             onChange={(event) => {inputHandler("startingBalance", event)}}
+            value={enteredStartingBalance}
           />
         </div>
       </div>

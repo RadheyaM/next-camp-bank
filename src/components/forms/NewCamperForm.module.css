@@ -38,3 +38,9 @@
 .newCamperForm .submitBtn button {
   padding: 1rem;
 }
+
+.newCamperForm .submitBtn button:hover {
+  cursor: pointer;
+  background-color: orange;
+  color: white;
+}

@@ -4,6 +4,6 @@ const HomePage = () => {
   return (
     <ScanCamperCode />
   )
-}
+};
 
-export default HomePage
+export default HomePage;
