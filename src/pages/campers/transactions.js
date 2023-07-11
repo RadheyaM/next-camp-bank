@@ -2,7 +2,7 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 import AllTransactionsTable from "@/components/transactions/AllTransactionsTable";
-import { getAllTransactions } from "../api/campers";
+import { getAllTransactions } from "../api/transactions";
 
 const Transactions = props => {
   return (

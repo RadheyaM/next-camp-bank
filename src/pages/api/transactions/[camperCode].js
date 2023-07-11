@@ -3,13 +3,13 @@ if (process.env.NODE_ENV !== "production") {
 }
 import { MongoClient } from "mongodb";
 
-export const getAllCampers = async () => {
+export const getCamperTransactions = async (camperId) => {
   const mongoClient = new MongoClient(process.env.CONNECTION);
 
   const data = await mongoClient
     .db("Campers")
-    .collection("Campers")
-    .find()
+    .collection("Transactions")
+    .find({ accountId: camperId })
     .toArray();
 
   return JSON.parse(JSON.stringify(data));
@@ -17,11 +17,11 @@ export const getAllCampers = async () => {
 
 const Handler = async (req, res) => {
   if (req.method === "GET") {
-    const getAllCampers = await getAllCampers();
+    const camperTransData = await getCamperTransactions();
     res.status(200).json({
-      allCampers: getAllCampers,
+      CamperTransactions: camperTransData
     });
   }
 };
 
-export default Handler;
+export default Handler; 

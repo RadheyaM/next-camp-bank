@@ -14,21 +14,10 @@ export const getCamper = async (camperId) => {
   return JSON.parse(JSON.stringify(data));
 };
 
-export const addCamper = async (camper) => {
-  const mongoClient = new MongoClient(process.env.CONNECTION);
-
-  const response = await mongoClient
-    .db("campers")
-    .collection("campers")
-    .insertOne(camper);
-
-  return response.insertedId;
-};
-
 const Handler = async (req, res) => {
   const camper = await getCamper(req.query.camperCode);
   if (!camper) {
-    res.status(404).json("big badaboom");
+    res.status(404).json("No camper data available...");
   } else {
     res.status(200).json({ camper: camper });
   }

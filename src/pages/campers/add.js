@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { addCamper } from "../api/campers";
 
 import NewCamperForm from "@/components/forms/NewCamperForm";
 
