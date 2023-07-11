@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styles from './NewCamperForm.module.css'
+import Button from '@mui/material/Button'
 
 const NewCamperForm = props => {
   const [enteredAccountId, setEnteredAccountId] = useState("");
@@ -71,7 +72,7 @@ const NewCamperForm = props => {
         </div>
       </div>
       <div className={styles.submitBtn}>
-        <button type="submit">Add New Camper</button>
+        <Button variant="contained" type="submit">Add New Camper</Button>
       </div>
     </form>
   )

@@ -20,7 +20,7 @@ const AllCampersTable = props => {
         </tr>
       </thead>
       <tbody>
-        {apiData.map((camper) => (
+        {props.query.data.data.campers.map((camper) => (
           <CamperRow key={camper.accountId} camper={camper}/>
         ))}
       </tbody>

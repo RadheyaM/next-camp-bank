@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import styles from "./NewTransForm.module.css";
+import Button from '@mui/material/Button'
 
 const NewTransForm = (props) => {
   const [enteredDeposit, setEnteredDeposit] = useState("");
@@ -129,7 +130,7 @@ const NewTransForm = (props) => {
         </div>
       </div>
       <div className={styles.submitBtn}>
-        <button type="submit">Add Transaction(s)</button>
+        <Button type="submit">Add Transaction(s)</Button>
       </div>
     </form>
   );
