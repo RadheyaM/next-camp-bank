@@ -65,7 +65,7 @@ const Handler = async (req, res) => {
     const camper = {
       accountId: req.body.accountId,
       name: req.body.name,
-      startingBalance: req.body.startingBalance
+      startingBalance: req.body.startingBalance.$decimalNumber
     }
     const insertedId = await addCamper(camper);
     res.revalidate('/campers')
