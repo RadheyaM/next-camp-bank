@@ -1,14 +1,16 @@
 .newCamperForm {
   text-align: center;
-  padding: 2rem;
-  width: 75%;
+  padding: 1rem;
+  width: 100%;
 }
 
 .newCamperForm .inputs{
   display: flex;
   flex-direction: column;
+  text-align: center;
+  justify-content: center;
   gap: 2rem;
-  padding: 1rem;
+  padding: 3rem;
 }
 
 .newCamperForm .inputs div {
@@ -25,7 +27,7 @@
 .newCamperForm .inputs input {
   font-size: 1.25rem;
   text-align: center;
-  width: 50%;
+
 }
 
 .newCamperForm .submitBtn {
@@ -43,4 +45,9 @@
   cursor: pointer;
   background-color: orange;
   color: white;
+}
+
+.newCamperForm hr {
+  width: 50%;
+  color: lightblue;
 }

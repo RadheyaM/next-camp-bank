@@ -1,5 +1,6 @@
 import styles from "./NewCamperForm.module.css";
 import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 import { useRef } from "react";
 
 const NewCamperForm = (props) => {
@@ -28,24 +29,29 @@ const NewCamperForm = (props) => {
 
   return (
     <form onSubmit={submitHandler} className={styles.newCamperForm}>
-      <h2>Add A Camper</h2>
+      <h3>ADD A NEW CAMPER</h3>
+      <hr />
       <div className={styles.inputs}>
         <div>
-          <label htmlFor="accountId">Account Code</label>
-          <input
+          {/* <label htmlFor="accountId">Account Code</label> */}
+          <TextField
             id="accountId"
+            variant="standard"
+            label="New Account Code:"
             type="text"
             required={true}
             ref={accountId}
           />
         </div>
         <div>
-          <label htmlFor="name">Camper's Full Name</label>
-          <input id="name" type="text" required={true} ref={name}/>
+          {/* <label htmlFor="name">Camper's Full Name</label> */}
+          <TextField variant="standard" label="New Camper's Full Name:" id="name" type="text" required={true} ref={name}/>
         </div>
         <div>
-          <label htmlFor="startingBalance">Starting Balance (if any)</label>
-          <input
+          {/* <label htmlFor="startingBalance">Starting Balance (if any)</label> */}
+          <TextField
+            label="Starting Balance:"
+            variant="standard"
             id="startingBalance"
             type="text"
             ref={balance}
