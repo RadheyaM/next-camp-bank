@@ -7,6 +7,7 @@ export const addCamper = async (camper) => {
   const mongoClient = new MongoClient(process.env.CONNECTION);
   try {
     await mongoClient.connect();
+    console.log("camper from api: ", camper);
     console.log("connected to server");
     const db = mongoClient.db("Campers");
     const col = db.collection("Campers");
