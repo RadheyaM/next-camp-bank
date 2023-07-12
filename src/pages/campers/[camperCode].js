@@ -2,13 +2,26 @@ const { default: CamperDetail } = require("@/components/campers/CamperDetail");
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
-
 import { getCamperTransactions } from "./../api/transactions/[camperCode]";
-import { getCamper } from "./../api/campers/[camperCode]"
+import { getCamper } from "./../api/campers/[camperCode]";
+import axios from "axios";
 
 const CamperOverview = (props) => {
   const { camper, camperTrans } = props;
-  return <CamperDetail camper={camper} camperTrans={camperTrans} />;
+  const postTransactions = async (trans) => {
+    await axios.post("/api/campers/[camperCode]", trans);
+  };
+  const postTransactionsHandler = (trans) => {
+    postTransactions(trans);
+  };
+
+  return (
+    <CamperDetail
+      camper={camper}
+      camperTrans={camperTrans}
+      onAddTransactions={postTransactionsHandler}
+    />
+  );
 };
 
 export default CamperOverview;
@@ -16,15 +29,14 @@ export default CamperOverview;
 export const getStaticProps = async (context) => {
   const { params } = context;
   const camperId = params.camperCode;
-
   const accountData = await getCamper(camperId);
   const transactionData = await getCamperTransactions(camperId);
-  
+
   return {
     props: {
       camper: accountData,
       camperTrans: transactionData,
-    }
+    },
   };
 };
 

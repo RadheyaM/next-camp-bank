@@ -31,16 +31,16 @@ const NewTransForm = (props) => {
     let withdrawalTransaction = {};
     if (enteredDeposit !== "" && enteredDeposit !== 0) {
       depositTransaction = {
-        accountId: "This will be taken from url",
+        accountId: "10001",
         dateTimeStamp: new Date(),
         type: "deposit",
-        category: "n/a",
+        category: "deposit",
         amount: enteredDeposit.toString(),
       };
     }
     if (enteredBook !== "" && enteredBook !== 0) {
       bookTransaction = {
-        accountId: "This will be taken from url",
+        accountId: "10001",
         dateTimeStamp: new Date(),
         type: "payment",
         category: "book",
@@ -49,7 +49,7 @@ const NewTransForm = (props) => {
     }
     if (enteredTuckshop !== "" && enteredTuckshop !== 0) {
       tuckTransaction = {
-        accountId: "This will be taken from url",
+        accountId: "10001",
         dateTimeStamp: new Date(),
         type: "payment",
         category: "tuck",
@@ -58,10 +58,10 @@ const NewTransForm = (props) => {
     }
     if (enteredWithdrawal !== "" && enteredWithdrawal !== 0) {
       withdrawalTransaction = {
-        accountId: "This will be taken from url",
+        accountId: "10001",
         dateTimeStamp: new Date(),
         type: "payment",
-        category: "tuck",
+        category: "withdrawal",
         amount: enteredTuckshop.toString(),
       };
     }
@@ -69,6 +69,12 @@ const NewTransForm = (props) => {
     // console.log("book: ", bookTransaction);
     // console.log("tuck: ", tuckTransaction);
     // console.log("withdrawal: ", withdrawalTransaction);
+    props.onAddTransactions({
+      depositTransaction,
+      bookTransaction,
+      tuckTransaction,
+      withdrawalTransaction
+    });
     setEnteredDeposit("");
     setEnteredBook("");
     setEnteredTuckshop("");
