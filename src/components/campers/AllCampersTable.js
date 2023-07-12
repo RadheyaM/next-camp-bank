@@ -21,7 +21,7 @@ const AllCampersTable = props => {
       </thead>
       <tbody>
         {props.query.data.data.campers.map((camper) => (
-          <CamperRow key={camper.accountId} camper={camper}/>
+          <CamperRow key={camper._id} camper={camper}/>
         ))}
       </tbody>
     </Table>

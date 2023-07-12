@@ -24,7 +24,8 @@ const NewCamperForm = props => {
     const camperData = {
       accountId: enteredAccountId,
       name: enteredName,
-      startingBalance: enteredStartingBalance
+      startingBalance: enteredStartingBalance,
+      dateTimeCreated: new Date()
     }
     // console.log("CamperData: ", camperData)
     props.onAdd(camperData);

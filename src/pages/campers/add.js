@@ -14,9 +14,8 @@ const AddCamper = (props) => {
   };
 
   const postNewCamper = async (data) => {
-    console.log(`data to be posted: ${data}`)
-    const post = await axios.post("/api/campers/addCamper", data);
-    console.log(post);
+    console.log("data about to be posted")
+    await axios.post("/api/campers/addCamper", data);
   };
 
   return <NewCamperForm onAdd={postCamperHandler} />;
