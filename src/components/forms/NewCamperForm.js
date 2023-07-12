@@ -47,7 +47,6 @@ const NewCamperForm = props => {
             required={true}
             autoFocus={true}
             onChange={(event) => {inputHandler("accountId", event)}}
-            value={enteredAccountId}
           />
         </div>
         <div>
@@ -57,7 +56,6 @@ const NewCamperForm = props => {
             type="text"
             required={true}
             onChange={(event) => {inputHandler("name", event)}}
-            value={enteredName}
           />
         </div>
         <div>
@@ -67,7 +65,6 @@ const NewCamperForm = props => {
             type="text"
             placeholder='0.00'
             onChange={(event) => {inputHandler("startingBalance", event)}}
-            value={enteredStartingBalance}
           />
         </div>
       </div>
