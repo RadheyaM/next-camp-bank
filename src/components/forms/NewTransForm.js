@@ -46,6 +46,7 @@ const NewTransForm = (props) => {
     if (enteredBook !== "" && enteredBook !== 0) {
       bT = {
         accountId: camperId,
+        name: name,
         type: "Payment",
         category: "Book",
         amount: enteredBook,
@@ -54,6 +55,7 @@ const NewTransForm = (props) => {
     if (enteredTuckshop !== "" && enteredTuckshop !== 0) {
       tT = {
         accountId: camperId,
+        name: name,
         type: "Payment",
         category: "Tuckshop",
         amount: enteredTuckshop,
@@ -62,9 +64,10 @@ const NewTransForm = (props) => {
     if (enteredWithdrawal !== "" && enteredWithdrawal !== 0) {
       wT = {
         accountId: camperId,
+        name: name,
         type: "Payment",
         category: "withdrawal",
-        amount: enteredTuckshop,
+        amount: enteredWithdrawal,
       };
     }
     // console.log("deposit: ", depositTransaction);

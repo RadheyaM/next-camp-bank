@@ -54,6 +54,7 @@ export const getStaticProps = async (context) => {
       camper: accountData,
       camperTrans: transactionData,
     },
+    revalidate: 10,
   };
 };
 
