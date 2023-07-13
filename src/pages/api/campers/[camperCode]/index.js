@@ -76,7 +76,7 @@ export const postCamperTransactions = async (transData) => {
 const Handler = async (req, res) => {
   if (req.method === "GET") {
     const camper = await getCamper(req.query.camperCode);
-    if (!camper) {
+    if (!camper || !currentBalance) {
       res.status(404).json("No camper data available...");
     } else {
       res.status(200).json({ camper: camper });

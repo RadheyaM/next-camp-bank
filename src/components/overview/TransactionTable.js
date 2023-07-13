@@ -4,7 +4,7 @@ import Table from '../UI/Table';
 
 const TransactionsTable = props => {
   const { camperTrans } = props
-  console.log(props.query.data)
+  // console.log(props.query.data)
   if (camperTrans.length < 1 ) {
     return (
       <Table className={styles.transactionTable}>

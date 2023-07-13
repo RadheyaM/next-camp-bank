@@ -3,7 +3,7 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 import { getCamperTransactions } from "./../api/transactions/[camperCode]";
-import { getCamper } from "./../api/campers/[camperCode]";
+import { getCamper } from "../api/campers/[camperCode]";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import axios from "axios";
@@ -13,6 +13,7 @@ const CamperOverview = (props) => {
   const { camper, camperTrans } = props;
   const camperId = router.query.camperCode.toString();
   const camperApiPath = `/api/transactions/${camperId}`
+  const balanceApiPath = `/api/campers/${camperId}/getBalance`
   //GET
   const query = useQuery(['transactions'], () => {
     return axios.get(camperApiPath)
@@ -22,6 +23,9 @@ const CamperOverview = (props) => {
         transactions: props.camperTrans
       }
     }
+  });
+  const balanceQuery = useQuery(['balance'], () => {
+    return axios.get(balanceApiPath)
   })
   //POST
   const postTransactions = async (trans) => {
@@ -36,6 +40,7 @@ const CamperOverview = (props) => {
       camper={camper}
       camperTrans={camperTrans}
       query={query}
+      balance={balanceQuery}
       onAddTransactions={postTransactionsHandler}
     />
   );
