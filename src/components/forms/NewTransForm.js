@@ -2,6 +2,8 @@ import { useState } from "react";
 
 import styles from "./NewTransForm.module.css";
 import Button from '@mui/material/Button'
+import { TextField } from "@mui/material";
+import InputAdornment from '@mui/material/InputAdornment';
 
 const NewTransForm = (props) => {
   const [enteredDeposit, setEnteredDeposit] = useState("");
@@ -91,52 +93,56 @@ const NewTransForm = (props) => {
       <p>Always enter positive transaction values.</p>
       <div className={styles.inputs}>
         <div>
-          <label htmlFor="deposit">Deposit</label>
-          <input
+          <TextField
             onChange={(event) => {
               inputHandler("deposit", event);
             }}
             type="number"
             id="deposit"
             value={enteredDeposit}
+            variant="outlined"
+            label="Enter amt to deposit..."
           />
         </div>
         <div>
-          <label htmlFor="book">Book</label>
-          <input
+          <TextField
             onChange={(event) => {
               inputHandler("book", event);
             }}
             type="number"
             id="book"
             value={enteredBook}
+            variant="outlined"
+            label="Enter book cost amt..."
           />
         </div>
         <div>
-          <label htmlFor="tuckshop">Tuckshop</label>
-          <input
+          <TextField
             onChange={(event) => {
               inputHandler("tuckshop", event);
             }}
             type="number"
             id="tuckshop"
             value={enteredTuckshop}
+            variant="outlined"
+            label="Enter tuckshop payment amt..."
           />
         </div>
         <div>
-          <label htmlFor="withdraw">Withdraw</label>
-          <input
+          <TextField
             onChange={(event) => {
               inputHandler("withdrawal", event);
             }}
             type="number"
             id="withdraw"
             value={enteredWithdrawal}
+            variant="outlined"
+            label="Enter Amt to Withdraw..."
           />
         </div>
       </div>
       <div className={styles.submitBtn}>
-        <Button type="submit">Add Transaction(s)</Button>
+        <Button variant="contained" type="submit">Add Transaction(s)</Button>
       </div>
     </form>
   );

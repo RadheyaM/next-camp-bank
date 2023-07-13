@@ -12,7 +12,7 @@ const CamperDetail = props => {
     <Card>
       <AccountSummary camper={props.camper} camperTrans={props.camperTrans}/>
       <NewTransForm onAddTransactions={addTransactionsHandler}/>
-      <TransactionsTable camperTrans={props.camperTrans} />
+      <TransactionsTable camperTrans={props.camperTrans} camper={props.camper} />
     </Card>
   )
 }

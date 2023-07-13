@@ -24,7 +24,10 @@ const TransactionsTable = props => {
   }
   return (
     <Table className={styles.transactionTable}>
-      <caption><h2>Account Transactions</h2></caption>
+      <caption>
+        <h2>Account Transactions</h2>
+        <h3>Camper Starting Balance: {props.camper.startingBalance}</h3>
+        </caption>
       <thead>
         <tr>
           <th>Transaction Id</th>

@@ -1,11 +1,16 @@
 .newTransForm {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+  width: 100%;
 }
 
 .newTransForm .inputs{
   display: flex;
-  gap: 0.5rem;
-  padding: 1rem 0;
+  gap: 3rem;
+  padding: 2% 0;
 }
 
 .newTransForm .inputs div {
@@ -17,6 +22,11 @@
 
 .newTransForm .inputs label {
   padding-right: 0.5rem;
+}
+
+.newTransForm .inputs input {
+  font-size: 1.25rem;
+  text-align: center;
 }
 
 .newTransForm .submitBtn{
