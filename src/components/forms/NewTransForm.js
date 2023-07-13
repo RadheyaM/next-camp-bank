@@ -6,6 +6,8 @@ import { TextField } from "@mui/material";
 import InputAdornment from '@mui/material/InputAdornment';
 
 const NewTransForm = (props) => {
+  const { camper } = props
+  const camperId = camper.accountId;
   const [enteredDeposit, setEnteredDeposit] = useState("");
   const [enteredBook, setEnteredBook] = useState("");
   const [enteredTuckshop, setEnteredTuckshop] = useState("");
@@ -33,38 +35,34 @@ const NewTransForm = (props) => {
     let withdrawalTransaction = {};
     if (enteredDeposit !== "" && enteredDeposit !== 0) {
       depositTransaction = {
-        accountId: "10001",
-        dateTimeStamp: new Date(),
-        type: "deposit",
-        category: "deposit",
-        amount: enteredDeposit.toString(),
+        accountId: camperId,
+        type: "Deposit",
+        category: "Deposit",
+        amount: enteredDeposit,
       };
     }
     if (enteredBook !== "" && enteredBook !== 0) {
       bookTransaction = {
-        accountId: "10001",
-        dateTimeStamp: new Date(),
-        type: "payment",
-        category: "book",
-        amount: enteredBook.toString(),
+        accountId: camperId,
+        type: "Payment",
+        category: "Book",
+        amount: enteredBook,
       };
     }
     if (enteredTuckshop !== "" && enteredTuckshop !== 0) {
       tuckTransaction = {
-        accountId: "10001",
-        dateTimeStamp: new Date(),
-        type: "payment",
-        category: "tuck",
-        amount: enteredTuckshop.toString(),
+        accountId: camperId,
+        type: "Payment",
+        category: "Tuckshop",
+        amount: enteredTuckshop,
       };
     }
     if (enteredWithdrawal !== "" && enteredWithdrawal !== 0) {
       withdrawalTransaction = {
-        accountId: "10001",
-        dateTimeStamp: new Date(),
-        type: "payment",
+        accountId: camperId,
+        type: "Payment",
         category: "withdrawal",
-        amount: enteredTuckshop.toString(),
+        amount: enteredTuckshop,
       };
     }
     // console.log("deposit: ", depositTransaction);

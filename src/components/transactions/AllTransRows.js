@@ -3,16 +3,8 @@ import Link from "next/link";
 const AllTransRows = (props) => {
   const { accountId, _id, dateTimeStamp, type, category, amount } = props.trans;
   const linkPath = `/campers/${accountId}`
-  const options = {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-    second: 'numeric',
-    hour12: true
-  };
-  let readableDate = new Date(dateTimeStamp).toLocaleString(undefined, options);
+  
+  let readableDate = new Date(dateTimeStamp).toLocaleString();
   
   return (
     <tr>

@@ -39,7 +39,7 @@ const TransactionsTable = props => {
       </thead>
       <tbody>
         {props.query.data.data.transactions.map((trans) => (
-          <TransactionRow key={trans._id} trans={trans}/>
+          <TransactionRow key={trans._id} trans={trans} />
         ))}
       </tbody> 
     </Table>
