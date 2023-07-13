@@ -1,16 +1,15 @@
-
-const TransactionRow = props => {
-  const { _id, dateTimeStamp, category, type, amount } = props.trans
-  // console.log(_id)
+const TransactionRow = (props) => {
+  const { _id, dateTimeStamp, category, type, amount } = props.trans;
+  let readableDate = new Date(dateTimeStamp).toLocaleString();
   return (
-   <tr>
+    <tr>
       <td>{_id}</td>
-      <td>{dateTimeStamp}</td>
+      <td>{readableDate}</td>
       <td>{type}</td>
       <td>{category}</td>
       <td>€{amount}</td>
     </tr>
-  )
+  );
 };
 
 export default TransactionRow;
