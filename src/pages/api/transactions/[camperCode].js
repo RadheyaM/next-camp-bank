@@ -16,12 +16,10 @@ export const getCamperTransactions = async (camperId) => {
 };
 
 const Handler = async (req, res) => {
-  if (req.method === "GET") {
-    const camperTransData = await getCamperTransactions();
-    res.status(200).json({
-      CamperTransactions: camperTransData
-    });
-  }
+  const camperTransData = await getCamperTransactions(req.query.camperCode);
+  res.status(200).json({
+    transactions: camperTransData
+  });
 };
 
 export default Handler; 

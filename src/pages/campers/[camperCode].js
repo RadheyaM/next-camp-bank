@@ -4,10 +4,26 @@ if (process.env.NODE_ENV !== "production") {
 }
 import { getCamperTransactions } from "./../api/transactions/[camperCode]";
 import { getCamper } from "./../api/campers/[camperCode]";
+import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/router";
 import axios from "axios";
 
 const CamperOverview = (props) => {
+  const router = useRouter();
   const { camper, camperTrans } = props;
+  const camperId = router.query.camperCode.toString();
+  const camperApiPath = `/api/transactions/${camperId}`
+  //GET
+  const query = useQuery(['transactions'], () => {
+    return axios.get(camperApiPath)
+  }, {
+    initialData: {
+      data: {
+        transactions: props.camperTrans
+      }
+    }
+  })
+  //POST
   const postTransactions = async (trans) => {
     await axios.post("/api/campers/[camperCode]", trans);
   };
@@ -19,6 +35,7 @@ const CamperOverview = (props) => {
     <CamperDetail
       camper={camper}
       camperTrans={camperTrans}
+      query={query}
       onAddTransactions={postTransactionsHandler}
     />
   );
