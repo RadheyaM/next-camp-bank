@@ -7,21 +7,22 @@
 
 .myTable th, 
 .myTable td {
-  border: 1px solid black;
+  /* border: 1px solid black; */
   padding: 8px;
 }
 
 .myTable th {
-  background-color: gray;
+  background-color: #588157;
+  color: white;
   font-weight: bold;
 }
 
 .myTable tr:nth-child(odd) {
-  background-color: lightgray;
+  background-color: #a3b18a;
 }
 
 .myTable tr:nth-child(even) {
-  background-color: gray;
+  background-color: #dad7cd;
 }
 
 .myTable tr:hover {

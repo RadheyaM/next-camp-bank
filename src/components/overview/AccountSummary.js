@@ -5,7 +5,7 @@ import styles from "./AccountSummary.module.css";
 const AccountSummary = (props) => {
   const { camper, camperTrans } = props;
   // console.log("accountSummary: ", camperTrans);
-  const startingBalance = parseFloat(camper.startingBalance.$numberDecimal);
+  const startingBalance = Number(camper.startingBalance);
   const deposits = camperTrans.map((trans) => {
     if (trans.type === "deposit") {
       return parseFloat(trans.amount);
