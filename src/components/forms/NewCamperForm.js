@@ -1,30 +1,27 @@
 import styles from "./NewCamperForm.module.css";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import { useRef } from "react";
+import { useState } from "react";
 
 const NewCamperForm = (props) => {
-  const accountId = useRef();
-  const name = useRef();
-  const balance = useRef();
+  const [accountId, setAccountId] = useState("");
+  const [name, setName] = useState("");
+  const [balance, setBalance ] = useState("");
+
+  console.log(`name: ${name}`);
+  console.log(`accountId: ${accountId}`);
+  console.log(`balance: ${balance}`);
 
   const submitHandler = (event) => {
     event.preventDefault();
-    const enteredAccountId = accountId.current.value;
-    const enteredName = name.current.value;
-    const enteredStartingBalance = name.current.value;
-    console.log(`Name: ${enteredName}`)
-    console.log(`ID: ${enteredAccountId}`)
-    console.log(`Balance: ${enteredStartingBalance}`)
     const camperData = {
-      accountId: enteredAccountId,
-      name: enteredName,
-      startingBalance: enteredStartingBalance,
+      accountId: accountId,
+      name: name,
+      startingBalance: balance,
       dateTimeCreated: new Date(),
     };
-    // console.log("CamperData: ", camperData)
+    console.log(`Camper data: ${camperData.accountId}, ${camperData.name}, ${camperData.startingBalance}`)
     props.onAdd(camperData);
-    // redirect to new customer account overview...
   };
 
   return (
@@ -40,12 +37,12 @@ const NewCamperForm = (props) => {
             label="New Account Code:"
             type="text"
             required={true}
-            ref={accountId}
+            onChange={(e) => setAccountId(e.target.value)}
           />
         </div>
         <div>
           {/* <label htmlFor="name">Camper's Full Name</label> */}
-          <TextField variant="standard" label="New Camper's Full Name:" id="name" type="text" required={true} ref={name}/>
+          <TextField variant="standard" label="New Camper's Full Name:" id="name" type="text" required={true} onChange={(e) => setName(e.target.value)}/>
         </div>
         <div>
           {/* <label htmlFor="startingBalance">Starting Balance (if any)</label> */}
@@ -54,7 +51,7 @@ const NewCamperForm = (props) => {
             variant="standard"
             id="startingBalance"
             type="text"
-            ref={balance}
+            onChange={(e) => setBalance(e.target.value)}
           />
         </div>
       </div>

@@ -22,6 +22,7 @@ export const addCamper = async (camper) => {
 
 const Handler = async (req, res) => {
   if (req.method === "POST") {
+    console.log("you reached the Handler...")
     await addCamper(req.body)
     res.status(201).json({message : "success!"});
   }
