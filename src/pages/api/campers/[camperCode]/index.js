@@ -5,13 +5,16 @@ import { MongoClient } from "mongodb";
 
 export const getCamper = async (camperId) => {
   const mongoClient = new MongoClient(process.env.CONNECTION);
-
-  const data = await mongoClient
-    .db("Campers")
-    .collection("Campers")
-    .findOne({ accountId: camperId });
-
-  return JSON.parse(JSON.stringify(data));
+  try {
+    const db = mongoClient.db("Campers");
+    const col = db.collection("Campers");
+    const data = await col.findOne({ accountId: camperId });
+    return JSON.parse(JSON.stringify(data));
+  } catch (err) {
+    console.log(err);
+  } finally {
+    await mongoClient.close();
+  }
 };
 
 export const postCamperTransactions = async (transData) => {
@@ -76,7 +79,7 @@ export const postCamperTransactions = async (transData) => {
 const Handler = async (req, res) => {
   if (req.method === "GET") {
     const camper = await getCamper(req.query.camperCode);
-    if (!camper || !currentBalance) {
+    if (!camper) {
       res.status(404).json("No camper data available...");
     } else {
       res.status(200).json({ camper: camper });

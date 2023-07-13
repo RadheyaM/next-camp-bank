@@ -5,14 +5,16 @@ import { MongoClient } from "mongodb";
 
 export const getAllCampers = async () => {
   const mongoClient = new MongoClient(process.env.CONNECTION);
-
-  const data = await mongoClient
-    .db("Campers")
-    .collection("Campers")
-    .find()
-    .toArray();
-
-  return JSON.parse(JSON.stringify(data));
+  try {
+    const db = mongoClient.db("Campers");
+    const col = db.collection("Campers");
+    const data = await col.find().toArray();
+    return JSON.parse(JSON.stringify(data));
+  } catch (err) {
+    console.log(err);
+  } finally {
+    await mongoClient.close();
+  }
 };
 
 const Handler = async (req, res) => {
