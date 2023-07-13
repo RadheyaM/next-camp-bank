@@ -1,13 +1,14 @@
 import { useState } from "react";
 
 import styles from "./NewTransForm.module.css";
-import Button from '@mui/material/Button'
+import Button from "@mui/material/Button";
 import { TextField } from "@mui/material";
-import InputAdornment from '@mui/material/InputAdornment';
+import InputAdornment from "@mui/material/InputAdornment";
 
 const NewTransForm = (props) => {
-  const { camper } = props
+  const { camper } = props;
   const camperId = camper.accountId;
+  const name = camper.name;
   const [enteredDeposit, setEnteredDeposit] = useState("");
   const [enteredBook, setEnteredBook] = useState("");
   const [enteredTuckshop, setEnteredTuckshop] = useState("");
@@ -29,20 +30,21 @@ const NewTransForm = (props) => {
   };
   const submitHandler = (event) => {
     event.preventDefault();
-    let depositTransaction = {};
-    let bookTransaction = {};
-    let tuckTransaction = {};
-    let withdrawalTransaction = {};
+    let dT = {};
+    let bT = {};
+    let tT = {};
+    let wT = {};
     if (enteredDeposit !== "" && enteredDeposit !== 0) {
-      depositTransaction = {
+      dT = {
         accountId: camperId,
+        name: name,
         type: "Deposit",
         category: "Deposit",
         amount: enteredDeposit,
       };
     }
     if (enteredBook !== "" && enteredBook !== 0) {
-      bookTransaction = {
+      bT = {
         accountId: camperId,
         type: "Payment",
         category: "Book",
@@ -50,7 +52,7 @@ const NewTransForm = (props) => {
       };
     }
     if (enteredTuckshop !== "" && enteredTuckshop !== 0) {
-      tuckTransaction = {
+      tT = {
         accountId: camperId,
         type: "Payment",
         category: "Tuckshop",
@@ -58,7 +60,7 @@ const NewTransForm = (props) => {
       };
     }
     if (enteredWithdrawal !== "" && enteredWithdrawal !== 0) {
-      withdrawalTransaction = {
+      wT = {
         accountId: camperId,
         type: "Payment",
         category: "withdrawal",
@@ -70,10 +72,10 @@ const NewTransForm = (props) => {
     // console.log("tuck: ", tuckTransaction);
     // console.log("withdrawal: ", withdrawalTransaction);
     props.onAddTransactions({
-      depositTransaction,
-      bookTransaction,
-      tuckTransaction,
-      withdrawalTransaction
+      dT,
+      bT,
+      tT,
+      wT,
     });
     setEnteredDeposit("");
     setEnteredBook("");
@@ -140,7 +142,9 @@ const NewTransForm = (props) => {
         </div>
       </div>
       <div className={styles.submitBtn}>
-        <Button variant="contained" type="submit">Add Transaction(s)</Button>
+        <Button variant="contained" type="submit">
+          Add Transaction(s)
+        </Button>
       </div>
     </form>
   );

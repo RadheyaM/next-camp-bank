@@ -5,16 +5,16 @@ import styles from "./AccountSummary.module.css";
 const AccountSummary = (props) => {
   const { camper, camperTrans } = props;
   // console.log("accountSummary: ", camperTrans);
-  const startingBalance = Number(camper.startingBalance);
+  const startingBalance = parseFloat(camper.startingBalance);
   const deposits = camperTrans.map((trans) => {
-    if (trans.type === "deposit") {
+    if (trans.type === "Deposit") {
       return parseFloat(trans.amount);
     } else {
       return 0;
     }
   });
   const payments = camperTrans.map((trans) => {
-    if (trans.type === "payment") {
+    if (trans.type === "Payment") {
       return parseFloat(trans.amount);
     } else {
       return 0;
