@@ -42,6 +42,8 @@ export const getCurrentBalance = async (camperId) => {
     return JSON.parse(JSON.stringify(currentAccountBalance));
   } catch (err) {
     console.log(err);
+  } finally {
+    await mongoClient.close()
   }
 };
 

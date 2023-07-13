@@ -12,21 +12,36 @@ const CamperOverview = (props) => {
   const router = useRouter();
   const { camper, camperTrans } = props;
   const camperId = router.query.camperCode.toString();
-  const camperApiPath = `/api/transactions/${camperId}`
-  const balanceApiPath = `/api/campers/${camperId}/getBalance`
+  const camperApiPath = `/api/transactions/${camperId}`;
+  const balanceApiPath = `/api/campers/${camperId}/getBalance`;
   //GET
-  const query = useQuery(['transactions'], () => {
-    return axios.get(camperApiPath)
-  }, {
-    initialData: {
-      data: {
-        transactions: props.camperTrans
-      }
+  const query = useQuery(
+    ["transactions"],
+    () => {
+      return axios.get(camperApiPath);
+    },
+    {
+      initialData: {
+        data: {
+          transactions: props.camperTrans,
+        },
+      },
     }
-  });
-  const balanceQuery = useQuery(['balance'], () => {
-    return axios.get(balanceApiPath)
-  })
+  );
+  const balanceQuery = useQuery(
+    ["balance"],
+    () => {
+      return axios.get(balanceApiPath);
+    },
+    {
+      initialData: {
+        data: {
+          balance: 0,
+        },
+      },
+      refetchInterval: 1000 * 2,
+    }
+  );
   //POST
   const postTransactions = async (trans) => {
     await axios.post("/api/campers/[camperCode]", trans);
