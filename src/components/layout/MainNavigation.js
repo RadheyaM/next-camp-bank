@@ -17,10 +17,10 @@ const MainNavigation = () => {
       </div>
       <nav>
         <ul className={styles.navLinkBar}>
-          <Button variant="contained" color="secondary"><Link href="/">Enter Code</Link></Button>
-          <Button variant="contained" color="secondary"><Link href="/campers" replace>All Campers</Link></Button>
-          <Button variant="contained" color="secondary"><Link href="/campers/transactions" replace>All Transactions</Link></Button>
-          <Button variant="contained" color="secondary"><Link href="/campers/add" replace>Add New Camper</Link></Button>
+          <Link href="/">Enter Code</Link>
+          <Link href="/campers" replace>All Campers</Link>
+          <Link href="/campers/transactions" replace>All Transactions</Link>
+          <Link href="/campers/add" replace>Add New Camper</Link>
         </ul>
       </nav>
     </header>

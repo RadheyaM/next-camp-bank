@@ -29,8 +29,11 @@
 .navLinkBar a {
   color: white;
   border-radius: 10%;
+  padding: 1rem;
+  background-color: #2a9d8f;
 }
 
 .navLinkBar a:hover {
   color: white;
+  background-color: orange;
 }
