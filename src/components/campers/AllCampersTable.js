@@ -1,31 +1,57 @@
-import CamperRow from './CamperRow';
-import Table from '../UI/Table';
+import CamperRow from "./CamperRow";
+import Table from "../UI/Table";
+import { Fragment } from "react";
+import SearchByName from "@/components/forms/SearchByName";
+import { useState } from "react";
 
+const AllCampersTable = (props) => {
+  const [filteredData, setFilteredData] = useState("");
+  const [clearFilter, setClearFilter] = useState(true);
+  const { query } = props;
+  const apiData = query.data.data.campers;
 
-const AllCampersTable = props => {
-  const { campers, query } = props
-  const apiData = query.data.data.campers
-  // console.log("from AllCampers", campers)
-  // console.log("from AllCampers TRans", camperTrans)
+  const searchFilterHandler = (filterName) => {
+    console.log("Filter: ", filterName);
+    const lst = [];
+    const names = apiData.map((camper) => {
+      console.log("here is the name: ", camper.name)
+      if (camper.name.toLowerCase().includes(filterName)) {
+        lst.push(camper)
+      }
+    });
+    console.log("the l list: ", lst)
+    setFilteredData(lst);
+    setClearFilter(false);
+  };
+  const clearFilterHandler = () => {
+    setClearFilter(true);
+    setFilteredData("")
+  }
   return (
-    <Table>
-      <caption>
-        <h2>All Campers</h2>
-      </caption>
-      <thead>
-        <tr>
-          <th>Account Id</th>
-          <th>Name</th>
-          <th>Balance</th>
-        </tr>
-      </thead>
-      <tbody>
-        {props.query.data.data.campers.map((camper) => (
-          <CamperRow key={camper._id} camper={camper}/>
-        ))}
-      </tbody>
-    </Table>
+    <Fragment>
+      <SearchByName query={query} onSearch={searchFilterHandler} onClear={clearFilterHandler}/>
+      <Table>
+        <caption>
+          <h2>All Campers</h2>
+        </caption>
+        <thead>
+          <tr>
+            <th>Account Id</th>
+            <th>Name</th>
+            <th>Balance</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredData && filteredData.map((camper) => (
+            <CamperRow key={camper._id} camper={camper} />
+          ))}
+          {clearFilter && apiData.map((camper) => (
+            <CamperRow key={camper._id} camper={camper} />
+          ))}
+        </tbody>
+      </Table>
+    </Fragment>
   );
 };
 
-export default AllCampersTable
+export default AllCampersTable;

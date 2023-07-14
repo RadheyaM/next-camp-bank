@@ -1,0 +1,17 @@
+.title {
+  padding: 0 1rem 1rem 1rem;
+}
+
+.searchByName {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0 1rem 1rem 1rem;
+  width: 75%;
+}
+
+.searchInput {
+  width: 25%;
+}
