@@ -93,7 +93,6 @@ const NewTransForm = (props) => {
         Leave fields blank where not applicable, e.g. no withdrawal, leave
         blank...
       </p>
-      <p>Always enter positive transaction values.</p>
       <div className={styles.inputs}>
         <div>
           <TextField
@@ -104,7 +103,7 @@ const NewTransForm = (props) => {
             id="deposit"
             value={enteredDeposit}
             variant="outlined"
-            label="Enter amt to deposit..."
+            label="DEPOSIT AMOUNT..."
           />
         </div>
         <div>
@@ -116,7 +115,7 @@ const NewTransForm = (props) => {
             id="book"
             value={enteredBook}
             variant="outlined"
-            label="Enter book cost amt..."
+            label="BOOK AMOUNT..."
           />
         </div>
         <div>
@@ -128,7 +127,7 @@ const NewTransForm = (props) => {
             id="tuckshop"
             value={enteredTuckshop}
             variant="outlined"
-            label="Enter tuckshop payment amt..."
+            label="TUCKSHOP AMOUNT..."
           />
         </div>
         <div>
@@ -140,7 +139,7 @@ const NewTransForm = (props) => {
             id="withdraw"
             value={enteredWithdrawal}
             variant="outlined"
-            label="Enter Amt to Withdraw..."
+            label="WITHDRAWAL AMOUNT..."
           />
         </div>
       </div>

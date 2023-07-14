@@ -1,20 +1,32 @@
 .header {
-  background-color: lightgrey;
-  padding: 2rem 4rem 4rem 4rem;
+  background-color: #dad7cd;
+  padding: 1rem 2rem 2rem 2rem;
   text-align: center;
+  justify-content: center;
+  display: flex;
+  gap: 4rem;
 }
 
-.logo {
-  padding-bottom: 1rem;
+.header nav {
+  display: flex;
+  align-items: center;
 }
+
+/* .logo .h1 {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  padding-bottom: 1rem;
+} */
 
 .header a{
   text-decoration: none;
-  color: black;
+  color: #1d3557;
 }
 
 .header a:hover {
-  color: rgb(196, 113, 11)
+  color: #2a9d8f;
 }
 
 .navLinkBar {
@@ -27,13 +39,13 @@
 }
 
 .navLinkBar a {
-  color: white;
+  color: #1d3557;
   border-radius: 10%;
   padding: 1rem;
-  background-color: #2a9d8f;
+  background-color: #83c5be;
 }
 
 .navLinkBar a:hover {
-  color: white;
-  background-color: orange;
+  color: #83c5be;
+  background-color: #1d3557;
 }
