@@ -1,12 +1,12 @@
 import styles from "./NewCamperForm.module.css";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 
 const NewCamperForm = (props) => {
   const [accountId, setAccountId] = useState("");
   const [name, setName] = useState("");
-  const [balance, setBalance ] = useState("");
+  const [balance, setBalance] = useState("");
 
   console.log(`name: ${name}`);
   console.log(`accountId: ${accountId}`);
@@ -20,7 +20,9 @@ const NewCamperForm = (props) => {
       startingBalance: balance,
       dateTimeCreated: new Date(),
     };
-    console.log(`Camper data: ${camperData.accountId}, ${camperData.name}, ${camperData.startingBalance}`)
+    console.log(
+      `Camper data: ${camperData.accountId}, ${camperData.name}, ${camperData.startingBalance}`
+    );
     props.onAdd(camperData);
   };
 
@@ -42,7 +44,14 @@ const NewCamperForm = (props) => {
         </div>
         <div>
           {/* <label htmlFor="name">Camper's Full Name</label> */}
-          <TextField variant="standard" label="New Camper's Full Name:" id="name" type="text" required={true} onChange={(e) => setName(e.target.value)}/>
+          <TextField
+            variant="standard"
+            label="New Camper's Full Name:"
+            id="name"
+            type="text"
+            required={true}
+            onChange={(e) => setName(e.target.value)}
+          />
         </div>
         <div>
           {/* <label htmlFor="startingBalance">Starting Balance (if any)</label> */}

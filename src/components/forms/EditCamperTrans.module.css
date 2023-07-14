@@ -1,0 +1,53 @@
+.newCamperForm {
+  text-align: center;
+  padding: 1rem;
+  width: 100%;
+}
+
+.newCamperForm .inputs{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 3rem;
+}
+
+.newCamperForm .inputs div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.newCamperForm .inputs label {
+  padding-bottom: 0.5rem;
+}
+
+.newCamperForm .inputs input {
+  font-size: 1.25rem;
+  text-align: center;
+
+}
+
+.newCamperForm .submitBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.newCamperForm .submitBtn button {
+  padding: 1rem;
+}
+
+.newCamperForm .submitBtn button:hover {
+  cursor: pointer;
+  background-color: orange;
+  color: white;
+}
+
+.newCamperForm hr {
+  width: 50%;
+  color: lightblue;
+}

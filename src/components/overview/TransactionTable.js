@@ -16,6 +16,7 @@ const TransactionsTable = props => {
             <th>Type</th>
             <th>Category</th>
             <th>Amount</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody><tr><td className={styles.noData} colSpan={5}>No Transaction to Display Yet.</td></tr></tbody>
@@ -35,11 +36,12 @@ const TransactionsTable = props => {
           <th>Type</th>
           <th>Category</th>
           <th>Amount</th>
+          <th>Delete</th>
         </tr>
       </thead>
       <tbody>
         {props.query.data.data.transactions.map((trans) => (
-          <TransactionRow key={trans._id} trans={trans} />
+          <TransactionRow key={trans._id} trans={trans}/>
         ))}
       </tbody> 
     </Table>
