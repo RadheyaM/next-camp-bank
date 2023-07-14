@@ -16,7 +16,7 @@ const MainNavigation = () => {
       </div>
       <nav>
         <ul className={styles.navLinkBar}>
-          <Link href="/">Enter Code</Link>
+          <Link href="/">Find Camper</Link>
           <Link href="/campers" replace>
             All Campers
           </Link>
