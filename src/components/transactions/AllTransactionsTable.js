@@ -11,8 +11,9 @@ const AllTransactionsTable = (props) => {
         <caption><h2>All Transactions</h2></caption>
         <thead>
           <tr>
-            <th>Camper Code</th>
             <th>Transaction Id</th>
+            <th>Account Code</th>
+            <th>Name</th>
             <th>Date</th>
             <th>Type</th>
             <th>Category</th>
