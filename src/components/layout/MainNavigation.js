@@ -19,6 +19,7 @@ const MainNavigation = () => {
         <ul className={styles.navLinkBar}>
           <Link href="/">Enter Code</Link>
           <Link href="/campers" replace>All Campers</Link>
+          <Link href="/campers" replace>Search By Name</Link>
           <Link href="/campers/transactions" replace>All Transactions</Link>
           <Link href="/campers/add" replace>Add New Camper</Link>
         </ul>

@@ -3,6 +3,9 @@ import { getAllCampers } from "../api/campers";
 
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import { TextField } from "@mui/material";
+import Card from "@/components/UI/Card";
+import { Button } from "@mui/material";
 
 const Campers = (props) => {
   const query = useQuery(
@@ -19,8 +22,16 @@ const Campers = (props) => {
     }
   );
   // console.log(props.campers, query)
-  return <AllCampersTable campers={props.campers} query={query}/>;
-};
+  return (
+    <Card>
+      <form>
+        <TextField label="Name Search" variant="standard" type="text"/>
+        <div><Button variant="contained">Find</Button></div>
+      </form>
+      <AllCampersTable campers={props.campers} query={query}/>
+    </Card>
+  );
+};  
 
 export default Campers;
 
