@@ -12,7 +12,7 @@ const TransactionRow = (props) => {
   return (
     <tr>
       <td>{_id}</td>
-      <td>{humanDate + " " + humanTime}</td>
+      <td suppressHydrationWarning>{humanDate + " " + humanTime}</td>
       <td>{type}</td>
       <td>{category}</td>
       <td>€{amount}</td>

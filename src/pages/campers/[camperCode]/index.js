@@ -39,7 +39,7 @@ const CamperOverview = (props) => {
           balance: 0,
         },
       },
-      refetchInterval: 1000 * 2,
+      refetchInterval: 1000 * 1,
     }
   );
   //POST
