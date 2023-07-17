@@ -11,6 +11,7 @@ const AddCamper = (props) => {
     // setNewCamperData(data);
     console.log("data about to be posted: ", data)
     postNewCamper(data);
+    // axios("/api/campers/addInitialData").then(res => console.log(JSON.parse(res.data)));
   };
   const postNewCamper = async (data) => {
     console.log("Welcome to the pre-axios waiting room....")
