@@ -16,7 +16,7 @@ const AccountSummary = (props) => {
       <h2>Account Details</h2>
       <div className={styles.accountDetails}>
         <h3>{camper.accountId}&nbsp;|&nbsp;</h3>
-        <h3>{camper.name}&nbsp;|&nbsp;</h3>
+        <h3>{camper.firstName + " " + camper.lastName}&nbsp;|&nbsp;</h3>
         <h3>{formattedCurrentAccountBalance}</h3>
       </div>
     </Fragment>

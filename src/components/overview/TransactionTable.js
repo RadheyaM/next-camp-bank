@@ -5,24 +5,6 @@ import Table from '../UI/Table';
 const TransactionsTable = props => {
   const { camperTrans } = props
   // console.log(props.query.data)
-  if (camperTrans.length < 1 ) {
-    return (
-      <Table className={styles.transactionTable}>
-        <caption><h2>Account Transactions</h2></caption>
-        <thead>
-          <tr>
-            <th>Transaction Id</th>
-            <th>Date</th>
-            <th>Type</th>
-            <th>Category</th>
-            <th>Amount</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody><tr><td className={styles.noData} colSpan={5}>No Transaction to Display Yet.</td></tr></tbody>
-      </Table>
-    )
-  }
   return (
     <Table className={styles.transactionTable}>
       <caption>

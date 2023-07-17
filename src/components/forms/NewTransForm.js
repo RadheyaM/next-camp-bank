@@ -3,12 +3,13 @@ import { useState } from "react";
 import styles from "./NewTransForm.module.css";
 import Button from "@mui/material/Button";
 import { TextField } from "@mui/material";
-import InputAdornment from "@mui/material/InputAdornment";
 
 const NewTransForm = (props) => {
   const { camper } = props;
   const camperId = camper.accountId;
-  const name = camper.name;
+  const firstName = camper.firstName;
+  const lastName = camper.lastName;
+  const name = firstName + " " + lastName;
   const [enteredDeposit, setEnteredDeposit] = useState("");
   const [enteredBook, setEnteredBook] = useState("");
   const [enteredTuckshop, setEnteredTuckshop] = useState("");

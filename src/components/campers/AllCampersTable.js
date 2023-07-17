@@ -15,7 +15,8 @@ const AllCampersTable = (props) => {
     const lst = [];
     const names = apiData.map((camper) => {
       console.log("here is the name: ", camper.name)
-      if (camper.name.toLowerCase().includes(filterName)) {
+      const name = camper.firstName + " " + camper.lastName
+      if (name.toLowerCase().includes(filterName)) {
         lst.push(camper)
       }
     });

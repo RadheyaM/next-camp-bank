@@ -10,7 +10,7 @@ const AllTransRows = (props) => {
       <td><small>{_id}</small></td>
       <td><Link href={linkPath} replace>{accountId}</Link></td>
       <td>{name}</td>
-      <td>{humanDate + " " + humanTime}</td>
+      <td suppressHydrationWarning>{humanDate + " " + humanTime}</td>
       <td>{type}</td>
       <td>{category}</td>
       <td>{amount}</td>
