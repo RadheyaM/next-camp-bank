@@ -3,11 +3,10 @@ import Link from "next/link";
 
 const TransactionRow = (props) => {
   const { _id, accountId, timeStamp, category, type, amount} = props.trans;
-  
+
   const humanTime = new Date(timeStamp).toLocaleTimeString();
   const humanDate = new Date(timeStamp).toLocaleDateString();
-  const editPath = `/campers/${accountId}/${_id}/edit`
-  const deletePath = `/campers/${accountId}/${_id}delete`
+  const deletePath = `/campers/${accountId}/${_id}/delete`
 
   return (
     <tr>
@@ -16,7 +15,7 @@ const TransactionRow = (props) => {
       <td>{type}</td>
       <td>{category}</td>
       <td>€{amount}</td>
-      <td><Button variant="outlined" color="error">Delete</Button></td>
+      <td><Button variant="outlined" color="error"><Link href={deletePath}>Delete</Link></Button></td>
     </tr>
   );
 };

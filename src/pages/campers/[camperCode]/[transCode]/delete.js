@@ -1,5 +1,11 @@
-const deleteTrans = () => {
-  return <h1>DELETE</h1>
-}
+import { useRouter } from "next/router";
 
-export default deleteTrans;
+const deleteTransaction = () => {
+  const router = useRouter();
+  const code = router.query.transCode
+  
+
+  return <h1>Delete {code}</h1>
+};
+
+export default deleteTransaction;
