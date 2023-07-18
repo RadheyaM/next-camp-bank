@@ -1,9 +1,10 @@
 import { useState, useRef } from "react";
 import styles from "./auth-form.module.css";
+import { signIn } from "next-auth/react";
 import axios from "axios";
 
 const createUser = async (email, password) => {
-  // this is taken direct from the axios site ... 
+  // this is taken direct from the axios site ...
   const response = await axios({
     method: "post",
     url: "api/auth/signup",
@@ -41,7 +42,12 @@ const AuthForm = () => {
     const enteredPassword = passwordInputRef.current.value;
     // optional validation...
     if (isLogin) {
-      // log user in
+      const result = await signIn("credentials", {
+        redirect: false,
+        email: enteredEmail,
+        password: enteredPassword,
+      });
+      console.log(result);
     } else {
       try {
         const result = await createUser(enteredEmail, enteredPassword);
