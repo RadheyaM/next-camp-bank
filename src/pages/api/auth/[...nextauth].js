@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { connectToDatabase } from "../../../../lib/db";
+import clientPromise from "../../../../lib/db";
 import { verifyPassword } from "../../../../lib/auth";
 
 // authenticaton API route using next auth.
@@ -11,7 +11,7 @@ export default NextAuth({
   providers: [
     CredentialsProvider({
       async authorize(credentials) {
-        const client = await connectToDatabase();
+        const client = await clientPromise;
         const usersCollection = client.db("Campers").collection("users");
         const user = await usersCollection.findOne({
           email: credentials.email,

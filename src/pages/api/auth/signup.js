@@ -1,5 +1,5 @@
 import { hashPassword } from "../../../../lib/auth";
-import { connectToDatabase } from "../../../../lib/db";
+import clientPromise from "../../../../lib/db";
 
 const handler = async (req, res) => {
   if (req.method === "POST") {
@@ -9,7 +9,7 @@ const handler = async (req, res) => {
       res.status(422).json({ message: "Invalid Input..." });
       return;
     }
-    const client = await connectToDatabase();
+    const client = await clientPromise;
     const db = client.db("Campers");
     const col = db.collection("users");
     const existingUser = await db.collection('users').findOne({email: email});
