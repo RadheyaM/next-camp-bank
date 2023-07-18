@@ -1,7 +1,4 @@
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
-}
-import { MongoClient } from "mongodb";
+import connectToDatabase from "../../../../../lib/db";
 
 const transactionBalance = (depArray, payArray) => {
   let sum1 = 0;
@@ -18,7 +15,7 @@ const transactionBalance = (depArray, payArray) => {
 };
 
 export const getCurrentBalance = async (camperId) => {
-  const mongoClient = new MongoClient(process.env.CONNECTION);
+  const mongoClient = connectToDatabase();
   try {
     await mongoClient.connect();
     console.log("connected to server");

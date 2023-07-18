@@ -1,10 +1,7 @@
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
-}
-import { MongoClient } from "mongodb";
+import connectToDatabase from "../../../../lib/db";
 
 export const addCamper = async (camper) => {
-  const mongoClient = new MongoClient(process.env.CONNECTION);
+  const mongoClient = connectToDatabase();
   try {
     await mongoClient.connect();
     console.log("camper from api: ", camper);
