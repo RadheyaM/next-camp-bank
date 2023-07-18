@@ -1,12 +1,12 @@
 import Link from "next/link";
 import styles from "./MainNavigation.module.css";
 import FestivalIcon from "@mui/icons-material/Festival";
-import { useSession, signOut } from "next-auth/react";
+// import { useSession, signOut } from "next-auth/react";
 import { Button } from "@mui/material";
 
 const MainNavigation = () => {
-  const {data: session, status } = useSession();
-  console.log(status)
+  // const {data: session, status } = useSession();
+
   const logoutHandler = () => {
     signOut();
   };
@@ -32,7 +32,7 @@ const MainNavigation = () => {
           <Link href="/campers/add" replace>
             Add New Camper
           </Link>
-          {session && (
+          {/* {session && (
             <Link href="/campers" replace>
             User Profile
             </Link>
@@ -41,7 +41,7 @@ const MainNavigation = () => {
             <Button size="large" variant="contained" onClick={logoutHandler}>
             Logout
             </Button>
-          )}
+          )} */}
         </ul>
       </nav>
     </header>

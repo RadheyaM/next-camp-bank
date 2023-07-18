@@ -1,5 +1,5 @@
 import CamperDetail from "@/components/campers/CamperDetail";
-import { getCamper } from "../../api/campers/[camperCode]";
+import clientPromise from "../../../../lib/db";
 
 const CamperOverview = (props) => {
   const { camper } = props;
@@ -12,28 +12,41 @@ const CamperOverview = (props) => {
   };
 
   return (
-    <CamperDetail
-      camper={camper}
-      onAddTransactions={postTransactionsHandler}
-    />
+    <CamperDetail camper={camper} onAddTransactions={postTransactionsHandler} />
   );
 };
 
 export default CamperOverview;
 
-export const getServerSideProps = async (context) => {
-  const { params } = context;
-  const camperId = params.camperCode;
-  try {
-    //simply call the function which can also be called by API fetch.
-    const accountData = await getCamper(camperId);
-    console.log(accountData)
-    return {
-      props: {
-        camper: accountData,
+export const getStaticPaths = async () => {
+  const client = await clientPromise;
+  const db = client.db("Campers");
+  const col = db.collection("Campers");
+  const data = await col.find({}, { accountId: 1 }).toArray();
+  const allCampers = JSON.parse(JSON.stringify(data))
+  console.log("all campers: ", allCampers)
+  return {
+    paths: allCampers.map((camperId) => ({
+      params: {
+        camperCode: camperId.accountId.toString(),
       },
-    }
-  } catch (error) {
-    console.error(error);
-  }
+    })),
+    fallback: false,
+  };
+};
+
+
+export const getStaticProps = async (context) => {
+  const camperId = context.params.camperCode;
+  const client = await clientPromise;
+  const db = client.db("Campers");
+  const col = db.collection("Campers");
+  const camper = await col.findOne({ accountId: camperId });
+  const camperTrans = await col.find({ accountId: camperId }).toArray();
+  return {
+    props: {
+      camper: JSON.parse(JSON.stringify(camper)),
+      camperTrans: JSON.parse(JSON.stringify(camperTrans))
+    },
+  };
 };
