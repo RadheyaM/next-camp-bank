@@ -18,12 +18,12 @@ function MyApp({ Component, pageProps }) {
   );
   return (
     <SessionProvider>
-      <QueryClientProvider client={queryClient}>
-        <Layout>
-          <Component {...pageProps} />
-          <ReactQueryDevtools />
-        </Layout>
-      </QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      <Layout>
+        <Component {...pageProps} />
+        <ReactQueryDevtools />
+      </Layout>
+    </QueryClientProvider>
     </SessionProvider>
   );
 }

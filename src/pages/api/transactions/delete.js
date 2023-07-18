@@ -1,4 +1,4 @@
-import connectToDatabase from "../../../../lib/db";
+import { connectToDatabase } from "../../../../lib/db";
 
 export const deleteTransaction = async (transId) => {
   const mongoClient = connectToDatabase();

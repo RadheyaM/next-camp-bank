@@ -1,4 +1,4 @@
-import connectToDatabase from "../../../../lib/db";
+import { connectToDatabase } from "../../../../lib/db";
 
 export const addCamper = async (camper) => {
   const mongoClient = connectToDatabase();

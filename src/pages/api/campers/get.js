@@ -1,8 +1,4 @@
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
-}
-import { MongoClient, ObjectId } from "mongodb";
-import connectToDatabase from "../../../../lib/db";
+import { connectToDatabase } from "../../../../lib/db";
 
 export const getTransaction = async (transId) => {
   const mongoClient = connectToDatabase();

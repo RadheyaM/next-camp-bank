@@ -1,11 +1,15 @@
 import Link from "next/link";
 import styles from "./MainNavigation.module.css";
 import FestivalIcon from "@mui/icons-material/Festival";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
+import { Button } from "@mui/material";
 
 const MainNavigation = () => {
   const {data: session, status } = useSession();
   console.log(status)
+  const logoutHandler = () => {
+    signOut();
+  };
   return (
     <header className={styles.header}>
       <div className={styles.logo}>
@@ -33,15 +37,10 @@ const MainNavigation = () => {
             User Profile
             </Link>
           )}
-          {!session && (
-            <Link href="/campers" replace>
-            Login
-            </Link>
-          )}
           {session && (
-            <Link href="/campers" replace>
+            <Button size="large" variant="contained" onClick={logoutHandler}>
             Logout
-            </Link>
+            </Button>
           )}
         </ul>
       </nav>

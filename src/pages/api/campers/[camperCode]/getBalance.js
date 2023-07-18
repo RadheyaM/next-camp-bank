@@ -1,4 +1,4 @@
-import connectToDatabase from "../../../../../lib/db";
+import { connectToDatabase } from "../../../../../lib/db";
 
 const transactionBalance = (depArray, payArray) => {
   let sum1 = 0;
