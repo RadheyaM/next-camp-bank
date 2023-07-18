@@ -1,9 +1,11 @@
 import Link from "next/link";
 import styles from "./MainNavigation.module.css";
-import Button from "@mui/material/Button";
 import FestivalIcon from "@mui/icons-material/Festival";
+import { useSession } from "next-auth/react";
 
 const MainNavigation = () => {
+  const {data: session, status } = useSession();
+  console.log(status)
   return (
     <header className={styles.header}>
       <div className={styles.logo}>
@@ -26,6 +28,21 @@ const MainNavigation = () => {
           <Link href="/campers/add" replace>
             Add New Camper
           </Link>
+          {session && (
+            <Link href="/campers" replace>
+            User Profile
+            </Link>
+          )}
+          {!session && (
+            <Link href="/campers" replace>
+            Login
+            </Link>
+          )}
+          {session && (
+            <Link href="/campers" replace>
+            Logout
+            </Link>
+          )}
         </ul>
       </nav>
     </header>
