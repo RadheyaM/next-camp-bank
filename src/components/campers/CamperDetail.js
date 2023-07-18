@@ -18,7 +18,7 @@ const CamperDetail = (props) => {
         camper={props.camper}
       />
       <TransactionsTable
-        camper={props.camper}
+        camper={props.camper} trans={props.trans}
       />
     </Card>
   );

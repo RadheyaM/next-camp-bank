@@ -4,6 +4,8 @@ import Table from '../UI/Table';
 
 const TransactionsTable = props => {
   // console.log(props.query.data)
+  const {trans} = props
+  console.log("trans: ", trans)
   return (
     <Table className={styles.transactionTable}>
       <caption>
@@ -21,9 +23,9 @@ const TransactionsTable = props => {
         </tr>
       </thead>
       <tbody>
-        {/* {props.query.data.data.transactions.map((trans) => (
-          <TransactionRow key={trans._id} trans={trans}/>
-        ))} */}
+        {trans.map((tran) => (
+          <TransactionRow key={tran._id} tran={tran}/>
+        ))}
       </tbody> 
     </Table>
   )

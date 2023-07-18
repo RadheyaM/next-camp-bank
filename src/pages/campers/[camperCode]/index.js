@@ -2,7 +2,7 @@ import CamperDetail from "@/components/campers/CamperDetail";
 import clientPromise from "../../../../lib/db";
 
 const CamperOverview = (props) => {
-  const { camper } = props;
+  const { camper, trans } = props;
   // const camperId = router.query.camperCode.toString();
   // const postTransactions = async (trans) => {
   //   await axios.post("/api/campers/[camperCode]", trans);
@@ -12,7 +12,7 @@ const CamperOverview = (props) => {
   };
 
   return (
-    <CamperDetail camper={camper} onAddTransactions={postTransactionsHandler} />
+    <CamperDetail camper={camper} trans={trans} onAddTransactions={postTransactionsHandler} />
   );
 };
 
@@ -24,7 +24,7 @@ export const getStaticPaths = async () => {
   const col = db.collection("Campers");
   const data = await col.find({}, { accountId: 1 }).toArray();
   const allCampers = JSON.parse(JSON.stringify(data))
-  console.log("all campers: ", allCampers)
+  console.log("all campers: ")
   return {
     paths: allCampers.map((camperId) => ({
       params: {
@@ -41,12 +41,13 @@ export const getStaticProps = async (context) => {
   const client = await clientPromise;
   const db = client.db("Campers");
   const col = db.collection("Campers");
+  const trans = db.collection("Transactions");
   const camper = await col.findOne({ accountId: camperId });
-  const camperTrans = await col.find({ accountId: camperId }).toArray();
+  const camperTrans = await trans.find({ accountId: camperId }).toArray();
   return {
     props: {
       camper: JSON.parse(JSON.stringify(camper)),
-      camperTrans: JSON.parse(JSON.stringify(camperTrans))
+      trans: JSON.parse(JSON.stringify(camperTrans))
     },
   };
 };

@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import Link from "next/link";
 
 const TransactionRow = (props) => {
-  const { _id, accountId, timeStamp, category, type, amount} = props.trans;
+  const { _id, accountId, timeStamp, category, type, amount} = props.tran;
 
   const humanTime = new Date(timeStamp).toLocaleTimeString();
   const humanDate = new Date(timeStamp).toLocaleDateString();
