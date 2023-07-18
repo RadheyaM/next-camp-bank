@@ -3,16 +3,26 @@ import styles from "./auth-form.module.css";
 import axios from "axios";
 
 const createUser = async (email, password) => {
+  // this is taken direct from the axios site ... 
   const response = await axios({
-    method: 'post',
-    url: 'api/auth/signup',
+    method: "post",
+    url: "api/auth/signup",
     data: {
       email: email,
-      password: password
+      password: password,
+    },
+  }).catch((error) => {
+    if (error.response) {
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+    } else if (error.request) {
+      console.log(error.request);
+    } else {
+      console.log("Error", error.message);
     }
+    console.log(error.config);
   });
-  console.log("your response: ", response)
-
   return response;
 };
 
@@ -47,11 +57,16 @@ const AuthForm = () => {
       <form onSubmit={submitHandler}>
         <div className={styles.control}>
           <label htmlFor="email">Your Email</label>
-          <input type="email" id="email" required ref={emailInputRef}/>
+          <input type="email" id="email" required ref={emailInputRef} />
         </div>
         <div className={styles.control}>
           <label htmlFor="password">Your Password</label>
-          <input type="password" id="password" required ref={passwordInputRef}/>
+          <input
+            type="password"
+            id="password"
+            required
+            ref={passwordInputRef}
+          />
         </div>
         <div className={styles.actions}>
           <button>{isLogin ? "Login" : "Create Account"}</button>
