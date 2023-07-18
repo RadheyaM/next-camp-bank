@@ -5,24 +5,28 @@ import { useState } from "react";
 
 const NewCamperForm = (props) => {
   const [accountId, setAccountId] = useState("");
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [balance, setBalance] = useState("");
 
-  console.log(`name: ${name}`);
-  console.log(`accountId: ${accountId}`);
-  console.log(`balance: ${balance}`);
+  // console.log(`first name: ${firstName}`);
+  // console.log(`last name: ${firstName}`);
+  // console.log(`accountId: ${accountId}`);
+  // console.log(`balance: ${balance}`);
 
   const submitHandler = (event) => {
     event.preventDefault();
     const camperData = {
       accountId: accountId,
-      name: name,
+      firstName: firstName,
+      lastName: lastName,
       startingBalance: balance,
+      isStaff: false,
       dateTimeCreated: new Date(),
     };
-    console.log(
-      `Camper data: ${camperData.accountId}, ${camperData.name}, ${camperData.startingBalance}`
-    );
+    // console.log(
+    //   `Camper data: ${camperData.accountId}, ${camperData.name}, ${camperData.startingBalance}`
+    // );
     props.onAdd(camperData);
   };
 
@@ -46,11 +50,22 @@ const NewCamperForm = (props) => {
           {/* <label htmlFor="name">Camper's Full Name</label> */}
           <TextField
             variant="standard"
-            label="New Camper's Full Name:"
-            id="name"
+            label="Camper's First Name:"
+            id="firstName"
             type="text"
             required={true}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+        </div>
+        <div>
+          {/* <label htmlFor="name">Camper's Full Name</label> */}
+          <TextField
+            variant="standard"
+            label="Camper's Last Name:"
+            id="lastName"
+            type="text"
+            required={true}
+            onChange={(e) => setLastName(e.target.value)}
           />
         </div>
         <div>
