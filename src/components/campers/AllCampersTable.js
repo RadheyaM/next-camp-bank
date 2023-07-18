@@ -8,7 +8,8 @@ const AllCampersTable = (props) => {
   const [filteredData, setFilteredData] = useState("");
   const [clearFilter, setClearFilter] = useState(true);
   const { query } = props;
-  const apiData = query.data.data.campers;
+  // const apiData = query.data.data.campers;
+  // you can fetch data from the api here...
 
   const searchFilterHandler = (filterName) => {
     console.log("Filter: ", filterName);
@@ -46,7 +47,7 @@ const AllCampersTable = (props) => {
           {filteredData && filteredData.map((camper) => (
             <CamperRow key={camper._id} camper={camper} />
           ))}
-          {clearFilter && apiData.map((camper) => (
+          {clearFilter && props.campers.map((camper) => (
             <CamperRow key={camper._id} camper={camper} />
           ))}
         </tbody>
