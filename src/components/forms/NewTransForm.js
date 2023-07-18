@@ -67,7 +67,7 @@ const NewTransForm = (props) => {
         accountId: camperId,
         name: name,
         type: "Payment",
-        category: "withdrawal",
+        category: "Withdrawal",
         amount: enteredWithdrawal,
       };
     }

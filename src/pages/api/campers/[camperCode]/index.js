@@ -1,43 +1,11 @@
 import clientPromise from "../../../../../lib/db";
 
-export const getCamper = async (camperId) => {
-  try {
-    const mongoClient = await clientPromise;
-    const db = mongoClient.db("Campers");
-    const col = db.collection("Campers");
-    const data = await col.findOne({ accountId: camperId });
-    return JSON.parse(JSON.stringify(data));
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-export const getCamperTransactions = async (camperId) => {
-  const mongoClient = await clientPromise;
-  try {
-    await mongoClient.connect();
-    const db = mongoClient.db("Campers");
-    const col = db.collection("Transactions");
-    const count = col.countDocuments({ accountId: camperId })
-    console.log(count)
-    if (count < 2) {
-      data = col.find({accountId: camperId});
-      return JSON.parse(JSON.stringify(data));
-    } else {
-      data = col.find({accountId: camperId}).toArray();
-      return JSON.parse(JSON.stringify(data));
-    }
-  } catch (error) {
-    console.error(error);
-  }
-}
-
 export const postCamperTransactions = async (transData) => {
   const mongoClient = await clientPromise;
   try {
-    await mongoClient.connect();
+    const client = await clientPromise;
     console.log("connected to server");
-    const db = mongoClient.db("Campers");
+    const db = client.db("Campers");
     const col = db.collection("Transactions");
     const { dT, bT, tT, wT } = transData;
     if (dT.accountId) {
@@ -86,24 +54,12 @@ export const postCamperTransactions = async (transData) => {
     }
   } catch (err) {
     console.log(err);
-  } finally {
-    await mongoClient.close();
   }
 };
 
 const Handler = async (req, res) => {
-  if (req.method === "GET") {
-    const camper = await getCamper(req.query.camperCode);
-    if (!camper) {
-      res.status(404).json("No camper data available...");
-    } else {
-      res.status(200).json({ camper: camper });
-    }
-  } else if (req.method === "POST") {
-    console.log(req.body);
-    await postCamperTransactions(req.body);
-    res.status(201).json({ message: "You added the transactions..." });
-  }
+  await postCamperTransactions(req.body);
+  res.status(201).json({ message: "You added the transactions..." });
 };
 
 export default Handler;

@@ -7,12 +7,25 @@ const CamperOverview = (props) => {
   // const postTransactions = async (trans) => {
   //   await axios.post("/api/campers/[camperCode]", trans);
   // };
-  const postTransactionsHandler = (trans) => {
-    postTransactions(trans);
+  const postTransactionsHandler = async (trans) => {
+    console.log(trans);
+    const response = await fetch("/api/campers/[campersCode]", {
+      method: "POST",
+      body: JSON.stringify(trans),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const responseData = await response.json();
+    console.log(responseData);
   };
 
   return (
-    <CamperDetail camper={camper} trans={trans} onAddTransactions={postTransactionsHandler} />
+    <CamperDetail
+      camper={camper}
+      trans={trans}
+      onAddTransactions={postTransactionsHandler}
+    />
   );
 };
 
@@ -23,8 +36,8 @@ export const getStaticPaths = async () => {
   const db = client.db("Campers");
   const col = db.collection("Campers");
   const data = await col.find({}, { accountId: 1 }).toArray();
-  const allCampers = JSON.parse(JSON.stringify(data))
-  console.log("all campers: ")
+  const allCampers = JSON.parse(JSON.stringify(data));
+  console.log("all campers: ");
   return {
     paths: allCampers.map((camperId) => ({
       params: {
@@ -34,7 +47,6 @@ export const getStaticPaths = async () => {
     fallback: false,
   };
 };
-
 
 export const getStaticProps = async (context) => {
   const camperId = context.params.camperCode;
@@ -47,7 +59,7 @@ export const getStaticProps = async (context) => {
   return {
     props: {
       camper: JSON.parse(JSON.stringify(camper)),
-      trans: JSON.parse(JSON.stringify(camperTrans))
+      trans: JSON.parse(JSON.stringify(camperTrans)),
     },
   };
 };
