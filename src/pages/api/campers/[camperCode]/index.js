@@ -1,21 +1,39 @@
-import { connectToDatabase } from "../../../../../lib/db";
+import clientPromise from "../../../../../lib/db";
 
 export const getCamper = async (camperId) => {
-  const mongoClient = connectToDatabase();
   try {
+    const mongoClient = await clientPromise;
     const db = mongoClient.db("Campers");
     const col = db.collection("Campers");
     const data = await col.findOne({ accountId: camperId });
     return JSON.parse(JSON.stringify(data));
   } catch (err) {
     console.log(err);
-  } finally {
-    await mongoClient.close();
   }
 };
 
+export const getCamperTransactions = async (camperId) => {
+  const mongoClient = await clientPromise;
+  try {
+    await mongoClient.connect();
+    const db = mongoClient.db("Campers");
+    const col = db.collection("Transactions");
+    const count = col.countDocuments({ accountId: camperId })
+    console.log(count)
+    if (count < 2) {
+      data = col.find({accountId: camperId});
+      return JSON.parse(JSON.stringify(data));
+    } else {
+      data = col.find({accountId: camperId}).toArray();
+      return JSON.parse(JSON.stringify(data));
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export const postCamperTransactions = async (transData) => {
-  const mongoClient = connectToDatabase();
+  const mongoClient = await clientPromise;
   try {
     await mongoClient.connect();
     console.log("connected to server");

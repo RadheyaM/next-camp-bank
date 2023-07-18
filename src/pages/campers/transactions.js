@@ -1,8 +1,5 @@
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
-}
+import clientPromise from "../../../lib/db";
 import AllTransactionsTable from "@/components/transactions/AllTransactionsTable";
-import { getAllTransactions } from "../api/transactions";
 
 const Transactions = props => {
   return (
@@ -10,15 +7,19 @@ const Transactions = props => {
   );
 };
 
-
-
 export default Transactions
 
-export const getStaticProps = async (context) => {
-  const transactionData = await getAllTransactions()
-  return {
-    props: {
-      allTrans: transactionData
+export const getStaticProps = async () => {
+  try {
+    const client = await clientPromise;
+    const db = client.db("Campers")
+    const trans = await db.collection("Transactions").find().toArray();
+    return {
+      props: {
+        allTrans: JSON.parse(JSON.stringify(trans))
+      }
     }
+  } catch (e) {
+    console.error(e);
   }
-};
+}
