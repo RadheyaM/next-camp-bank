@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import { TextField } from "@mui/material";
 
 const NewTransForm = (props) => {
+  // const [negativeBalance, setNegativeBalance] = useState();
   const { camper } = props;
   const camperId = camper.accountId;
   const firstName = camper.firstName;
@@ -31,6 +32,14 @@ const NewTransForm = (props) => {
   };
   const submitHandler = (event) => {
     event.preventDefault();
+    const enoughCheck =
+      props.balance.data.data.data +
+      enteredDeposit -
+      (enteredBook + enteredTuckshop + withdrawal);
+    if (enoughCheck < 0) {
+
+      return;
+    }
     let dT = {};
     let bT = {};
     let tT = {};
@@ -90,6 +99,7 @@ const NewTransForm = (props) => {
   return (
     <form onSubmit={submitHandler} className={styles.newTransForm}>
       <h2>Create Transactions</h2>
+      <h2>{props.balance.data.data.data}</h2>
       <p>
         Leave fields blank where not applicable, e.g. no withdrawal, leave
         blank...

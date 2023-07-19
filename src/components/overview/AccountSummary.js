@@ -6,6 +6,7 @@ const AccountSummary = (props) => {
   const { camper, query } = props;
   const transData = query.data.data.data;
   const camperId = camper.accountId;
+  let balance = 0;
 
   const calcBalance = (transData) => {
     const depLst = [];
@@ -31,7 +32,12 @@ const AccountSummary = (props) => {
     // console.log("depLst, payLst", depLst, payLst);
     return depTotal - payTotal
   }
-  const balance = calcBalance(transData);
+
+  try {
+    balance = props.balance.data.data.data
+  } catch (err) {
+    balance = 0;
+  }
   console.log("balance: ", balance)
   const formattedCurrentAccountBalance = balance.toLocaleString(
     "en-US",

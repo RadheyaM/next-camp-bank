@@ -2,13 +2,16 @@ import CamperDetail from "@/components/campers/CamperDetail";
 import clientPromise from "../../../../lib/db";
 import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import axios from "axios";
 
 const CamperOverview = (props) => {
+  const [currentBalance, setCurrentBalance] = useState(0);
   const router = useRouter();
   const camperId = router.query.camperCode.toString();
   console.log("CamperId: ", camperId);
   const apiPath = `/api/campers/${camperId}/get-trans`;
+  const apiBalancePath = `/api/campers/${camperId}/get-balance`;
   const postTransactionsHandler = async (trans) => {
     console.log(trans);
     const response = await fetch("/api/campers/[campersCode]", {
@@ -34,6 +37,12 @@ const CamperOverview = (props) => {
       },
     }
   );
+  const balanceQuery = useQuery(
+    ["balance"],
+    () => {
+      return axios(apiBalancePath);
+    }
+  );
   console.log("query:", query.data.data.data);
 
   return (
@@ -41,6 +50,7 @@ const CamperOverview = (props) => {
       trans={props.trans}
       camper={props.camper}
       query={query}
+      balance={balanceQuery}
       onAddTransactions={postTransactionsHandler}
     />
   );
