@@ -1,18 +1,12 @@
-import { connectToDatabase } from "../../../../lib/db";
+import clientPromise from "../../../../lib/db";
 
-export const getTransaction = async (transId) => {
-  const mongoClient = connectToDatabase();
-  try {
-    console.log("you're in")
-    const db = mongoClient.db("Campers");
-    const col = db.collection("Transactions");
-    const data = col.find({ _id: ObjectId(transId) });
-    console.log("your data: ", JSON.parse(JSON.stringify(data)));
-    return JSON.parse(JSON.stringify(data));
-  } catch (err) {
-    console.log(err);
-  } finally {
-    await mongoClient.close();
-  }
-  return;
+const handler = async (req, res) => {
+  const client = await clientPromise;
+  const db = client.db("Campers");
+  const col = db.collection("Campers");
+  const campers = await col.find({}).toArray();
+  const data = JSON.parse(JSON.stringify(campers))
+  res.status(200).json({data: data})
 };
+
+export default handler;

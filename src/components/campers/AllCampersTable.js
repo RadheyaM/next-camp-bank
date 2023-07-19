@@ -5,7 +5,7 @@ import SearchByName from "@/components/forms/SearchByName";
 import { useState } from "react";
 
 const AllCampersTable = (props) => {
-  const {campers} = props;
+  const {campers, query} = props;
   const [filteredData, setFilteredData] = useState("");
   const [clearFilter, setClearFilter] = useState(true);
   // const apiData = query.data.data.campers;
@@ -14,7 +14,7 @@ const AllCampersTable = (props) => {
   const searchFilterHandler = (filterName) => {
     console.log("Filter: ", filterName);
     const lst = [];
-    const names = campers.map((camper) => {
+    const names = query.data.data.data.map((camper) => {
       console.log("here is the name: ", camper.name)
       const name = camper.firstName + " " + camper.lastName
       if (name.toLowerCase().includes(filterName)) {
@@ -47,7 +47,7 @@ const AllCampersTable = (props) => {
           {filteredData && filteredData.map((camper) => (
             <CamperRow key={camper._id} camper={camper}/>
           ))}
-          {clearFilter && props.campers.map((camper) => (
+          {clearFilter && props.query.data.data.data.map((camper) => (
             <CamperRow key={camper._id} camper={camper}/>
           ))}
         </tbody>
