@@ -1,7 +1,5 @@
 import { Fragment } from "react";
 import styles from "./AccountSummary.module.css";
-import { transactionBalance } from "../../../lib/helpers";
-import { DepartureBoardOutlined } from "@mui/icons-material";
 
 
 const AccountSummary = (props) => {
@@ -32,12 +30,8 @@ const AccountSummary = (props) => {
     console.log("depLst, payLst", depLst, payLst);
     return depTotal - payTotal
   }
-
   const balance = calcBalance(trans);
   console.log("balance: ", balance)
-
-  
-  
   const formattedCurrentAccountBalance = balance.toLocaleString(
     "en-US",
     {

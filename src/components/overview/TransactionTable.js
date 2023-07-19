@@ -1,11 +1,14 @@
 import TransactionRow from './TransactionRow';
 import styles from './TransactionTable.module.css'
 import Table from '../UI/Table';
+import sortBy from 'array-sort-by';
+
 
 const TransactionsTable = props => {
   // console.log(props.query.data)
   const {trans} = props
-  console.log("trans: ", trans)
+  const sortByDate = sortBy(trans, tran => -new Date(tran.timeStamp))
+  console.log("sortbydate: ", sortByDate)
   return (
     <Table className={styles.transactionTable}>
       <caption>
@@ -23,7 +26,7 @@ const TransactionsTable = props => {
         </tr>
       </thead>
       <tbody>
-        {trans.map((tran) => (
+        {sortByDate.map((tran) => (
           <TransactionRow key={tran._id} tran={tran}/>
         ))}
       </tbody> 
