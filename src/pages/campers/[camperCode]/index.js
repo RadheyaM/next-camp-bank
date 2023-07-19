@@ -1,12 +1,14 @@
 import CamperDetail from "@/components/campers/CamperDetail";
 import clientPromise from "../../../../lib/db";
+import { useRouter } from "next/router";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 const CamperOverview = (props) => {
-  const { camper, trans } = props;
-  // const camperId = router.query.camperCode.toString();
-  // const postTransactions = async (trans) => {
-  //   await axios.post("/api/campers/[camperCode]", trans);
-  // };
+  const router = useRouter();
+  const camperId = router.query.camperCode.toString();
+  console.log("CamperId: ", camperId);
+  const apiPath = `/api/campers/${camperId}/get-trans`;
   const postTransactionsHandler = async (trans) => {
     console.log(trans);
     const response = await fetch("/api/campers/[campersCode]", {
@@ -19,11 +21,26 @@ const CamperOverview = (props) => {
     const responseData = await response.json();
     console.log(responseData);
   };
+  const query = useQuery(
+    ["transactions"],
+    () => {
+      return axios(apiPath);
+    },
+    {
+      initialData: {
+        data: {
+          data: props.trans,
+        },
+      },
+    }
+  );
+  console.log("query:", query.data.data.data);
 
   return (
     <CamperDetail
-      camper={camper}
-      trans={trans}
+      trans={props.trans}
+      camper={props.camper}
+      query={query}
       onAddTransactions={postTransactionsHandler}
     />
   );

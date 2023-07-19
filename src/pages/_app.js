@@ -11,7 +11,7 @@ function MyApp({ Component, pageProps }) {
       new QueryClient({
         defaultOptions: {
           queries: {
-            refetchInterval: 1000 * 3,
+            refetchInterval: 1000 * 1000,
           },
         },
       })

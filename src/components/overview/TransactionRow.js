@@ -1,6 +1,3 @@
-import { Button } from "@mui/material";
-import Link from "next/link";
-
 const TransactionRow = (props) => {
   const { _id, accountId, timeStamp, category, type, amount} = props.tran;
 
@@ -15,7 +12,6 @@ const TransactionRow = (props) => {
       <td>{type}</td>
       <td>{category}</td>
       <td>€{amount}</td>
-      <td><Button variant="outlined" color="error"><Link href={deletePath}>Delete</Link></Button></td>
     </tr>
   );
 };

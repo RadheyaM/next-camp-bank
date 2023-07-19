@@ -10,15 +10,16 @@ const CamperDetail = (props) => {
   };
   return (
     <Card>
+      <h1>Camper Detail</h1>
       <AccountSummary
-        camper={props.camper} trans={props.trans}
+        camper={props.camper} trans={props.trans} query={props.query}
       />
       <NewTransForm
         onAddTransactions={addTransactionsHandler}
         camper={props.camper}
       />
       <TransactionsTable
-        camper={props.camper} trans={props.trans}
+        camper={props.camper} query={props.query} trans={props.trans}
       />
     </Card>
   );
