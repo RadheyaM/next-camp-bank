@@ -3,7 +3,6 @@ import Link from "next/link";
 const CamperRow = (props) => {
   const { accountId, firstName, lastName, startingBalance } = props.camper;
   const linkPath = `/campers/${accountId}`;
-  // console.log(`starting balance: ${props.camper}`)
   return (
     <tr>
       <td>

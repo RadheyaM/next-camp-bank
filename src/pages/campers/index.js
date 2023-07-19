@@ -3,7 +3,6 @@ import Card from "@/components/UI/Card";
 import clientPromise from "../../../lib/db";
 
 const Campers = (props) => {
-  console.log(props.campers)
   
   return (
     <Card>

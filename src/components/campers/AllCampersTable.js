@@ -45,10 +45,10 @@ const AllCampersTable = (props) => {
         </thead>
         <tbody>
           {filteredData && filteredData.map((camper) => (
-            <CamperRow key={camper._id} camper={camper} />
+            <CamperRow key={camper._id} camper={camper}/>
           ))}
           {clearFilter && props.campers.map((camper) => (
-            <CamperRow key={camper._id} camper={camper} />
+            <CamperRow key={camper._id} camper={camper}/>
           ))}
         </tbody>
       </Table>
