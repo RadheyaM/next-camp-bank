@@ -33,11 +33,11 @@ const NewTransForm = (props) => {
   const submitHandler = (event) => {
     event.preventDefault();
     const enoughCheck =
-      props.balance.data.data.data +
-      enteredDeposit -
-      (enteredBook + enteredTuckshop + enteredWithdrawal);
+      Number(props.balance.data.data.data) +
+      Number(enteredDeposit) -
+      (Number(enteredBook) + Number(enteredTuckshop) + Number(enteredWithdrawal));
     if (enoughCheck < 0) {
-
+      //add some input feedback
       return;
     }
     let dT = {};
@@ -48,6 +48,7 @@ const NewTransForm = (props) => {
     let bal = {
       balance: enoughCheck
     };
+    console.log(bal.balance)
     if (enteredDeposit !== "" && enteredDeposit !== 0) {
       dT = {
         accountId: camperId,
