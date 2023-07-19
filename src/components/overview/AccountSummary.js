@@ -1,44 +1,57 @@
 import { Fragment } from "react";
-import { useQuery } from "@tanstack/react-query";
 import styles from "./AccountSummary.module.css";
-import axios from "axios";
+import { transactionBalance } from "../../../lib/helpers";
+import { DepartureBoardOutlined } from "@mui/icons-material";
+
 
 const AccountSummary = (props) => {
-  const { camper } = props;
+  const { camper, trans } = props;
   const camperId = camper.accountId;
-  const balanceApiPath = `/api/campers/${camperId}/getBalance`;
-  const balanceQuery = useQuery(
-    ["balance"],
-    () => {
-      return axios({
-        method: "get",
-        url: balanceApiPath,
-        data: {camperId: camperId}
-      });
-    },
+
+  const calcBalance = (trans) => {
+    const depLst = [];
+    const payLst = [];
+    let depTotal = 0;
+    let payTotal = 0;
+    trans.map((tran) => {
+      if (tran.type === "Payment") {
+        payLst.push(Number(tran.amount));
+        console.log("pay", tran.amount);
+      } else {
+        depLst.push(Number(tran.amount))
+        console.log("dep", tran.amount);
+      }
+    });
+    for (let i = 0; i < depLst.length; i++) {
+      depTotal += depLst[i];
+    }
+  
+    for (let i = 0; i < payLst.length; i++) {
+      payTotal += payLst[i];
+    }
+    console.log("depLst, payLst", depLst, payLst);
+    return depTotal - payTotal
+  }
+
+  const balance = calcBalance(trans);
+  console.log("balance: ", balance)
+
+  
+  
+  const formattedCurrentAccountBalance = balance.toLocaleString(
+    "en-US",
     {
-      initialData: {
-        data: {
-          balance: 0,
-        },
-      },
-      refetchInterval: 1000 * 100,
+      style: "currency",
+      currency: "EUR",
     }
   );
-  console.log("balance", balanceQuery.data)
-  // const formattedCurrentAccountBalance = balance.data.data.balance.toLocaleString(
-  //   "en-US",
-  //   {
-  //     style: "currency",
-  //     currency: "EUR",
-  //   }
-  // );
   return (
     <Fragment>
       <h2>Account Details</h2>
       <div className={styles.accountDetails}>
         <h3>{camper.accountId}&nbsp;|&nbsp;</h3>
         <h3>{camper.firstName + " " + camper.lastName}&nbsp;|&nbsp;</h3>
+        <h3>{formattedCurrentAccountBalance}</h3>
       </div>
     </Fragment>
   );
