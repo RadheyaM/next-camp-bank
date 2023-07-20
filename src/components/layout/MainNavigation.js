@@ -1,15 +1,16 @@
 import Link from "next/link";
 import styles from "./MainNavigation.module.css";
 import FestivalIcon from "@mui/icons-material/Festival";
-// import { useSession, signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { Button } from "@mui/material";
 
 const MainNavigation = () => {
-  // const {data: session, status } = useSession();
+  const {data: session} = useSession();
 
   const logoutHandler = () => {
     signOut();
   };
+
   return (
     <header className={styles.header}>
       <div className={styles.logo}>
@@ -22,26 +23,29 @@ const MainNavigation = () => {
       </div>
       <nav>
         <ul className={styles.navLinkBar}>
-          <Link href="/">Find Camper</Link>
-          <Link href="/campers" replace>
-            All Campers
-          </Link>
-          <Link href="/campers/transactions" replace>
-            All Transactions
-          </Link>
-          <Link href="/campers/add" replace>
-            Add New Camper
-          </Link>
-          {/* {session && (
-            <Link href="/campers" replace>
-            User Profile
-            </Link>
-          )}
+          {session && (
+            <>
+              <Link href="/">Find Camper</Link>
+              <Link href="/campers" replace>
+                All Campers
+              </Link>
+              <Link href="/campers/transactions" replace>
+                All Transactions
+              </Link>
+              <Link href="/campers/add" replace>
+                Add New Camper
+              </Link>
+            </>)}
           {session && (
             <Button size="large" variant="contained" onClick={logoutHandler}>
             Logout
             </Button>
-          )} */}
+          )}
+          {!session && (
+            <Link href="/auth">
+              Login
+            </Link>
+          )}
         </ul>
       </nav>
     </header>

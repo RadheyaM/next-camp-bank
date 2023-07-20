@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { SessionProvider } from "next-auth/react";
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps: {session, ...pageProps} }) {
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -17,12 +17,14 @@ function MyApp({ Component, pageProps }) {
       })
   );
   return (
-    <QueryClientProvider client={queryClient}>
-      <Layout>
-        <Component {...pageProps} />
-        <ReactQueryDevtools />
-      </Layout>
-    </QueryClientProvider>
+    <SessionProvider session={session}>
+      <QueryClientProvider client={queryClient}>
+        <Layout>
+          <Component {...pageProps} />
+          <ReactQueryDevtools />
+        </Layout>
+      </QueryClientProvider>
+    </SessionProvider>
   );
 }
 
