@@ -28,13 +28,13 @@ const authOptions = {
           return user;
         }
         return null;
-      },
+      }
     }),
   ],
   pages: {
     signIn: '/auth',
     // error: /auth/error,
     // signOut: '/auth/signout',
-  }
+  },
 }
 export default NextAuth(authOptions);

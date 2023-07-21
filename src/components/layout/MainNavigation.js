@@ -37,9 +37,11 @@ const MainNavigation = () => {
               </Link>
             </>)}
           {session && (
-            <Button size="large" variant="contained" onClick={logoutHandler}>
-            Logout
-            </Button>
+            <div>
+              <Button size="small" variant="contained" onClick={logoutHandler}>
+                {session.user.email} - Logout
+              </Button>
+            </div>
           )}
           {!session && (
             <Link href="/auth">

@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import styles from "./auth-form.module.css";
 import { signIn } from "next-auth/react";
+import Router from "next/router";
 
 const createUser = async (email, password) => {
   console.log("you're in the create user fn...")
@@ -53,6 +54,7 @@ const AuthForm = () => {
         console.log("create user error: ", err);
       }
     }
+    Router.replace('/');
   };
   return (
     <section className={styles.auth}>

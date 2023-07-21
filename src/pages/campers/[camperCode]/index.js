@@ -3,9 +3,18 @@ import clientPromise from "../../../../lib/db";
 import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
+import Router from "next/router";
 import axios from "axios";
 
 const CamperOverview = (props) => {
+  const { status, data } = useSession();
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      Router.replace("/auth");
+    }
+  }, [status]);
   const [currentBalance, setCurrentBalance] = useState(0);
   const router = useRouter();
   const camperId = router.query.camperCode.toString();
@@ -14,7 +23,7 @@ const CamperOverview = (props) => {
   const apiBalancePath = `/api/campers/${camperId}/get-balance`;
   const apiAddBalancePath = `/api/campers/${camperId}/add-balance`;
   const postTransactionsHandler = async (trans) => {
-    console.log("trans here now: ", trans);
+    // console.log("trans here now: ", trans);
     const response = await fetch("/api/campers/[campersCode]", {
       method: "POST",
       body: JSON.stringify(trans),
@@ -51,17 +60,18 @@ const CamperOverview = (props) => {
       return axios(apiBalancePath);
     }
   );
-  console.log("query:", query.data.data.data);
-
-  return (
-    <CamperDetail
-      trans={props.trans}
-      camper={props.camper}
-      query={query}
-      balance={balanceQuery}
-      onAddTransactions={postTransactionsHandler}
-    />
-  );
+  // console.log("query:", query.data.data.data);
+  if (status === "authenticated") {
+    return (
+      <CamperDetail
+        trans={props.trans}
+        camper={props.camper}
+        query={query}
+        balance={balanceQuery}
+        onAddTransactions={postTransactionsHandler}
+      />
+    );
+  };
 };
 
 export default CamperOverview;
