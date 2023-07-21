@@ -23,7 +23,6 @@ const handler = async (req, res) => {
       password: hashedPassword,
     });
     res.status(201).json({ message: "User Created!" });
-    client.close();
   }
 };
 
