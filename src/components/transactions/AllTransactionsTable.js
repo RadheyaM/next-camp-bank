@@ -3,12 +3,15 @@ import AllTransRows from "./AllTransRows";
 import Card from "../UI/Card";
 
 const AllTransactionsTable = (props) => {
-  const { allTrans } = props
+  const { query } = props;
+  const allTrans = query.data.data.data;
   // console.log("CAMPERTRANS", allTrans)
   return (
     <Card>
       <Table>
-        <caption><h2>All Transactions</h2></caption>
+        <caption>
+          <h2>All Transactions</h2>
+        </caption>
         <thead>
           <tr>
             <th>Transaction Id</th>
@@ -30,4 +33,4 @@ const AllTransactionsTable = (props) => {
   );
 };
 
-export default AllTransactionsTable
+export default AllTransactionsTable;
