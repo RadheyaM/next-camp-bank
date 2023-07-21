@@ -18,12 +18,13 @@ const CamperOverview = (props) => {
   const [currentBalance, setCurrentBalance] = useState(0);
   const router = useRouter();
   const camperId = router.query.camperCode.toString();
-  console.log("CamperId: ", camperId);
+  // console.log("CamperId: ", camperId);
   const apiPath = `/api/campers/${camperId}/get-trans`;
   const apiBalancePath = `/api/campers/${camperId}/get-balance`;
   const apiAddBalancePath = `/api/campers/${camperId}/add-balance`;
   const postTransactionsHandler = async (trans) => {
     // console.log("trans here now: ", trans);
+    setTimeout(() => {Router.replace("/")}, 3000);
     const response = await fetch("/api/campers/[campersCode]", {
       method: "POST",
       body: JSON.stringify(trans),
@@ -33,13 +34,13 @@ const CamperOverview = (props) => {
     });
     const addBalance = await fetch(apiAddBalancePath, {
       method: "POST",
-      body: JSON.stringify(trans), 
+      body: JSON.stringify(trans),
       headers: {
         "Content-Type": "application/json",
-      }
-    })
+      },
+    });
     const responseData = await response.json();
-    console.log(responseData);
+    // console.log(responseData);
   };
   const query = useQuery(
     ["transactions"],
@@ -54,12 +55,9 @@ const CamperOverview = (props) => {
       },
     }
   );
-  const balanceQuery = useQuery(
-    ["balance"],
-    () => {
-      return axios(apiBalancePath);
-    }
-  );
+  const balanceQuery = useQuery(["balance"], () => {
+    return axios(apiBalancePath);
+  });
   // console.log("query:", query.data.data.data);
   if (status === "authenticated") {
     return (
@@ -71,7 +69,7 @@ const CamperOverview = (props) => {
         onAddTransactions={postTransactionsHandler}
       />
     );
-  };
+  }
 };
 
 export default CamperOverview;
