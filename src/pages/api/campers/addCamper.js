@@ -1,6 +1,6 @@
 import clientPromise from "../../../../lib/db";
 import { getServerSession } from "next-auth/next"
-import { authOptions } from "./auth/[...nextauth]"
+import { authOptions } from "../auth/[...nextauth]"
 
 async function handler(req, res) {
   const session = await getServerSession(res, res, authOptions)
