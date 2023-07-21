@@ -4,35 +4,37 @@ import clientPromise from "../../../../lib/db";
 import { verifyPassword } from "../../../../lib/auth";
 
 // authenticaton API route using next auth.
-export default NextAuth({
+const authOptions = {
   session: {
-    jwt: true,
+    strategy: "jwt",
   },
   providers: [
     CredentialsProvider({
-      async authorize(credentials) {
+      type: 'credentials',
+      credentials: {},
+      async authorize(credentials, req) {
+        const {email, password} = credentials;
         const client = await clientPromise;
         const usersCollection = client.db("Campers").collection("users");
         const user = await usersCollection.findOne({
           email: credentials.email,
         });
-        if (!user) {
-          client.close();
-          throw new Error("No user found!");
-        }
-
         const isValid = await verifyPassword(
           credentials.password,
           user.password
         );
-
-        if (!isValid) {
-          client.close();
-          throw new Error("Could not log you in!");
+        console.log("isValid:", isValid)
+        if (isValid) {
+          return user;
         }
-        client.close();
-        return { email: user.email };
+        return null;
       },
     }),
   ],
-});
+  pages: {
+    signIn: '/auth',
+    // error: /auth/error,
+    // signOut: '/auth/signout',
+  }
+}
+export default NextAuth(authOptions);

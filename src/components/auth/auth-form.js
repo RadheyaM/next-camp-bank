@@ -1,30 +1,23 @@
 import { useState, useRef } from "react";
 import styles from "./auth-form.module.css";
 import { signIn } from "next-auth/react";
-import axios from "axios";
 
 const createUser = async (email, password) => {
-  // this is taken direct from the axios site ...
-  const response = await axios({
-    method: "post",
-    url: "api/auth/signup",
-    data: {
-      email: email,
-      password: password,
+  console.log("you're in the create user fn...")
+  const response = await fetch("api/auth/signup", {
+    method: "POST",
+    body: JSON.stringify({email, password}),
+    headers: {
+      'Content-Type': 'application/json',
     },
-  }).catch((error) => {
-    if (error.response) {
-      console.log(error.response.data);
-      console.log(error.response.status);
-      console.log(error.response.headers);
-    } else if (error.request) {
-      console.log(error.request);
-    } else {
-      console.log("Error", error.message);
-    }
-    console.log(error.config);
   });
-  return response;
+  const data = await response.json();
+  if (!response.ok) {
+    console.log("response not ok...")
+    throw new Error(data.message || 'Something went wrong...')
+  }
+  console.log("data returned...")
+  return data;
 };
 
 const AuthForm = () => {
@@ -32,28 +25,32 @@ const AuthForm = () => {
   const passwordInputRef = useRef();
   const [isLogin, setIsLogin] = useState(true);
 
+  // toggle between signIn and signUp.
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
   };
 
   const submitHandler = async (event) => {
+    console.log("submit handler")
     event.preventDefault();
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
     // optional validation...
     if (isLogin) {
+      console.log("isLogin === true")
       const result = await signIn("credentials", {
-        redirect: false,
         email: enteredEmail,
         password: enteredPassword,
+        redirect: false,
       });
-      console.log(result);
+      console.log("result: ", result);
     } else {
       try {
+        console.log("try block")
         const result = await createUser(enteredEmail, enteredPassword);
         console.log(result);
       } catch (err) {
-        console.log(err);
+        console.log("create user error: ", err);
       }
     }
   };
