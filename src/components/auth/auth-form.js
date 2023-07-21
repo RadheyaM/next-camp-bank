@@ -17,7 +17,7 @@ const createUser = async (email, password) => {
     console.log("response not ok...")
     throw new Error(data.message || 'Something went wrong...')
   }
-  console.log("data returned...")
+  // console.log("data returned...")
   return data;
 };
 

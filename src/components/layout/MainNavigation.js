@@ -21,30 +21,32 @@ const MainNavigation = () => {
           </Link>
         </span>
       </div>
-      <nav>
-        <ul className={styles.navLinkBar}>
+      
+        <nav>
+            <ul className={styles.navLinkBar}>
+                  <Link href="/">Find Camper</Link>
+                  <Link href="/campers" replace>
+                    All Campers
+                  </Link>
+                  <Link href="/campers/transactions" replace>
+                    All Transactions
+                  </Link>
+                  <Link href="/campers/add" replace>
+                    Add New Camper
+                  </Link>
+            </ul>
           {session && (
-            <>
-              <Link href="/">Find Camper</Link>
-              <Link href="/campers" replace>
-                All Campers
-              </Link>
-              <Link href="/campers/transactions" replace>
-                All Transactions
-              </Link>
-              <Link href="/campers/add" replace>
-                Add New Camper
-              </Link>
-            </>)}
-          {session && (
-            <div>
-              <Button size="small" variant="contained" onClick={logoutHandler}>
+            <div className={styles.logoutBtnDiv}>
+            <Button size="small" variant="contained" onClick={logoutHandler}>
                 {session.user.email}  |  Logout
-              </Button>
-            </div>
+            </Button>
+          </div>
           )}
-        </ul>
-      </nav>
+        </nav>
+      
+      
+  
+      
     </header>
   );
 };
