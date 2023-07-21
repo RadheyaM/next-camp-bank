@@ -11,10 +11,10 @@ const authOptions = {
   },
   providers: [
     CredentialsProvider({
-      type: 'credentials',
+      type: "credentials",
       credentials: {},
       async authorize(credentials, req) {
-        const {email, password} = credentials;
+        const { email, password } = credentials;
         const client = await clientPromise;
         const usersCollection = client.db("Campers").collection("users");
         const user = await usersCollection.findOne({
@@ -24,18 +24,18 @@ const authOptions = {
           credentials.password,
           user.password
         );
-        console.log("isValid:", isValid)
+        console.log("isValid:", isValid);
         if (isValid) {
           return user;
         }
         return null;
-      }
+      },
     }),
   ],
   pages: {
-    signIn: '/auth',
+    signIn: "/auth",
     // error: /auth/error,
     // signOut: '/auth/signout',
   },
-}
+};
 export default NextAuth(authOptions);
