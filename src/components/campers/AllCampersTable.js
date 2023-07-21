@@ -12,16 +12,16 @@ const AllCampersTable = (props) => {
   // you can fetch data from the api here...
 
   const searchFilterHandler = (filterName) => {
-    console.log("Filter: ", filterName);
+    // console.log("Filter: ", filterName);
     const lst = [];
     const names = query.data.data.data.map((camper) => {
-      console.log("here is the name: ", camper.name)
+      // console.log("here is the name: ", camper.name)
       const name = camper.firstName + " " + camper.lastName
       if (name.toLowerCase().includes(filterName)) {
         lst.push(camper)
       }
     });
-    console.log("the l list: ", lst)
+    // console.log("the l list: ", lst)
     setFilteredData(lst);
     setClearFilter(false);
   };

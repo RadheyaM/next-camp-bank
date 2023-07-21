@@ -38,7 +38,7 @@ const AccountSummary = (props) => {
   } catch (err) {
     balance = 0;
   }
-  console.log("balance: ", balance)
+  // console.log("balance: ", balance)
   const formattedCurrentAccountBalance = balance.toLocaleString(
     "en-US",
     {
