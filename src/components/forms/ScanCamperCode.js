@@ -30,8 +30,8 @@ const ScanCamperCode = () => {
           {/* <label htmlFor='code-input'>Scan or Enter Code Manually</label>
           <input autoFocus={true} id='code-input' className={styles.codeInput} type="text" onChange={codeInputHandler}/> */}
         </div>
-        <div>
-          <Button variant="contained" type="submit">
+        <div className={styles.findBtnDiv}>
+          <Button size="large" variant="contained" type="submit">
             Find
           </Button>
         </div>
