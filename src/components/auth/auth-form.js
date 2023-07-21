@@ -61,8 +61,8 @@ const AuthForm = () => {
       <h1>{isLogin ? "Login" : "Sign Up"}</h1>
       <form onSubmit={submitHandler}>
         <div className={styles.control}>
-          <label htmlFor="email">Your Email</label>
-          <input type="email" id="email" required ref={emailInputRef} />
+          <label htmlFor="email">Username</label>
+          <input type="text" id="email" required ref={emailInputRef} />
         </div>
         <div className={styles.control}>
           <label htmlFor="password">Your Password</label>
