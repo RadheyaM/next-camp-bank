@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 import styles from "./AccountSummary.module.css";
+import { euro } from "../../../lib/helpers";
 
 
 const AccountSummary = (props) => {
@@ -39,21 +40,13 @@ const AccountSummary = (props) => {
     balance = 0;
   }
   // console.log("balance: ", balance)
-  const formattedCurrentAccountBalance = balance.toLocaleString(
-    "en-US",
-    {
-      style: "currency",
-      currency: "EUR",
-    }
-  
-  );
   return (
     <Fragment>
       <h2>Account Details</h2>
       <div className={styles.accountDetails}>
         <h3>{camper.accountId}&nbsp;|&nbsp;</h3>
         <h3>{camper.firstName + " " + camper.lastName}&nbsp;|&nbsp;</h3>
-        <h3>{formattedCurrentAccountBalance}</h3>
+        <h3>{euro.format(Number(balance))}</h3>
       </div>
     </Fragment>
   );

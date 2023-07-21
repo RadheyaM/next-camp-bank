@@ -1,3 +1,5 @@
+import { euro } from "../../../lib/helpers";
+
 const TransactionRow = (props) => {
   const { _id, accountId, timeStamp, category, type, amount} = props.tran;
 
@@ -11,7 +13,7 @@ const TransactionRow = (props) => {
       <td suppressHydrationWarning>{humanDate + " " + humanTime}</td>
       <td>{type}</td>
       <td>{category}</td>
-      <td>€{amount}</td>
+      <td>{euro.format(Number(amount))}</td>
     </tr>
   );
 };
