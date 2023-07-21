@@ -5,8 +5,7 @@ import { useSession, signOut } from "next-auth/react";
 import { Button } from "@mui/material";
 
 const MainNavigation = () => {
-  const {data: session} = useSession();
-
+  const {status, data: session} = useSession();
   const logoutHandler = () => {
     signOut();
   };
@@ -21,7 +20,6 @@ const MainNavigation = () => {
           </Link>
         </span>
       </div>
-      
         <nav>
             <ul className={styles.navLinkBar}>
                   <Link href="/">Find Camper</Link>
@@ -30,9 +28,6 @@ const MainNavigation = () => {
                   </Link>
                   <Link href="/campers/transactions" replace>
                     All Transactions
-                  </Link>
-                  <Link href="/campers/add" replace>
-                    Add New Camper
                   </Link>
             </ul>
           {session && (
@@ -43,10 +38,6 @@ const MainNavigation = () => {
           </div>
           )}
         </nav>
-      
-      
-  
-      
     </header>
   );
 };

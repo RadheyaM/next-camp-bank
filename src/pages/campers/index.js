@@ -27,7 +27,7 @@ const Campers = (props) => {
       },
     }
   );
-  console.log(query.data.data.data);
+  // console.log(query.data.data.data);
   if (status === "authenticated") {
     return (
       <Card>
