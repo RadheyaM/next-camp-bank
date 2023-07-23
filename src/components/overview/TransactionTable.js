@@ -17,6 +17,7 @@ const TransactionsTable = props => {
         </caption>
       <thead>
         <tr>
+          <th>Added By</th>
           <th>Date</th>
           <th>Type</th>
           <th>Category</th>
