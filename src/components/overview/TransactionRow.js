@@ -8,8 +8,8 @@ const TransactionRow = (props) => {
 
   return (
     <tr>
-      <td suppressHydrationWarning>{humanDate + " " + humanTime}</td>
       <td>{user}</td>
+      <td suppressHydrationWarning>{humanDate + " " + humanTime}</td>
       <td>{type}</td>
       <td>{category}</td>
       <td>{euro.format(Number(amount))}</td>
