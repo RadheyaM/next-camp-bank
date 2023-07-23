@@ -65,6 +65,7 @@ const NewTransForm = (props) => {
       balance: enoughCheck
     };
     console.log(bal.balance)
+    const user = localStorage.getItem("User");
     if (enteredDeposit !== "" && enteredDeposit !== 0) {
       dT = {
         accountId: camperId,
@@ -73,6 +74,7 @@ const NewTransForm = (props) => {
         category: "Deposit",
         amount: enteredDeposit,
         note: depNote,
+        user: user,
       };
     }
     if (enteredBook !== "" && enteredBook !== 0) {
@@ -83,6 +85,7 @@ const NewTransForm = (props) => {
         category: "Book",
         amount: enteredBook,
         note: bookNote,
+        user: user,
       };
     }
     if (enteredTuckshop !== "" && enteredTuckshop !== 0) {
@@ -93,6 +96,7 @@ const NewTransForm = (props) => {
         category: "Tuckshop",
         amount: enteredTuckshop,
         note: tuckNote,
+        user: user,
       };
     }
     if (enteredWithdrawal !== "" && enteredWithdrawal !== 0) {
@@ -103,6 +107,7 @@ const NewTransForm = (props) => {
         category: "Withdrawal",
         amount: enteredWithdrawal,
         note: withNote,
+        user: user,
       };
     }
     // console.log("deposit: ", depositTransaction);

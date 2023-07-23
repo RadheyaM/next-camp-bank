@@ -54,6 +54,7 @@ const AuthForm = () => {
         console.log("create user error: ", err);
       }
     }
+    localStorage.setItem("User", enteredEmail);
     Router.replace('/');
   };
   return (

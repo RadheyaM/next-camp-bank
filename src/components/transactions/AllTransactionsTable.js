@@ -19,7 +19,7 @@ const AllTransactionsTable = (props) => {
       <Table>
         <thead>
           <tr>
-            <th>Transaction Id</th>
+            <th>Added By</th>
             <th>Account Code</th>
             <th>Name</th>
             <th>Date</th>
