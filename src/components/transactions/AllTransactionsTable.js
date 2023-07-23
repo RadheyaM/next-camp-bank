@@ -26,6 +26,7 @@ const AllTransactionsTable = (props) => {
             <th>Type</th>
             <th>Category</th>
             <th>Amount</th>
+            <th>Note</th>
           </tr>
         </thead>
         <tbody>

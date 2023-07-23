@@ -15,6 +15,10 @@ const NewTransForm = (props) => {
   const [enteredBook, setEnteredBook] = useState("");
   const [enteredTuckshop, setEnteredTuckshop] = useState("");
   const [enteredWithdrawal, setEnteredWithdrawal] = useState("");
+  const [depNote, setDepNote] = useState("")
+  const [bookNote, setBookNote] = useState("")
+  const [tuckNote, setTuckNote] = useState("")
+  const [withNote, setWithNote] = useState("")
   const inputHandler = (identifier, event) => {
     if (identifier === "deposit") {
       setEnteredDeposit(event.target.value);
@@ -25,8 +29,20 @@ const NewTransForm = (props) => {
     } else if (identifier === "tuckshop") {
       setEnteredTuckshop(event.target.value);
       console.log(event.target.value);
-    } else {
+    } else if (identifier === "withdrawal") {
       setEnteredWithdrawal(event.target.value.toString());
+      console.log(event.target.value);
+    } else if (identifier === "depNote") {
+      setDepNote(event.target.value);
+      console.log(event.target.value);
+    } else if (identifier === "bookNote") {
+      setBookNote(event.target.value);
+      console.log(event.target.value);
+    } else if (identifier === "tuckNote") {
+      setTuckNote(event.target.value);
+      console.log(event.target.value);
+    } else {
+      setWithNote(event.target.value);
       console.log(event.target.value);
     }
   };
@@ -56,6 +72,7 @@ const NewTransForm = (props) => {
         type: "Deposit",
         category: "Deposit",
         amount: enteredDeposit,
+        note: depNote,
       };
     }
     if (enteredBook !== "" && enteredBook !== 0) {
@@ -65,6 +82,7 @@ const NewTransForm = (props) => {
         type: "Payment",
         category: "Book",
         amount: enteredBook,
+        note: bookNote,
       };
     }
     if (enteredTuckshop !== "" && enteredTuckshop !== 0) {
@@ -74,6 +92,7 @@ const NewTransForm = (props) => {
         type: "Payment",
         category: "Tuckshop",
         amount: enteredTuckshop,
+        note: tuckNote,
       };
     }
     if (enteredWithdrawal !== "" && enteredWithdrawal !== 0) {
@@ -83,6 +102,7 @@ const NewTransForm = (props) => {
         type: "Payment",
         category: "Withdrawal",
         amount: enteredWithdrawal,
+        note: withNote,
       };
     }
     // console.log("deposit: ", depositTransaction);
@@ -100,6 +120,10 @@ const NewTransForm = (props) => {
     setEnteredBook("");
     setEnteredTuckshop("");
     setEnteredWithdrawal("");
+    setDepNote("");
+    setBookNote("");
+    setTuckNote("");
+    setWithNote("");
   };
 
   return (
@@ -164,6 +188,61 @@ const NewTransForm = (props) => {
         <Button variant="contained" type="submit">
           Add Transaction(s)
         </Button>
+      </div>
+      <div><h3>Add a short note for special transactions</h3></div>
+      <div className={styles.inputs}>
+        <div>
+          <TextField
+              onChange={(event) => {
+                inputHandler("depNote", event);
+              }}
+              type="text"
+              id="depNote"
+              value={depNote}
+              variant="outlined"
+              label="DEPOSIT NOTE..."
+              multiline
+            />
+        </div>
+        <div>
+          <TextField
+              onChange={(event) => {
+                inputHandler("bookNote", event);
+              }}
+              type="text"
+              id="bookNote"
+              value={bookNote}
+              variant="outlined"
+              label="BOOK NOTE..."
+              multiline
+            />
+        </div>
+        <div>
+          <TextField
+              onChange={(event) => {
+                inputHandler("tuckNote", event);
+              }}
+              type="text"
+              id="tuckNote"
+              value={tuckNote}
+              variant="outlined"
+              label="TUCKSHOP NOTE..."
+              multiline
+            />
+        </div>
+        <div>
+          <TextField
+              onChange={(event) => {
+                inputHandler("withNote", event);
+              }}
+              type="text"
+              id="withNote"
+              value={withNote}
+              variant="outlined"
+              label="WITHDRAWAL NOTE..."
+              multiline
+            />
+        </div>
       </div>
     </form>
   );

@@ -17,11 +17,11 @@ const TransactionsTable = props => {
         </caption>
       <thead>
         <tr>
-          <th>Transaction Id</th>
           <th>Date</th>
           <th>Type</th>
           <th>Category</th>
           <th>Amount</th>
+          <th>Note</th>
         </tr>
       </thead>
       <tbody>

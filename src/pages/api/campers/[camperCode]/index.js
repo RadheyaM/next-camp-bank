@@ -15,6 +15,7 @@ export const postCamperTransactions = async (transData) => {
         type: dT.type,
         category: dT.category,
         amount: dT.amount.toString(),
+        note: dT.note,
         timeStamp: new Date(),
       });
       console.log("deposit added");
@@ -26,6 +27,7 @@ export const postCamperTransactions = async (transData) => {
         type: bT.type,
         category: bT.category,
         amount: bT.amount.toString(),
+        note: bT.note,
         timeStamp: new Date(),
       });
       console.log("book added");
@@ -37,6 +39,7 @@ export const postCamperTransactions = async (transData) => {
         type: tT.type,
         category: tT.category,
         amount: tT.amount.toString(),
+        note: tT.note,
         timeStamp: new Date(),
       });
       console.log("tuck added");
@@ -48,6 +51,7 @@ export const postCamperTransactions = async (transData) => {
         type: wT.type,
         category: wT.category,
         amount: wT.amount.toString(),
+        note: wT.note,
         timeStamp: new Date(),
       });
       console.log("withdrawal added");
