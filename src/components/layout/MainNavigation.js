@@ -32,7 +32,7 @@ const MainNavigation = () => {
                     All Campers
                   </Link>
                   <Link href="/campers/transactions" replace>
-                    All Transactions
+                    Recent Transactions
                   </Link>
             </ul>
           {session && (

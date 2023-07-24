@@ -11,7 +11,7 @@ const AllTransactionsTable = (props) => {
   // console.log("CAMPERTRANS", allTrans)
   return (
     <Card>
-      <h2>All Transactions</h2>
+      <h2>Recent Transactions</h2>
       {/* <div className={styles.totalsContainer}>
         <div>Total Deposits: </div>
         <div>Total Books: </div>

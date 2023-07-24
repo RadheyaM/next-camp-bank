@@ -3,6 +3,7 @@ import Table from "../UI/Table";
 import { Fragment } from "react";
 import SearchByName from "@/components/forms/SearchByName";
 import { useState } from "react";
+import styles from './AllCampersTable.module.css'
 
 const AllCampersTable = (props) => {
   const {campers, query} = props;
@@ -32,7 +33,7 @@ const AllCampersTable = (props) => {
   return (
     <Fragment>
       <SearchByName onSearch={searchFilterHandler} onClear={clearFilterHandler}/>
-      <Table>
+      <Table className={styles.transTable}>
         <caption>
           <h2>All Campers</h2>
         </caption>
@@ -40,7 +41,6 @@ const AllCampersTable = (props) => {
           <tr>
             <th>Account Id</th>
             <th>Name</th>
-            <th>Balance</th>
           </tr>
         </thead>
         <tbody>
