@@ -153,6 +153,7 @@ const NewTransForm = (props) => {
       <div className={styles.inputs}>
         <div>
           <TextField
+            onWheel={() => document.activeElement.blur()}
             onChange={(event) => {
               inputHandler("deposit", event);
             }}
@@ -165,6 +166,7 @@ const NewTransForm = (props) => {
         </div>
         <div>
           <TextField
+            onWheel={() => document.activeElement.blur()}
             onChange={(event) => {
               inputHandler("book", event);
             }}
@@ -177,6 +179,7 @@ const NewTransForm = (props) => {
         </div>
         <div>
           <TextField
+            onWheel={() => document.activeElement.blur()}
             onChange={(event) => {
               inputHandler("tuckshop", event);
             }}
@@ -189,6 +192,7 @@ const NewTransForm = (props) => {
         </div>
         <div>
           <TextField
+            onWheel={() => document.activeElement.blur()}
             onChange={(event) => {
               inputHandler("withdrawal", event);
             }}
