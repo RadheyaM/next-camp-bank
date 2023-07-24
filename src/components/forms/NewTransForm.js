@@ -28,28 +28,28 @@ const NewTransForm = (props) => {
   const inputHandler = (identifier, event) => {
     if (identifier === "deposit") {
       setEnteredDeposit(event.target.value);
-      console.log(event.target.value);
+      // console.log(event.target.value);
     } else if (identifier === "book") {
       setEnteredBook(event.target.value);
-      console.log(event.target.value);
+      // console.log(event.target.value);
     } else if (identifier === "tuckshop") {
       setEnteredTuckshop(event.target.value);
-      console.log(event.target.value);
+      // console.log(event.target.value);
     } else if (identifier === "withdrawal") {
       setEnteredWithdrawal(event.target.value.toString());
-      console.log(event.target.value);
+      // console.log(event.target.value);
     } else if (identifier === "depNote") {
       setDepNote(event.target.value);
-      console.log(event.target.value);
+      // console.log(event.target.value);
     } else if (identifier === "bookNote") {
       setBookNote(event.target.value);
-      console.log(event.target.value);
+      // console.log(event.target.value);
     } else if (identifier === "tuckNote") {
       setTuckNote(event.target.value);
-      console.log(event.target.value);
+      // console.log(event.target.value);
     } else {
       setWithNote(event.target.value);
-      console.log(event.target.value);
+      // console.log(event.target.value);
     }
   };
   const submitHandler = (event) => {
@@ -74,7 +74,7 @@ const NewTransForm = (props) => {
     let localName = {
       name: name
     }
-    console.log(bal.balance)
+    // console.log(bal.balance)
     const user = localStorage.getItem("User");
     if (enteredDeposit !== "" && enteredDeposit !== 0) {
       dT = {

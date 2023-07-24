@@ -2,10 +2,12 @@ import Table from "../UI/Table";
 import AllTransRows from "./AllTransRows";
 import Card from "../UI/Card";
 import styles from "./AllTransactionsTable.module.css";
+import sortBy from 'array-sort-by';
 
 const AllTransactionsTable = (props) => {
   const { query } = props;
   const allTrans = query.data.data.data;
+  const sortByDate = sortBy(allTrans, tran => -new Date(tran.timeStamp))
   // console.log("CAMPERTRANS", allTrans)
   return (
     <Card>
@@ -30,7 +32,7 @@ const AllTransactionsTable = (props) => {
           </tr>
         </thead>
         <tbody>
-          {allTrans.map((trans) => (
+          {sortByDate.map((trans) => (
             <AllTransRows key={trans._id} trans={trans} />
           ))}
         </tbody>
