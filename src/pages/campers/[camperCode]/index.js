@@ -24,7 +24,7 @@ const CamperOverview = (props) => {
   const apiAddBalancePath = `/api/campers/${camperId}/add-balance`;
   const postTransactionsHandler = async (trans) => {
     // console.log("trans here now: ", trans);
-    setTimeout(() => {Router.replace("/")}, 3000);
+    setTimeout(() => {Router.replace("/")}, 2000);
     const response = await fetch("/api/campers/[campersCode]", {
       method: "POST",
       body: JSON.stringify(trans),

@@ -3,6 +3,10 @@ import { useState } from "react";
 import styles from "./NewTransForm.module.css";
 import Button from "@mui/material/Button";
 import { TextField } from "@mui/material";
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+import Stack from '@mui/material/Stack';
+import { euro } from "../../../lib/helpers";
 
 const NewTransForm = (props) => {
   const [negativeBalance, setNegativeBalance] = useState();
@@ -19,6 +23,8 @@ const NewTransForm = (props) => {
   const [bookNote, setBookNote] = useState("")
   const [tuckNote, setTuckNote] = useState("")
   const [withNote, setWithNote] = useState("")
+  const [alert, setAlert] = useState(false)
+  const [enoughCheck, setEnoughCheck] = useState("")
   const inputHandler = (identifier, event) => {
     if (identifier === "deposit") {
       setEnteredDeposit(event.target.value);
@@ -53,7 +59,8 @@ const NewTransForm = (props) => {
       Number(enteredDeposit) -
       (Number(enteredBook) + Number(enteredTuckshop) + Number(enteredWithdrawal));
     if (enoughCheck < 0) {
-      //add some input feedback
+      setAlert(true);
+      setEnoughCheck(enoughCheck)
       return;
     }
     let dT = {};
@@ -64,6 +71,9 @@ const NewTransForm = (props) => {
     let bal = {
       balance: enoughCheck
     };
+    let localName = {
+      name: name
+    }
     console.log(bal.balance)
     const user = localStorage.getItem("User");
     if (enteredDeposit !== "" && enteredDeposit !== 0) {
@@ -121,6 +131,7 @@ const NewTransForm = (props) => {
       wT,
       bal,
     });
+    localStorage.setItem("Alert", JSON.stringify([dT, bT, tT, wT, bal, localName]))
     setEnteredDeposit("");
     setEnteredBook("");
     setEnteredTuckshop("");
@@ -194,6 +205,13 @@ const NewTransForm = (props) => {
           Add Transaction(s)
         </Button>
       </div>
+      {alert && 
+      <Stack sx={{ width: '25%' }} spacing={2}>
+        <Alert severity="warning" onClose={() => {setAlert(false)}}>
+          <AlertTitle>Warning</AlertTitle>
+          Cannot proceed: The transaction will be in the negative:{euro.format(enoughCheck)}.
+          </Alert>
+      </Stack>}
       <div><h3>Add a short note for special transactions</h3></div>
       <div className={styles.inputs}>
         <div>
