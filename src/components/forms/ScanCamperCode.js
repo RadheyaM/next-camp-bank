@@ -81,7 +81,7 @@ const ScanCamperCode = () => {
               }}
             >
               <AlertTitle>
-                Last Transaction:<strong>&nbsp;{name}&nbsp;|&nbsp;Current Balance:&nbsp;€{balance}</strong>
+                Last Transaction:<strong>&nbsp;{name}&nbsp;|&nbsp;Current Balance:&nbsp;{euro.format(balance)}</strong>
               </AlertTitle>
               Dep:&nbsp;€{dep}&nbsp;|&nbsp;Book:&nbsp;€{book}&nbsp;|&nbsp;Tuck:&nbsp;€{tuck}&nbsp;
               |&nbsp;Withdrawal&nbsp;€{withdrawn}
