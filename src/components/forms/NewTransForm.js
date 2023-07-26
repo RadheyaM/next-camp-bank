@@ -157,6 +157,9 @@ const NewTransForm = (props) => {
             onChange={(event) => {
               inputHandler("deposit", event);
             }}
+            inputProps={{
+              step: 0.5,
+            }}
             type="number"
             id="deposit"
             value={enteredDeposit}
@@ -169,6 +172,9 @@ const NewTransForm = (props) => {
             onWheel={() => document.activeElement.blur()}
             onChange={(event) => {
               inputHandler("book", event);
+            }}
+            inputProps={{
+              step: 0.5,
             }}
             type="number"
             id="book"
@@ -183,6 +189,9 @@ const NewTransForm = (props) => {
             onChange={(event) => {
               inputHandler("tuckshop", event);
             }}
+            inputProps={{
+              step: 0.5,
+            }}
             type="number"
             id="tuckshop"
             value={enteredTuckshop}
@@ -195,6 +204,9 @@ const NewTransForm = (props) => {
             onWheel={() => document.activeElement.blur()}
             onChange={(event) => {
               inputHandler("withdrawal", event);
+            }}
+            inputProps={{
+              step: 0.5,
             }}
             type="number"
             id="withdraw"
