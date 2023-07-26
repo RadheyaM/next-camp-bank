@@ -158,7 +158,7 @@ const NewTransForm = (props) => {
               inputHandler("deposit", event);
             }}
             inputProps={{
-              step: 0.5,
+              step: 0.01,
             }}
             type="number"
             id="deposit"
@@ -174,7 +174,7 @@ const NewTransForm = (props) => {
               inputHandler("book", event);
             }}
             inputProps={{
-              step: 0.5,
+              step: 0.01,
             }}
             type="number"
             id="book"
@@ -190,7 +190,7 @@ const NewTransForm = (props) => {
               inputHandler("tuckshop", event);
             }}
             inputProps={{
-              step: 0.5,
+              step: 0.01,
             }}
             type="number"
             id="tuckshop"
@@ -206,7 +206,7 @@ const NewTransForm = (props) => {
               inputHandler("withdrawal", event);
             }}
             inputProps={{
-              step: 0.5,
+              step: 0.01,
             }}
             type="number"
             id="withdraw"
