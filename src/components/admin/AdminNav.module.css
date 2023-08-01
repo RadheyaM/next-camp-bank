@@ -1,0 +1,12 @@
+.adminNav {
+	width: 75%;
+	background-color: #1d3557;
+	color: white;
+}
+
+.adminList {
+	display: flex;
+	justify-content: center;
+	gap: 5rem;
+	list-style: none;
+}

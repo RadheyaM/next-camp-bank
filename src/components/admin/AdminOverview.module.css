@@ -1,0 +1,17 @@
+.summaryContDiv {
+	width: 75%;
+	display: flex;
+	justify-content:space-around
+}
+  
+.summaryDiv {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding: 3rem;
+}
+
+.summaryDiv>p {
+	font-size: 3rem;
+	margin: 1rem;
+}
