@@ -15,7 +15,6 @@ const CamperOverview = (props) => {
       Router.replace("/auth");
     }
   }, [status]);
-  const [currentBalance, setCurrentBalance] = useState(0);
   const router = useRouter();
   const camperId = router.query.camperCode.toString();
   // console.log("CamperId: ", camperId);

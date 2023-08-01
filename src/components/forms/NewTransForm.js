@@ -3,13 +3,12 @@ import { useState } from "react";
 import styles from "./NewTransForm.module.css";
 import Button from "@mui/material/Button";
 import { TextField } from "@mui/material";
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
-import Stack from '@mui/material/Stack';
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import Stack from "@mui/material/Stack";
 import { euro } from "../../../lib/helpers";
 
 const NewTransForm = (props) => {
-  const [negativeBalance, setNegativeBalance] = useState();
   const { camper } = props;
   const camperId = camper.accountId;
   const firstName = camper.firstName;
@@ -19,62 +18,63 @@ const NewTransForm = (props) => {
   const [enteredBook, setEnteredBook] = useState("");
   const [enteredTuckshop, setEnteredTuckshop] = useState("");
   const [enteredWithdrawal, setEnteredWithdrawal] = useState("");
-  const [depNote, setDepNote] = useState("")
-  const [bookNote, setBookNote] = useState("")
-  const [tuckNote, setTuckNote] = useState("")
-  const [withNote, setWithNote] = useState("")
-  const [alert, setAlert] = useState(false)
-  const [enoughCheck, setEnoughCheck] = useState("")
+  const [enteredAdj, setEnteredAdj] = useState("");
+  const [depNote, setDepNote] = useState("");
+  const [bookNote, setBookNote] = useState("");
+  const [tuckNote, setTuckNote] = useState("");
+  const [withNote, setWithNote] = useState("");
+  const [adjNote, setAdjNote] = useState("");
+  const [alert, setAlert] = useState(false);
+  const [enoughCheck, setEnoughCheck] = useState("");
   const inputHandler = (identifier, event) => {
     if (identifier === "deposit") {
       setEnteredDeposit(event.target.value);
-      // console.log(event.target.value);
     } else if (identifier === "book") {
       setEnteredBook(event.target.value);
-      // console.log(event.target.value);
     } else if (identifier === "tuckshop") {
       setEnteredTuckshop(event.target.value);
-      // console.log(event.target.value);
     } else if (identifier === "withdrawal") {
       setEnteredWithdrawal(event.target.value.toString());
-      // console.log(event.target.value);
+    } else if (identifier === "adjustment") {
+      setEnteredAdj(event.target.value);
     } else if (identifier === "depNote") {
       setDepNote(event.target.value);
-      // console.log(event.target.value);
     } else if (identifier === "bookNote") {
       setBookNote(event.target.value);
-      // console.log(event.target.value);
     } else if (identifier === "tuckNote") {
       setTuckNote(event.target.value);
-      // console.log(event.target.value);
+    } else if (identifier === "adjNote") {
+      setAdjNote(event.target.value);
     } else {
       setWithNote(event.target.value);
-      // console.log(event.target.value);
     }
   };
   const submitHandler = (event) => {
     event.preventDefault();
+    // calc balance, return if balance negative.
     const enoughCheck =
       Number(props.balance.data.data.data) +
       Number(enteredDeposit) -
-      (Number(enteredBook) + Number(enteredTuckshop) + Number(enteredWithdrawal));
+      (Number(enteredBook) +
+        Number(enteredTuckshop) +
+        Number(enteredWithdrawal) +
+        Number(enteredAdj));
     if (enoughCheck < 0) {
       setAlert(true);
-      setEnoughCheck(enoughCheck)
+      setEnoughCheck(enoughCheck);
       return;
     }
     let dT = {};
     let bT = {};
     let tT = {};
     let wT = {};
-    let newBal = enoughCheck
+    let aT = {};
     let bal = {
-      balance: enoughCheck
+      balance: enoughCheck,
     };
     let localName = {
-      name: name
-    }
-    // console.log(bal.balance)
+      name: name,
+    };
     const user = localStorage.getItem("User");
     if (enteredDeposit !== "" && enteredDeposit !== 0) {
       dT = {
@@ -119,19 +119,32 @@ const NewTransForm = (props) => {
         note: withNote,
         user: user,
       };
-    }
-    // console.log("deposit: ", depositTransaction);
-    // console.log("book: ", bookTransaction);
-    // console.log("tuck: ", tuckTransaction);
-    // console.log("withdrawal: ", withdrawalTransaction);
+    };
+    if (enteredAdj !== "" && enteredAdj !== 0) {
+      aT = {
+        accountId: camperId,
+        name: name,
+        type: "Adjustment",
+        category: "Adjustment",
+        amount: enteredAdj,
+        note: adjNote,
+        user: user,
+      };
+    };
+    // transfer transaction data up to parent.
     props.onAddTransactions({
       dT,
       bT,
       tT,
       wT,
+      aT,
       bal,
     });
-    localStorage.setItem("Alert", JSON.stringify([dT, bT, tT, wT, bal, localName]))
+    //save for 'last transaction' message.
+    localStorage.setItem(
+      "Alert",
+      JSON.stringify([dT, bT, tT, wT, aT, bal, localName])
+    );
     setEnteredDeposit("");
     setEnteredBook("");
     setEnteredTuckshop("");
@@ -164,7 +177,7 @@ const NewTransForm = (props) => {
             id="deposit"
             value={enteredDeposit}
             variant="outlined"
-            label="DEPOSIT AMOUNT..."
+            label="Deposit € Amt"
           />
         </div>
         <div>
@@ -180,7 +193,7 @@ const NewTransForm = (props) => {
             id="book"
             value={enteredBook}
             variant="outlined"
-            label="BOOK AMOUNT..."
+            label="Book € Amt"
           />
         </div>
         <div>
@@ -196,7 +209,7 @@ const NewTransForm = (props) => {
             id="tuckshop"
             value={enteredTuckshop}
             variant="outlined"
-            label="TUCKSHOP AMOUNT..."
+            label="Tuckshop € Amt"
           />
         </div>
         <div>
@@ -212,77 +225,115 @@ const NewTransForm = (props) => {
             id="withdraw"
             value={enteredWithdrawal}
             variant="outlined"
-            label="WITHDRAWAL AMOUNT..."
+            label="Withdraw € Amt"
+          />
+        </div>
+        <div>
+          <TextField
+            onWheel={() => document.activeElement.blur()}
+            onChange={(event) => {
+              inputHandler("adjustment", event);
+            }}
+            inputProps={{
+              step: 0.01,
+            }}
+            type="number"
+            id="adjustment"
+            value={enteredAdj}
+            variant="outlined"
+            label="Adjustment € - / + "
+          />
+        </div>
+      </div>
+      <div>
+        <h3>Add a short note for special transactions</h3>
+      </div>
+      <div className={styles.inputs}>
+        <div>
+          <TextField
+            onChange={(event) => {
+              inputHandler("depNote", event);
+            }}
+            type="text"
+            id="depNote"
+            value={depNote}
+            variant="outlined"
+            label="Deposit Note"
+            multiline
+          />
+        </div>
+        <div>
+          <TextField
+            onChange={(event) => {
+              inputHandler("bookNote", event);
+            }}
+            type="text"
+            id="bookNote"
+            value={bookNote}
+            variant="outlined"
+            label="Book Note"
+            multiline
+          />
+        </div>
+        <div>
+          <TextField
+            onChange={(event) => {
+              inputHandler("tuckNote", event);
+            }}
+            type="text"
+            id="tuckNote"
+            value={tuckNote}
+            variant="outlined"
+            label="Tuckshop Note"
+            multiline
+          />
+        </div>
+        <div>
+          <TextField
+            onChange={(event) => {
+              inputHandler("withNote", event);
+            }}
+            type="text"
+            id="withNote"
+            value={withNote}
+            variant="outlined"
+            label="Withdraw Note"
+            multiline
+          />
+        </div>
+        <div>
+          <TextField
+            onChange={(event) => {
+              inputHandler("adjNote", event);
+            }}
+            type="text"
+            id="adjNote"
+            value={adjNote}
+            variant="outlined"
+            label="Adj Note"
+            multiline
           />
         </div>
       </div>
       <div className={styles.submitBtn}>
-        <Button variant="contained" type="submit">
+        <Button size="large" variant="contained" type="submit">
           Add Transaction(s)
         </Button>
       </div>
-      {alert && 
-      <Stack sx={{ width: '25%' }} spacing={2}>
-        <Alert severity="warning" onClose={() => {setAlert(false)}}>
-          <AlertTitle>Warning</AlertTitle>
-          Cannot proceed: The transaction will be in the negative:{euro.format(enoughCheck)}.
+      {alert && (
+        <Stack sx={{ width: "25%" }} spacing={2}>
+          <Alert
+            severity="warning"
+            onClose={() => {
+              setAlert(false);
+            }}
+          >
+            <AlertTitle>Warning</AlertTitle>
+            Cannot proceed: Balance will be negative:
+            {euro.format(enoughCheck)}.
           </Alert>
-      </Stack>}
-      <div><h3>Add a short note for special transactions</h3></div>
-      <div className={styles.inputs}>
-        <div>
-          <TextField
-              onChange={(event) => {
-                inputHandler("depNote", event);
-              }}
-              type="text"
-              id="depNote"
-              value={depNote}
-              variant="outlined"
-              label="DEPOSIT NOTE..."
-              multiline
-            />
-        </div>
-        <div>
-          <TextField
-              onChange={(event) => {
-                inputHandler("bookNote", event);
-              }}
-              type="text"
-              id="bookNote"
-              value={bookNote}
-              variant="outlined"
-              label="BOOK NOTE..."
-              multiline
-            />
-        </div>
-        <div>
-          <TextField
-              onChange={(event) => {
-                inputHandler("tuckNote", event);
-              }}
-              type="text"
-              id="tuckNote"
-              value={tuckNote}
-              variant="outlined"
-              label="TUCKSHOP NOTE..."
-              multiline
-            />
-        </div>
-        <div>
-          <TextField
-              onChange={(event) => {
-                inputHandler("withNote", event);
-              }}
-              type="text"
-              id="withNote"
-              value={withNote}
-              variant="outlined"
-              label="WITHDRAWAL NOTE..."
-              multiline
-            />
-        </div>
-      </div>
+        </Stack>
+      )}
     </form>
   );
 };

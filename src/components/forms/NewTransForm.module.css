@@ -1,22 +1,21 @@
 .newTransForm {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   width: 100%;
 }
 
 .newTransForm .inputs{
+  width: 60%;
   display: flex;
-  gap: 3rem;
-  padding: 2% 0;
+  gap: 1rem;
+  justify-content: space-between;
+  padding: 2rem;
 }
 
-.newTransForm .inputs div {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.newTransForm .inputs > div {
+  background-color: aliceblue;
 }
 
 .newTransForm .inputs label {

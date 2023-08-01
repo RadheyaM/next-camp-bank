@@ -7,7 +7,7 @@ export const postCamperTransactions = async (transData) => {
     console.log("connected to server");
     const db = client.db("Campers");
     const col = db.collection("Transactions");
-    const { dT, bT, tT, wT } = transData;
+    const { dT, bT, tT, wT, aT } = transData;
     if (dT.accountId) {
       const d = await col.insertOne({
         accountId: dT.accountId,
@@ -59,6 +59,19 @@ export const postCamperTransactions = async (transData) => {
         timeStamp: new Date(),
       });
       console.log("withdrawal added");
+    }
+    if (aT.accountId) {
+      const a = await col.insertOne({
+        accountId: aT.accountId,
+        name: aT.name,
+        type: aT.type,
+        category: aT.category,
+        amount: aT.amount.toString(),
+        note: aT.note,
+        user: aT.user,
+        timeStamp: new Date(),
+      });
+      console.log("adjustment added");
     }
   } catch (err) {
     console.log(err);
