@@ -1,0 +1,50 @@
+.adminSection {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.adminNav {
+  width: 75%;
+  background-color: #1d3557;
+  color: white;
+}
+
+.adminList {
+  display: flex;
+  justify-content: center;
+  gap: 5rem;
+  list-style: none;
+}
+
+.summaryContDiv {
+  width: 75%;
+  display: flex;
+  justify-content:space-around
+}
+
+.summaryDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem;
+}
+
+.summaryDiv>p {
+  font-size: 3rem;
+  margin: 1rem;
+}
+
+.breakdownDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.breakdownDiv>p {
+  font-size: 2rem;
+  margin: 0;
+}
