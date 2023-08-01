@@ -2,9 +2,20 @@ import Link from "next/link";
 import styles from "./MainNavigation.module.css";
 import { useSession, signOut } from "next-auth/react";
 import { Button } from "@mui/material";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const MainNavigation = (props) => {
+  const [admin, setAdmin] = useState(false)
+  const router = useRouter();
   const { data: session, status } = useSession();
+  const siteSettingsHandler = () => {
+    setAdmin(true)
+  }
+  useEffect(() => {
+    router.replace('/admin');
+  }, [admin]);
   const logoutHandler = () => {
     signOut();
   };
@@ -38,8 +49,8 @@ const MainNavigation = (props) => {
             <Button size="small" variant="contained" onClick={logoutHandler}>
               {session.user.email} | Logout
             </Button>
-            {session.user.email === "Superuser" && <Button onClick={() => {}} size="small" variant="contained">
-              Site Settings
+            {session.user.email === "Superuser" && <Button onClick={siteSettingsHandler} size="small" variant="contained">
+              Admin Dashboard
             </Button>}
           </div>
         )}

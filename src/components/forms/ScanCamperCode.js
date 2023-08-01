@@ -37,7 +37,6 @@ const ScanCamperCode = () => {
     if (localParsed[3].amount) {
       withdrawn = localParsed[3].amount;
     }
-    console.log(name);
   }
   const router = useRouter();
   const [enteredCode, setEnteredCode] = useState("");
@@ -52,7 +51,6 @@ const ScanCamperCode = () => {
       localStorage.removeItem("Alert");
     }
   };
-  console.log(enteredCode);
   return (
     <Card>
       <form onSubmit={submitHandler} className={styles.enterCodeForm}>
