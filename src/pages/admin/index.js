@@ -3,6 +3,7 @@ import s from "./index.module.css";
 import AdminOverview from "@/components/admin/AdminOverview";
 import AdminOverviewTable from "@/components/admin/AdminOverviewTable";
 import AdminTransTable from "@/components/admin/AdminTransTable";
+import TableFilterSort from "@/components/admin/TableFilterSort";
 import AdminNav from "@/components/admin/AdminNav";
 
 const dashboard = () => {
@@ -15,6 +16,9 @@ const dashboard = () => {
 				<div className={s.summaryContDiv}>
 					<AdminOverviewTable />
         </div>
+				<div className={s.summaryContDiv}>
+					<TableFilterSort />
+				</div>
 				<div className={s.summaryContDiv}>
 					<AdminTransTable />
 				</div>
