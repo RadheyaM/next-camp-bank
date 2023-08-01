@@ -10,7 +10,6 @@ const TransactionRow = (props) => {
     <tr>
       <td>{user}</td>
       <td suppressHydrationWarning>{humanDate + " " + humanTime}</td>
-      <td>{type}</td>
       <td>{category}</td>
       <td>{euro.format(Number(amount))}</td>
       <td>{note}</td>

@@ -55,16 +55,20 @@
 }
 
 .logoutBtnDiv {
+  display: flex;
+  gap: 1rem;
   padding-top: 1rem;
 }
 
-.logoutBtnDiv Button {
+.logoutBtnDiv Button,
+.logoutBtnDiv a {
   background-color: #dad7cd;
   border: none;
   color:#14213d;
 }
 
-.logoutBtnDiv Button:hover {
+.logoutBtnDiv Button:hover,
+.logoutBtnDiv a:hover{
   background-color: #fcbf49; 
   color:#14213d;
 }

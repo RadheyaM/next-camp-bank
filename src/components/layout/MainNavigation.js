@@ -1,9 +1,7 @@
 import Link from "next/link";
 import styles from "./MainNavigation.module.css";
-import FestivalIcon from "@mui/icons-material/Festival";
 import { useSession, signOut } from "next-auth/react";
 import { Button } from "@mui/material";
-import logo from '../../../public/intents_logo.png'
 
 const MainNavigation = () => {
   const {data: session} = useSession();
@@ -37,10 +35,11 @@ const MainNavigation = () => {
             </ul>
           {session && (
             <div className={styles.logoutBtnDiv}>
-            <Button size="small" variant="contained" onClick={logoutHandler}>
-                {session.user.email}  |  Logout
-            </Button>
-          </div>
+              <Button size="small" variant="contained" onClick={logoutHandler}>
+                  {session.user.email}  |  Logout
+              </Button>
+              <Button onClick={() => {}} size="small" variant="contained">Site Settings</Button>
+            </div>
           )}
         </nav>
     </header>
