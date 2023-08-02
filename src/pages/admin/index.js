@@ -8,19 +8,28 @@ import clientPromise from "../../../lib/db";
 import { sumObjectArrayAmounts } from "../../../lib/helpers";
 
 const dashboard = ({ trans, fifty, amounts }) => {
-  const totalDep = Number(sumObjectArrayAmounts(amounts.dep));
-  const totalBooks = Number(sumObjectArrayAmounts(amounts.book));
-  const totalTuckshop = Number(sumObjectArrayAmounts(amounts.tuck));
-  const totalWithdrawals = Number(sumObjectArrayAmounts(amounts.with));
-  const totalAdjustments = Number(sumObjectArrayAmounts(amounts.adj));
+  const totals = {
+    dep: Number(sumObjectArrayAmounts(amounts.dep)),
+    book: Number(sumObjectArrayAmounts(amounts.book)),
+    tuck: Number(sumObjectArrayAmounts(amounts.tuck)),
+    with: Number(sumObjectArrayAmounts(amounts.with)),
+    adj: Number(sumObjectArrayAmounts(amounts.adj)),
+    depCount: amounts.dep.length,
+    bookCount: amounts.book.length,
+    tuckCount: amounts.tuck.length,
+    withCount: amounts.with.length,
+    adjCount: amounts.adj.length,
+    transCount: trans.length,
+    camperCount: amounts.camperCount,
+  };
   return (
     <Fragment>
       <section className={s.adminSection}>
         <h1>Admin Dashboard...</h1>
         <AdminNav />
-        <AdminOverview trans={trans} />
+        <AdminOverview totals={totals} /> 
         <div className={s.summaryContDiv}>
-          <AdminOverviewTable />
+          <AdminOverviewTable totals={totals}/>
         </div>
         <div className={s.summaryContDiv}>
           <TableFilterSort trans={trans} fifty={fifty}/>
@@ -36,6 +45,7 @@ export const getServerSideProps = async () => {
   const client = await clientPromise;
   const db = client.db("Campers");
   const col = db.collection("Transactions");
+  const col2 = db.collection("Campers");
   // 50 most recent.
   const fifty = await col.find({}).sort({ timeStamp: -1 }).limit(50).toArray();
   // All transactions
@@ -54,6 +64,7 @@ export const getServerSideProps = async () => {
   const adjustments = await col
     .find({ category: "Adjustment" }, { amount: 1 })
     .toArray();
+  const camperCount = await col2.countDocuments();
   console.log("adjustments: ", adjustments);
   const data = JSON.parse(JSON.stringify(trans));
   const fiftyData = JSON.parse(JSON.stringify(fifty));
@@ -73,6 +84,7 @@ export const getServerSideProps = async () => {
         tuck: tuckData,
         with: withData,
         adj: adjData,
+        camperCount: camperCount,
       },
     },
   };
