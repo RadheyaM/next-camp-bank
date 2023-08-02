@@ -23,20 +23,48 @@ const TableFilterSort = ({ trans, fifty }) => {
     amount: "",
     note: "",
   });
+  const [filterTracker, setFilterTracker] = React.useState({
+    addedby: false, 
+    category: false,
+    date: false,
+    amount: false,
+    note: false,
+  })
   const handleFilterChange = (identifier, event) => {
     if (identifier === "category") {
+      if (filterTracker.category) {
+        return
+      }
       setFilter({ ...filter, category: event.target.value });
       setFilteredData(filterFn(filteredData, 'category', event.target.value))
+      setFilterTracker({...filterTracker, category: true})
     } else if (identifier === "date") {
+      if (filterTracker.date) {
+        return
+      }
       setFilter({ ...filter, date: event.target.value });
       setFilteredData(filterDates(filteredData, event.target.value));
+      setFilterTracker({...filterTracker, date: true})
     } else if (identifier === "amount") {
+      if (filterTracker.amount) {
+        return
+      }
       setFilter({ ...filter, amount: event.target.value });
+      setFilterTracker({...filterTracker, amount: true})
     } else if (identifier === "addedby") {
+      if (filterTracker.addedby) {
+        return
+      }
       setFilter({ ...filter, addedby: event.target.value });
       setFilteredData(filterFn(filteredData, 'user', event.target.value))
+      setFilterTracker({...filterTracker, addedby: true})
     } else {
+      if (filterTracker.note) {
+        return
+      }
       setFilter({ ...filter, note: event.target.value });
+      setFilteredData(filterFn(filteredData, 'note', event.target.value));
+      setFilterTracker({...filterTracker, note: true})
     }
   };
   const handleSortChange = (identifier, event) => {
@@ -68,7 +96,13 @@ const TableFilterSort = ({ trans, fifty }) => {
       amount: "",
       note: "",
     });
-    setFilteredData(fifty);
+    setFilterTracker({
+      addedby: false, 
+      category: false,
+      date: false,
+      amount: false,
+      note: false,
+    })
   };
   const handleClearSort = () => {
     setSort({
