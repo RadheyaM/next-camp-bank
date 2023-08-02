@@ -65,7 +65,6 @@ export const getServerSideProps = async () => {
     .find({ category: "Adjustment" }, { amount: 1 })
     .toArray();
   const camperCount = await col2.countDocuments();
-  console.log("adjustments: ", adjustments);
   const data = JSON.parse(JSON.stringify(trans));
   const fiftyData = JSON.parse(JSON.stringify(fifty));
   const depData = JSON.parse(JSON.stringify(deposits));

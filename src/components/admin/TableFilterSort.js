@@ -6,11 +6,13 @@ import Select from "@mui/material/Select";
 import s from "./TableFilterSort.module.css";
 import { Button } from "@mui/material";
 import AdminTransTable from "./AdminTransTable";
-import { filterFn } from "../../../lib/helpers";
+import { filterFn, getDateRange } from "../../../lib/helpers";
 
-const TableFilterSort = ({ trans }) => {
-  console.log("trans: ", trans);
-  const [filteredData, setFilteredData] = React.useState(trans);
+const TableFilterSort = ({ trans, fifty }) => {
+  const dateRange = Array.from(getDateRange(trans));
+  console.log('date range: ', dateRange)
+
+  const [filteredData, setFilteredData] = React.useState(fifty);
   const [sort, setSort] = React.useState({
     name: "",
     date: "",
@@ -19,16 +21,17 @@ const TableFilterSort = ({ trans }) => {
   const [filter, setFilter] = React.useState({
     addedby: "",
     category: "",
-    day: "",
+    date: "",
     amount: "",
     note: "",
   });
   const handleFilterChange = (identifier, event) => {
+    setFilteredData(trans);
     if (identifier === "category") {
       setFilter({ ...filter, category: event.target.value });
       setFilteredData(filterFn(filteredData, 'category', event.target.value))
-    } else if (identifier === "day") {
-      setFilter({ ...filter, day: event.target.value });
+    } else if (identifier === "date") {
+      setFilter({ ...filter, date: event.target.value });
     } else if (identifier === "amount") {
       setFilter({ ...filter, amount: event.target.value });
     } else if (identifier === "addedby") {
@@ -107,29 +110,29 @@ const TableFilterSort = ({ trans }) => {
             }}
             label="category"
           >
-            <MenuItem value={"Deposit"}>Deposits</MenuItem>
-            <MenuItem value={"Book"}>Book Sales</MenuItem>
-            <MenuItem value={"Tuckshop"}>Tuckshop Sales</MenuItem>
-            <MenuItem value={"Withdrawal"}>Withdrawals</MenuItem>
-            <MenuItem value={"Adjustment"}>Adjustments</MenuItem>
+            <MenuItem value="Deposit">Deposits</MenuItem>
+            <MenuItem value="Book">Book Sales</MenuItem>
+            <MenuItem value="Tuckshop">Tuckshop Sales</MenuItem>
+            <MenuItem value="Withdrawal">Withdrawals</MenuItem>
+            <MenuItem value="Adjustment">Adjustments</MenuItem>
           </Select>
         </FormControl>
         <FormControl className={s.formControl} variant="standard">
-          <InputLabel id="day-label">Day</InputLabel>
+          <InputLabel id="date-label">Date</InputLabel>
           <Select
-            labelId="day-label"
-            id="day-filter"
-            value={filter.day}
+            format="DD-MM-YYYY"
+            labelId="date-label"
+            id="date-filter"
+            value={filter.date}
             onChange={(event) => {
-              handleFilterChange("day", event);
+              handleFilterChange("date", event);
             }}
-            label="day"
+            label="date"
           >
-            <MenuItem value={"Monday"}>Monday</MenuItem>
-            <MenuItem value={"Tuesday"}>Tuesday</MenuItem>
-            <MenuItem value={"Wednesday"}>Wednesday</MenuItem>
-            <MenuItem value={"Thursday"}>Thursday</MenuItem>
-            <MenuItem value={"Friday"}>Friday</MenuItem>
+            {dateRange && dateRange.map((date) => {
+              return <MenuItem id={date} value={date}>{date}</MenuItem>
+            })}
+            {!dateRange && <MenuItem value="">No Transactions</MenuItem>}
           </Select>
         </FormControl>
         <FormControl className={s.formControl} variant="standard">
