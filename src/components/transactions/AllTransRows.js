@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { euro } from "../../../lib/helpers";
 
-const AllTransRows = (props) => {
-  const { accountId, user, name, timeStamp, type, category, amount, note } = props.trans;
+const AllTransRows = ({trans}) => {
+  const { accountId, user, name, timeStamp, type, category, amount, note } = trans;
   const linkPath = `/campers/${accountId}`
   const humanTime = new Date(timeStamp).toLocaleTimeString();
   const humanDate = new Date(timeStamp).toLocaleDateString();

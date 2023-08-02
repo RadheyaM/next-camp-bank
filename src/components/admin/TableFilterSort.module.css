@@ -3,9 +3,11 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  margin-top: 5rem;
 }
 .filterContainer,
-.sortContainer {
+.sortContainer,
+.tableContainer {
   display: flex;
   gap: 2rem;
   justify-content: center;

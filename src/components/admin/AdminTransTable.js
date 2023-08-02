@@ -1,9 +1,10 @@
 import Table from "../UI/Table";
+import AllTransRows from "../transactions/AllTransRows";
 
-const AdminTransTable = () => {
+const AdminTransTable = ({trans}) => {
   return (
 		<Table>
-			<caption><h1>All Transactions</h1></caption>
+			<caption><h1>Transactions</h1></caption>
 			<thead>
 				<tr>
 					<th>Added By</th>
@@ -17,16 +18,9 @@ const AdminTransTable = () => {
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>1</td>
-					<td>2</td>
-					<td>3</td>
-					<td>4</td>
-					<td>5</td>
-					<td>6</td>
-					<td>7</td>
-					<td>8</td>
-				</tr>
+				{trans.map((trans) => (
+					<AllTransRows key={trans._id} trans={trans} />
+				))}
 			</tbody>
 		</Table>
 	)

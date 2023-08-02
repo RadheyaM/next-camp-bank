@@ -5,8 +5,10 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import s from "./TableFilterSort.module.css";
 import { Button } from "@mui/material";
+import AdminTransTable from "./AdminTransTable";
 
-const TableFilterSort = () => {
+const TableFilterSort = ({trans}) => {
+  console.log("trans: ", trans);
   const [sort, setSort] = React.useState({
     name: "",
     date: "",
@@ -211,6 +213,9 @@ const TableFilterSort = () => {
           </Select>
         </FormControl>
         <Button onClick={handleClearSort} color="error">Clear Sort</Button>
+      </div>
+      <div className={s.tableContainer}>
+        <AdminTransTable trans={trans}/>
       </div>
     </div>
   );
