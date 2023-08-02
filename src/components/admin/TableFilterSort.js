@@ -6,9 +6,11 @@ import Select from "@mui/material/Select";
 import s from "./TableFilterSort.module.css";
 import { Button } from "@mui/material";
 import AdminTransTable from "./AdminTransTable";
+import { filterFn } from "../../../lib/helpers";
 
-const TableFilterSort = ({trans}) => {
+const TableFilterSort = ({ trans }) => {
   console.log("trans: ", trans);
+  const [filteredData, setFilteredData] = React.useState(trans);
   const [sort, setSort] = React.useState({
     name: "",
     date: "",
@@ -24,12 +26,14 @@ const TableFilterSort = ({trans}) => {
   const handleFilterChange = (identifier, event) => {
     if (identifier === "category") {
       setFilter({ ...filter, category: event.target.value });
+      setFilteredData(filterFn(filteredData, 'category', event.target.value))
     } else if (identifier === "day") {
       setFilter({ ...filter, day: event.target.value });
     } else if (identifier === "amount") {
       setFilter({ ...filter, amount: event.target.value });
     } else if (identifier === "addedby") {
       setFilter({ ...filter, addedby: event.target.value });
+      setFilteredData(filterFn(filteredData, 'user', event.target.value))
     } else {
       setFilter({ ...filter, note: event.target.value });
     }
@@ -40,21 +44,21 @@ const TableFilterSort = ({trans}) => {
         name: event.target.value,
         date: "",
         amount: "",
-      })
+      });
     } else if (identifier === "date") {
       setSort({
         name: "",
         date: event.target.value,
         amount: "",
-      })
+      });
     } else {
       setSort({
         name: "",
         date: "",
         amount: event.target.value,
-      })
+      });
     }
-  }
+  };
   const handleClearFilters = () => {
     setFilter({
       addedby: "",
@@ -62,15 +66,19 @@ const TableFilterSort = ({trans}) => {
       day: "",
       amount: "",
       note: "",
-    })
-  }
+    });
+    setFilteredData(trans);
+  };
   const handleClearSort = () => {
     setSort({
       name: "",
       date: "",
       amount: "",
-    })
-  }
+    });
+  };
+
+  // console.log("filterFn", filterFn(trans, 'user', 'Dylan'));
+
   return (
     <div className={s.filterSortContainer}>
       <div className={s.filterContainer}>
@@ -105,7 +113,7 @@ const TableFilterSort = ({trans}) => {
             <MenuItem value={"Book"}>Book Sales</MenuItem>
             <MenuItem value={"Tuckshop"}>Tuckshop Sales</MenuItem>
             <MenuItem value={"Withdrawal"}>Withdrawals</MenuItem>
-            <MenuItem value={"Adjustments"}>Adjustments</MenuItem>
+            <MenuItem value={"Adjustment"}>Adjustments</MenuItem>
           </Select>
         </FormControl>
         <FormControl className={s.formControl} variant="standard">
@@ -159,7 +167,9 @@ const TableFilterSort = ({trans}) => {
             <MenuItem value={false}>Without Notes</MenuItem>
           </Select>
         </FormControl>
-        <Button onClick={handleClearFilters} color="error">Clear Filters</Button>
+        <Button onClick={handleClearFilters} color="error">
+          Clear Filters
+        </Button>
       </div>
       <div className={s.sortContainer}>
         <h2>Sort:</h2>
@@ -200,22 +210,23 @@ const TableFilterSort = ({trans}) => {
           <Select
             labelId="amountSort-label"
             id="amountSort"
-            value={sort.amount
-            }
+            value={sort.amount}
             onChange={(event) => {
               handleSortChange("amount", event);
             }}
             label="Amount"
-            inputProps={{'aria-label': "Sort by Amount"}}
+            inputProps={{ "aria-label": "Sort by Amount" }}
           >
             <MenuItem value={"Most-Least"}>Most-Least</MenuItem>
             <MenuItem value={"Least-Most"}>Least-Most</MenuItem>
           </Select>
         </FormControl>
-        <Button onClick={handleClearSort} color="error">Clear Sort</Button>
+        <Button onClick={handleClearSort} color="error">
+          Clear Sort
+        </Button>
       </div>
       <div className={s.tableContainer}>
-        <AdminTransTable trans={trans}/>
+        <AdminTransTable trans={filteredData} />
       </div>
     </div>
   );

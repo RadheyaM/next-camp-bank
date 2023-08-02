@@ -31,8 +31,8 @@ export const getServerSideProps = async () => {
   const client = await clientPromise;
   const db = client.db("Campers");
   const col = db.collection("Transactions");
-  const trans = await col.find({}).sort({timeStamp: -1}).limit(50).toArray();
-  // const trans = await col.find({}).toArray();
+  // const trans = await col.find({}).sort({timeStamp: -1}).limit(50).toArray();
+  const trans = await col.find({}).toArray();
   const data = JSON.parse(JSON.stringify(trans));
   // writeLocal(data);
   return {
