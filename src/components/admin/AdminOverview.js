@@ -1,6 +1,6 @@
 import s from './AdminOverview.module.css'
 
-const AdminOverview = () => {
+const AdminOverview = ({trans}) => {
 	return (
 		<div className={s.summaryContDiv}>
 			<div className={s.summaryDiv}>

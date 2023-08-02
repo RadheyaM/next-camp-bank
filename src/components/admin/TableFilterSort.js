@@ -77,8 +77,6 @@ const TableFilterSort = ({ trans }) => {
     });
   };
 
-  // console.log("filterFn", filterFn(trans, 'user', 'Dylan'));
-
   return (
     <div className={s.filterSortContainer}>
       <div className={s.filterContainer}>
