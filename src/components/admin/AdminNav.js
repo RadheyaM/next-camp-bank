@@ -6,6 +6,7 @@ const AdminNav = () => {
 			<ul className={s.adminList}>
 				<li>Overview</li>
 				<li>Data</li>
+				<li>Add New User</li>
 				<li>Add Single Camper</li>
 				<li>Start: Add Campers</li>
 				<li>End: Close Accounts</li>

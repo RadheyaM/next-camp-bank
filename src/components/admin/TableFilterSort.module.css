@@ -1,4 +1,11 @@
 .filterSortContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.filterContainer,
+.sortContainer {
   display: flex;
   gap: 2rem;
   justify-content: center;
