@@ -6,13 +6,11 @@ import Select from "@mui/material/Select";
 import s from "./TableFilterSort.module.css";
 import { Button } from "@mui/material";
 import AdminTransTable from "./AdminTransTable";
-import { filterFn, getDateRange } from "../../../lib/helpers";
+import { filterFn, getDateRange, filterDates } from "../../../lib/helpers";
 
 const TableFilterSort = ({ trans, fifty }) => {
   const dateRange = Array.from(getDateRange(trans));
-  console.log('date range: ', dateRange)
-
-  const [filteredData, setFilteredData] = React.useState(fifty);
+  const [filteredData, setFilteredData] = React.useState(trans);
   const [sort, setSort] = React.useState({
     name: "",
     date: "",
@@ -26,12 +24,12 @@ const TableFilterSort = ({ trans, fifty }) => {
     note: "",
   });
   const handleFilterChange = (identifier, event) => {
-    setFilteredData(trans);
     if (identifier === "category") {
       setFilter({ ...filter, category: event.target.value });
       setFilteredData(filterFn(filteredData, 'category', event.target.value))
     } else if (identifier === "date") {
       setFilter({ ...filter, date: event.target.value });
+      setFilteredData(filterDates(filteredData, event.target.value));
     } else if (identifier === "amount") {
       setFilter({ ...filter, amount: event.target.value });
     } else if (identifier === "addedby") {
@@ -70,7 +68,7 @@ const TableFilterSort = ({ trans, fifty }) => {
       amount: "",
       note: "",
     });
-    setFilteredData(trans);
+    setFilteredData(fifty);
   };
   const handleClearSort = () => {
     setSort({
