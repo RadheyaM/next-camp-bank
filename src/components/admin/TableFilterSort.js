@@ -10,7 +10,8 @@ import { filterFn, getDateRange, filterDates } from "../../../lib/helpers";
 
 const TableFilterSort = ({ trans, fifty }) => {
   const dateRange = Array.from(getDateRange(trans));
-  const [filteredData, setFilteredData] = React.useState("");
+  const [filteredData, setFilteredData] = React.useState(trans);
+  const [showData, setShowData] = React.useState(false);
   const [sort, setSort] = React.useState({
     name: "",
     date: "",
@@ -26,19 +27,23 @@ const TableFilterSort = ({ trans, fifty }) => {
   const handleFilterChange = (identifier, event) => {
     if (identifier === "category") {
       setFilter({ ...filter, category: event.target.value });
-      setFilteredData(filterFn(trans, "category", event.target.value));
+      setFilteredData(filterFn(filteredData, "category", event.target.value));
+      setShowData(true);
       // handleMultipleFilters("category");
     } else if (identifier === "date") {
       setFilter({ ...filter, date: event.target.value });
-      setFilteredData(filterDates(trans, event.target.value));
+      setFilteredData(filterDates(filteredData, event.target.value));
+      setShowData(true);
       // handleMultipleFilters("date");
     } else if (identifier === "addedby") {
       setFilter({ ...filter, addedby: event.target.value });
-      setFilteredData(filterFn(trans, "user", event.target.value));
+      setFilteredData(filterFn(filteredData, "user", event.target.value));
+      setShowData(true);
       // handleMultipleFilters("addedby");
     } else {
       setFilter({ ...filter, note: event.target.value });
-      setFilteredData(filterFn(trans, "note", event.target.value));
+      setFilteredData(filterFn(filteredData, "note", event.target.value));
+      setShowData(true);
       // handleMultipleFilters("note");
     }
   };
@@ -85,7 +90,8 @@ const TableFilterSort = ({ trans, fifty }) => {
       date: "",
       note: "",
     });
-    setFilteredData("");
+    setFilteredData(trans);
+    setShowData(false);
   };
   const handleClearSort = () => {
     setSort({
@@ -228,9 +234,16 @@ const TableFilterSort = ({ trans, fifty }) => {
           Clear Sort
         </Button>
       </div>
-      <div className={s.tableContainer}>
-        <AdminTransTable trans={filteredData} />
-      </div>
+      {showData && (
+        <div id="showall" className={s.tableContainer}>
+          <AdminTransTable trans={filteredData} />
+        </div>
+      )}
+      {!showData && (
+        <div id="showNone" className={s.tableContainer}>
+          <AdminTransTable />
+        </div>
+      )}
     </div>
   );
 };
