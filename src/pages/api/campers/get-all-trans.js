@@ -3,13 +3,13 @@ const fs = require('fs');
 
 export const writeLocal = async (obj) => {
     const currentDate = new Date();
-    const currentTime = currentDate.toLocaleTimeString().replaceAll(":", "_");
-    const filePath = `data/data_${currentDate.toJSON().slice(0,10).concat("_", currentTime)}.json`
+    const filePath = `data/data_${currentDate.toJSON().slice(0,10)}.json`
     const jsonStringify = JSON.stringify(obj);
     fs.writeFileSync(filePath, jsonStringify, (err) => {
       if (err) throw err;
     });
-    console.log('content has been saved', currentTime)
+    console.log('content has been saved')
+    return filePath;
 }
 
 const handler = async (req, res) => {
