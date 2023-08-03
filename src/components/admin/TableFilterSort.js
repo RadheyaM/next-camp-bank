@@ -7,6 +7,7 @@ import s from "./TableFilterSort.module.css";
 import { Button } from "@mui/material";
 import AdminTransTable from "./AdminTransTable";
 import { filterFn, getDateRange, filterDates } from "../../../lib/helpers";
+import sortBy from 'array-sort-by';
 
 const TableFilterSort = ({ trans, fifty }) => {
   const dateRange = Array.from(getDateRange(trans));
@@ -29,53 +30,49 @@ const TableFilterSort = ({ trans, fifty }) => {
       setFilter({ ...filter, category: event.target.value });
       setFilteredData(filterFn(filteredData, "category", event.target.value));
       setShowData(true);
-      // handleMultipleFilters("category");
     } else if (identifier === "date") {
       setFilter({ ...filter, date: event.target.value });
       setFilteredData(filterDates(filteredData, event.target.value));
       setShowData(true);
-      // handleMultipleFilters("date");
     } else if (identifier === "addedby") {
       setFilter({ ...filter, addedby: event.target.value });
       setFilteredData(filterFn(filteredData, "user", event.target.value));
       setShowData(true);
-      // handleMultipleFilters("addedby");
     } else {
       setFilter({ ...filter, note: event.target.value });
       setFilteredData(filterFn(filteredData, "note", event.target.value));
       setShowData(true);
-      // handleMultipleFilters("note");
-    }
-  };
-  const handleMultipleFilters = (identifier) => {
-    if (filter.addedby & (identifier !== "addedby")) {
-      setFilteredData(filterFn(filteredData, "addedby", filter.addedby));
-    }
-    if (filter.category & (identifier !== "category")) {
-      setFilteredData(filterFn(filteredData, "category", filter.category));
-    }
-    if (filter.date & (identifier !== "date")) {
-      setFilteredData(filterDates(filteredData, filter.date));
-    }
-    // setFilteredData(filteredData, amount, filter.amount);
-    if (filter.note & (identifier !== "note")) {
-      setFilteredData(filterFn(filteredData, "note", filter.note));
     }
   };
   const handleSortChange = (identifier, event) => {
     if (identifier === "name") {
+      if (event.target.value === "A-Z") {
+        setFilteredData(sortBy(filteredData, data => data.name))
+      } else {
+        setFilteredData(sortBy(filteredData, data => -data.name))
+      }
       setSort({
         name: event.target.value,
         date: "",
         amount: "",
       });
     } else if (identifier === "date") {
+      if (event.target.value === "Old-New") {
+        setFilteredData(sortBy(filteredData, data => new Date(data.timeStamp)))
+      } else {
+        setFilteredData(sortBy(filteredData, data => -new Date(data.timeStamp)))
+      }
       setSort({
         name: "",
         date: event.target.value,
         amount: "",
       });
     } else {
+      if (event.target.value === "Most-Least") {
+        setFilteredData(sortBy(filteredData, data => -new Number(data.amount)))
+      } else {
+        setFilteredData(sortBy(filteredData, data => new Number(data.amount)))
+      }
       setSort({
         name: "",
         date: "",
@@ -116,6 +113,7 @@ const TableFilterSort = ({ trans, fifty }) => {
             }}
             label="Added By"
           >
+            <MenuItem value={""}>All</MenuItem>
             <MenuItem value={"Staff"}>Staff</MenuItem>
             <MenuItem value={"Dylan"}>Dylan</MenuItem>
           </Select>
@@ -131,6 +129,7 @@ const TableFilterSort = ({ trans, fifty }) => {
             }}
             label="category"
           >
+            <MenuItem value={""}>All</MenuItem>
             <MenuItem value="Deposit">Deposits</MenuItem>
             <MenuItem value="Book">Book Sales</MenuItem>
             <MenuItem value="Tuckshop">Tuckshop Sales</MenuItem>
@@ -150,6 +149,7 @@ const TableFilterSort = ({ trans, fifty }) => {
             }}
             label="date"
           >
+            <MenuItem value={""}>All</MenuItem>
             {dateRange &&
               dateRange.map((date) => {
                 return (
@@ -172,6 +172,7 @@ const TableFilterSort = ({ trans, fifty }) => {
             }}
             label="note"
           >
+            <MenuItem value={""}>All</MenuItem>
             <MenuItem value={true}>With Notes</MenuItem>
             <MenuItem value={false}>Without Notes</MenuItem>
           </Select>
@@ -193,10 +194,8 @@ const TableFilterSort = ({ trans, fifty }) => {
             }}
             label="Name"
           >
-            <MenuItem value={"First A-Z"}>First A-Z</MenuItem>
-            <MenuItem value={"First Z-A"}>First Z-A</MenuItem>
-            <MenuItem value={"Last A-Z"}>Last A-Z</MenuItem>
-            <MenuItem value={"Last Z-A"}>Last A-Z</MenuItem>
+            <MenuItem value={"A-Z"}>A-Z</MenuItem>
+            <MenuItem value={"Z-A"}>Z-A</MenuItem>
           </Select>
         </FormControl>
         <FormControl className={s.formControl} variant="standard">
