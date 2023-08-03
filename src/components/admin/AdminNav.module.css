@@ -2,6 +2,7 @@
 	width: 75%;
 	background-color: #1d3557;
 	color: white;
+	text-decoration: none;
 }
 
 .adminList {
@@ -9,4 +10,9 @@
 	justify-content: center;
 	gap: 5rem;
 	list-style: none;
+}
+
+.adminList a {
+	text-decoration: none;
+	color: white
 }
