@@ -80,24 +80,21 @@ const TableFilterSort = ({ trans, fifty }) => {
       });
     }
   };
-  const handleClearFilters = () => {
+  const handleClear = () => {
     setFilter({
       addedby: "",
       category: "",
       date: "",
       note: "",
     });
-    setFilteredData(trans);
-    setShowData(false);
-  };
-  const handleClearSort = () => {
     setSort({
       name: "",
       date: "",
       amount: "",
     });
+    setFilteredData(trans);
+    setShowData(false);
   };
-
   return (
     <div className={s.filterSortContainer}>
       <div className={s.filterContainer}>
@@ -177,9 +174,6 @@ const TableFilterSort = ({ trans, fifty }) => {
             <MenuItem value={false}>Without Notes</MenuItem>
           </Select>
         </FormControl>
-        <Button onClick={handleClearFilters} color="error">
-          Clear Filters
-        </Button>
       </div>
       <div className={s.sortContainer}>
         <h2>Sort:</h2>
@@ -199,7 +193,7 @@ const TableFilterSort = ({ trans, fifty }) => {
           </Select>
         </FormControl>
         <FormControl className={s.formControl} variant="standard">
-          <InputLabel id="dateSort-label">Date</InputLabel>
+          <InputLabel id="dateSort-label">Date/Time</InputLabel>
           <Select
             labelId="dateSort-label"
             id="dateSort"
@@ -229,8 +223,10 @@ const TableFilterSort = ({ trans, fifty }) => {
             <MenuItem value={"Least-Most"}>Least-Most</MenuItem>
           </Select>
         </FormControl>
-        <Button onClick={handleClearSort} color="error">
-          Clear Sort
+      </div>
+      <div className={s.sortContainer}>
+        <Button onClick={handleClear} color="error">
+          Clear
         </Button>
       </div>
       {showData && (
