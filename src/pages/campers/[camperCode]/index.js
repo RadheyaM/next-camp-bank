@@ -24,6 +24,7 @@ const CamperOverview = (props) => {
   const postTransactionsHandler = async (trans) => {
     // console.log("trans here now: ", trans);
     setTimeout(() => {Router.replace("/")}, 2000);
+    const saveJsonData = await fetch("/api/campers/get-all-trans");
     const response = await fetch("/api/campers/[campersCode]", {
       method: "POST",
       body: JSON.stringify(trans),

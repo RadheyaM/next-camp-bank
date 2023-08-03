@@ -16,3 +16,8 @@
 	text-decoration: none;
 	color: white
 }
+
+.adminList a.highlighNav {
+	text-decoration: none;
+	color: yellow;
+}

@@ -5,12 +5,12 @@ import { Fragment } from "react";
 import s from "./index.module.css";
 import AdminOverview from "@/components/admin/AdminOverview";
 import AdminOverviewTable from "@/components/admin/AdminOverviewTable";
-import TableFilterSort from "@/components/admin/TableFilterSort";
 import AdminNav from "@/components/admin/AdminNav";
 import clientPromise from "../../../lib/db";
 import { sumObjectArrayAmounts } from "../../../lib/helpers";
+import { writeLocal } from "../api/campers/get-all-trans";
 
-const dashboard = ({ trans, fifty, amounts }) => {
+const dashboard = ({ amounts, trans }) => {
   const { status, data } = useSession();
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -37,12 +37,9 @@ const dashboard = ({ trans, fifty, amounts }) => {
         <section className={s.adminSection}>
           <h1>Admin Dashboard...</h1>
           <AdminNav />
-          <AdminOverview totals={totals} /> 
+          <AdminOverview totals={totals} />
           <div className={s.summaryContDiv}>
             <AdminOverviewTable totals={totals}/>
-          </div>
-          <div className={s.summaryContDiv}>
-            <TableFilterSort trans={trans} fifty={fifty}/>
           </div>
         </section>
       </Fragment>
@@ -83,7 +80,7 @@ export const getServerSideProps = async () => {
   const tuckData = JSON.parse(JSON.stringify(tuck));
   const withData = JSON.parse(JSON.stringify(withdrawals));
   const adjData = JSON.parse(JSON.stringify(adjustments));
-  // writeLocal(data);
+  await writeLocal(data);
   return {
     props: {
       trans: data,

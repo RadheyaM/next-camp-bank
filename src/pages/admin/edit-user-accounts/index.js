@@ -4,7 +4,7 @@ import s from "../index.module.css";
 const editUserAccounts = () => {
     return(
         <section className={s.adminSection}>
-            <AdminNav />
+            <AdminNav/>
             <h1>Edit User Accounts</h1>
         </section>
     )
