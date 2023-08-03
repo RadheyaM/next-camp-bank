@@ -18,9 +18,14 @@ const AdminTransTable = ({trans}) => {
 				</tr>
 			</thead>
 			<tbody>
-				{trans.map((trans) => (
+				{trans && trans.map((trans) => (
 					<AllTransRows key={trans._id} trans={trans} />
 				))}
+				{!trans && 
+					<tr id="unique">
+						<td colSpan={8} id="unique2"><strong>Select Filters to display data...</strong></td>
+					</tr>
+				}
 			</tbody>
 		</Table>
 	)

@@ -1,3 +1,6 @@
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
+import Router from "next/router";
 import { Fragment } from "react";
 import s from "./index.module.css";
 import AdminOverview from "@/components/admin/AdminOverview";
@@ -8,6 +11,12 @@ import clientPromise from "../../../lib/db";
 import { sumObjectArrayAmounts } from "../../../lib/helpers";
 
 const dashboard = ({ trans, fifty, amounts }) => {
+  const { status, data } = useSession();
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      Router.replace("/auth");
+    }
+  }, [status]);
   const totals = {
     dep: Number(sumObjectArrayAmounts(amounts.dep)),
     book: Number(sumObjectArrayAmounts(amounts.book)),
@@ -22,21 +31,23 @@ const dashboard = ({ trans, fifty, amounts }) => {
     transCount: trans.length,
     camperCount: amounts.camperCount,
   };
-  return (
-    <Fragment>
-      <section className={s.adminSection}>
-        <h1>Admin Dashboard...</h1>
-        <AdminNav />
-        <AdminOverview totals={totals} /> 
-        <div className={s.summaryContDiv}>
-          <AdminOverviewTable totals={totals}/>
-        </div>
-        <div className={s.summaryContDiv}>
-          <TableFilterSort trans={trans} fifty={fifty}/>
-        </div>
-      </section>
-    </Fragment>
-  );
+  if (status === "authenticated") {
+    return (
+      <Fragment>
+        <section className={s.adminSection}>
+          <h1>Admin Dashboard...</h1>
+          <AdminNav />
+          <AdminOverview totals={totals} /> 
+          <div className={s.summaryContDiv}>
+            <AdminOverviewTable totals={totals}/>
+          </div>
+          <div className={s.summaryContDiv}>
+            <TableFilterSort trans={trans} fifty={fifty}/>
+          </div>
+        </section>
+      </Fragment>
+    );
+  };
 };
 
 export default dashboard;

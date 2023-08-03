@@ -10,7 +10,7 @@ import { filterFn, getDateRange, filterDates } from "../../../lib/helpers";
 
 const TableFilterSort = ({ trans, fifty }) => {
   const dateRange = Array.from(getDateRange(trans));
-  const [filteredData, setFilteredData] = React.useState(trans);
+  const [filteredData, setFilteredData] = React.useState("");
   const [sort, setSort] = React.useState({
     name: "",
     date: "",
@@ -20,51 +20,41 @@ const TableFilterSort = ({ trans, fifty }) => {
     addedby: "",
     category: "",
     date: "",
-    amount: "",
     note: "",
   });
-  const [filterTracker, setFilterTracker] = React.useState({
-    addedby: false, 
-    category: false,
-    date: false,
-    amount: false,
-    note: false,
-  })
+  console.log("filter.addedby: ", filter.addedby === true);
   const handleFilterChange = (identifier, event) => {
     if (identifier === "category") {
-      if (filterTracker.category) {
-        return
-      }
       setFilter({ ...filter, category: event.target.value });
-      setFilteredData(filterFn(filteredData, 'category', event.target.value))
-      setFilterTracker({...filterTracker, category: true})
+      setFilteredData(filterFn(trans, "category", event.target.value));
+      // handleMultipleFilters("category");
     } else if (identifier === "date") {
-      if (filterTracker.date) {
-        return
-      }
       setFilter({ ...filter, date: event.target.value });
-      setFilteredData(filterDates(filteredData, event.target.value));
-      setFilterTracker({...filterTracker, date: true})
-    } else if (identifier === "amount") {
-      if (filterTracker.amount) {
-        return
-      }
-      setFilter({ ...filter, amount: event.target.value });
-      setFilterTracker({...filterTracker, amount: true})
+      setFilteredData(filterDates(trans, event.target.value));
+      // handleMultipleFilters("date");
     } else if (identifier === "addedby") {
-      if (filterTracker.addedby) {
-        return
-      }
       setFilter({ ...filter, addedby: event.target.value });
-      setFilteredData(filterFn(filteredData, 'user', event.target.value))
-      setFilterTracker({...filterTracker, addedby: true})
+      setFilteredData(filterFn(trans, "user", event.target.value));
+      // handleMultipleFilters("addedby");
     } else {
-      if (filterTracker.note) {
-        return
-      }
       setFilter({ ...filter, note: event.target.value });
-      setFilteredData(filterFn(filteredData, 'note', event.target.value));
-      setFilterTracker({...filterTracker, note: true})
+      setFilteredData(filterFn(trans, "note", event.target.value));
+      // handleMultipleFilters("note");
+    }
+  };
+  const handleMultipleFilters = (identifier) => {
+    if (filter.addedby & (identifier !== "addedby")) {
+      setFilteredData(filterFn(filteredData, "addedby", filter.addedby));
+    }
+    if (filter.category & (identifier !== "category")) {
+      setFilteredData(filterFn(filteredData, "category", filter.category));
+    }
+    if (filter.date & (identifier !== "date")) {
+      setFilteredData(filterDates(filteredData, filter.date));
+    }
+    // setFilteredData(filteredData, amount, filter.amount);
+    if (filter.note & (identifier !== "note")) {
+      setFilteredData(filterFn(filteredData, "note", filter.note));
     }
   };
   const handleSortChange = (identifier, event) => {
@@ -92,17 +82,10 @@ const TableFilterSort = ({ trans, fifty }) => {
     setFilter({
       addedby: "",
       category: "",
-      day: "",
-      amount: "",
+      date: "",
       note: "",
     });
-    setFilterTracker({
-      addedby: false, 
-      category: false,
-      date: false,
-      amount: false,
-      note: false,
-    })
+    setFilteredData("");
   };
   const handleClearSort = () => {
     setSort({
@@ -161,28 +144,15 @@ const TableFilterSort = ({ trans, fifty }) => {
             }}
             label="date"
           >
-            {dateRange && dateRange.map((date) => {
-              return <MenuItem id={date} value={date}>{date}</MenuItem>
-            })}
+            {dateRange &&
+              dateRange.map((date) => {
+                return (
+                  <MenuItem id={date} value={date}>
+                    {date}
+                  </MenuItem>
+                );
+              })}
             {!dateRange && <MenuItem value="">No Transactions</MenuItem>}
-          </Select>
-        </FormControl>
-        <FormControl className={s.formControl} variant="standard">
-          <InputLabel id="amount-label">Amount</InputLabel>
-          <Select
-            labelId="amount-label"
-            id="amount-filter"
-            value={filter.amount}
-            onChange={(event) => {
-              handleFilterChange("amount", event);
-            }}
-            label="amount"
-          >
-            <MenuItem value={"0-5"}>€0 - 5</MenuItem>
-            <MenuItem value={"5-10"}>€5 - 10</MenuItem>
-            <MenuItem value={"10-20"}>€10 - 20</MenuItem>
-            <MenuItem value={"20-50"}>€20 - 50</MenuItem>
-            <MenuItem value={"50+"}>€50+</MenuItem>
           </Select>
         </FormControl>
         <FormControl className={s.formControl} variant="standard">
