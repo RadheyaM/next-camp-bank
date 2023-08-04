@@ -32,7 +32,7 @@ const DownloadDataButton = ({ trans }) => {
     <div className={s.downloadLinkDiv}>
       <DownloadIcon className={s.icon}/>
       <a className={s.downloadLink} href={objUrl} download={csvName}>
-      Download Latest Transaction Data.csv
+      Download Transaction Data
       </a> 
     </div>
     

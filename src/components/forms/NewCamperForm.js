@@ -7,7 +7,6 @@ const NewCamperForm = (props) => {
   const [accountId, setAccountId] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [balance, setBalance] = useState("");
 
   // console.log(`first name: ${firstName}`);
   // console.log(`last name: ${firstName}`);
@@ -20,7 +19,7 @@ const NewCamperForm = (props) => {
       accountId: accountId,
       firstName: firstName,
       lastName: lastName,
-      startingBalance: balance,
+      startingBalance: 0,
       isStaff: false,
       dateTimeCreated: new Date(),
     };
@@ -68,19 +67,9 @@ const NewCamperForm = (props) => {
             onChange={(e) => setLastName(e.target.value)}
           />
         </div>
-        <div>
-          {/* <label htmlFor="startingBalance">Starting Balance (if any)</label> */}
-          <TextField
-            label="Starting Balance:"
-            variant="standard"
-            id="startingBalance"
-            type="text"
-            onChange={(e) => setBalance(e.target.value)}
-          />
-        </div>
       </div>
       <div className={styles.submitBtn}>
-        <Button variant="contained" type="submit">
+        <Button size="small" variant="contained" type="submit">
           Add New Camper
         </Button>
       </div>

@@ -4,7 +4,6 @@ import Router from "next/router";
 import s from "../index.module.css";
 import TableFilterSort from "@/components/admin/TableFilterSort";
 import AdminNav from "@/components/admin/AdminNav";
-import DownloadDataButton from "@/components/admin/DownloadDataButton";
 import clientPromise from "../../../../lib/db";
 
 const adminTransactions = ({trans, fifty}) => {
@@ -19,7 +18,7 @@ const adminTransactions = ({trans, fifty}) => {
       <section className={s.adminSection}>
         <h1>Admin Transactions</h1>
         <AdminNav />
-        <DownloadDataButton trans={trans}/>
+        
         <div className={s.summaryContDiv}>
             <TableFilterSort trans={trans} fifty={fifty}/>
         </div>
