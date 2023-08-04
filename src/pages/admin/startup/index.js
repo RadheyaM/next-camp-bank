@@ -11,3 +11,7 @@ const startup = () => {
 }
 
 export default startup;
+
+export const getServerSideProps = async () => {
+    
+}
