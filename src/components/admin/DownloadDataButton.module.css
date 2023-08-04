@@ -6,6 +6,7 @@
     border: 1px solid #023e8a;
     border-radius: 4px;
     padding: 0.3rem;
+    margin-top: 3rem;
 }
 
 .downloadLinkDiv:hover {

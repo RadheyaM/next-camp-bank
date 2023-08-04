@@ -23,9 +23,6 @@ const NewCamperForm = (props) => {
       isStaff: false,
       dateTimeCreated: new Date(),
     };
-    // console.log(
-    //   `Camper data: ${camperData.accountId}, ${camperData.name}, ${camperData.startingBalance}`
-    // );
     props.onAdd(camperData);
   };
 
@@ -35,7 +32,6 @@ const NewCamperForm = (props) => {
       <hr />
       <div className={styles.inputs}>
         <div>
-          {/* <label htmlFor="accountId">Account Code</label> */}
           <TextField
             id="accountId"
             variant="standard"
@@ -46,7 +42,6 @@ const NewCamperForm = (props) => {
           />
         </div>
         <div>
-          {/* <label htmlFor="name">Camper's Full Name</label> */}
           <TextField
             variant="standard"
             label="Camper's First Name:"
@@ -57,7 +52,6 @@ const NewCamperForm = (props) => {
           />
         </div>
         <div>
-          {/* <label htmlFor="name">Camper's Full Name</label> */}
           <TextField
             variant="standard"
             label="Camper's Last Name:"
@@ -69,7 +63,7 @@ const NewCamperForm = (props) => {
         </div>
       </div>
       <div className={styles.submitBtn}>
-        <Button size="small" variant="contained" type="submit">
+        <Button size="small" variant="outlined" type="submit">
           Add New Camper
         </Button>
       </div>

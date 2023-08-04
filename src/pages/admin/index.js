@@ -38,8 +38,8 @@ const dashboard = ({ amounts, trans }) => {
         <section className={s.adminSection}>
           <h1>Admin Dashboard...</h1>
           <AdminNav />
-          <AdminOverview totals={totals} />
           <DownloadDataButton trans={trans}/>
+          <AdminOverview totals={totals} />
           <div className={s.summaryContDiv}>
             <AdminOverviewTable totals={totals}/>
           </div>
