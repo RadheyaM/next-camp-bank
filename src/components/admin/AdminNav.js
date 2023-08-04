@@ -23,9 +23,6 @@ const AdminNav = () => {
           <Link href="/admin/withdrawals">End of Camp Withdrawals</Link>
         </li>
         <li>
-          <Link href="/admin/saved-data">Saved Data</Link>
-        </li>
-        <li>
           <Link href="/admin/shutdown">Clear All Data</Link>
         </li>
       </ul>

@@ -1,0 +1,25 @@
+.downloadLinkDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 1px 1px rgba(0,0,0,0.2);
+    border: 1px solid #023e8a;
+    border-radius: 4px;
+    padding: 0.3rem;
+}
+
+.downloadLinkDiv:hover {
+    box-shadow: 2px 2px rgba(0,0,0,0.2);
+    background-color: #fcbf49;
+}
+
+.downloadLink {
+    text-decoration: none;
+    text-align: start;
+    padding-bottom: 0.1rem;
+    color: #023e8a;
+}
+
+.icon {
+    color:#023e8a;
+}

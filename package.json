@@ -26,6 +26,7 @@
     "nextjs-cors": "^2.1.2",
     "react": "18.2.0",
     "react-dom": "^18.2.0",
+    "react-use-downloader": "^1.2.4",
     "styled-components": "^5.3.11",
     "xlsx": "^0.18.5"
   },

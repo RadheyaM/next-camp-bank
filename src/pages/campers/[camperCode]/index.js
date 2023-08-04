@@ -17,12 +17,10 @@ const CamperOverview = (props) => {
   }, [status]);
   const router = useRouter();
   const camperId = router.query.camperCode.toString();
-  // console.log("CamperId: ", camperId);
   const apiPath = `/api/campers/${camperId}/get-trans`;
   const apiBalancePath = `/api/campers/${camperId}/get-balance`;
   const apiAddBalancePath = `/api/campers/${camperId}/add-balance`;
   const postTransactionsHandler = async (trans) => {
-    // console.log("trans here now: ", trans);
     setTimeout(() => {Router.replace("/")}, 2000);
     const saveJsonData = await fetch("/api/campers/get-all-trans");
     const response = await fetch("/api/campers/[campersCode]", {
@@ -58,7 +56,6 @@ const CamperOverview = (props) => {
   const balanceQuery = useQuery(["balance"], () => {
     return axios(apiBalancePath);
   });
-  // console.log("query:", query.data.data.data);
   if (status === "authenticated") {
     return (
       <CamperDetail

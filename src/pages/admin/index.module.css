@@ -10,5 +10,14 @@
   width: 75%;
   display: flex;
   justify-content:space-around;
+  margin-top: 3rem;
+}
+
+.savedDataDiv {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin-top: 2rem;
 }

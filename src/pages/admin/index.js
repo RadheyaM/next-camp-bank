@@ -9,6 +9,7 @@ import AdminNav from "@/components/admin/AdminNav";
 import clientPromise from "../../../lib/db";
 import { sumObjectArrayAmounts } from "../../../lib/helpers";
 import { writeLocal } from "../api/campers/get-all-trans";
+import DownloadDataButton from "@/components/admin/DownloadDataButton";
 
 const dashboard = ({ amounts, trans }) => {
   const { status, data } = useSession();
@@ -38,6 +39,7 @@ const dashboard = ({ amounts, trans }) => {
           <h1>Admin Dashboard...</h1>
           <AdminNav />
           <AdminOverview totals={totals} />
+          <DownloadDataButton trans={trans}/>
           <div className={s.summaryContDiv}>
             <AdminOverviewTable totals={totals}/>
           </div>
