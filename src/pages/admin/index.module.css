@@ -21,3 +21,21 @@
   align-items: center;
   margin-top: 2rem;
 }
+
+.userListDiv {
+  display: flex;
+  flex: auto;
+  gap: 3rem;
+}
+
+.usernameDiv {
+  width: 50%;
+}
+
+.userSubDiv {
+  text-align: center;
+}
+
+.iconBtnDiv {
+  display: flex;
+}

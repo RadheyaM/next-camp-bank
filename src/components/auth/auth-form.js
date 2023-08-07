@@ -3,9 +3,9 @@ import styles from "./auth-form.module.css";
 import { signIn } from "next-auth/react";
 import Router from "next/router";
 
-const createUser = async (email, password) => {
+export const createUser = async (email, password) => {
   console.log("you're in the create user fn...")
-  const response = await fetch("api/auth/signup", {
+  const response = await fetch("/api/auth/signup", {
     method: "POST",
     body: JSON.stringify({email, password}),
     headers: {
@@ -66,7 +66,7 @@ const AuthForm = () => {
           <input type="text" id="email" required ref={emailInputRef} />
         </div>
         <div className={styles.control}>
-          <label htmlFor="password">Your Password</label>
+          <label htmlFor="password">Password</label>
           <input
             type="password"
             id="password"
@@ -81,7 +81,7 @@ const AuthForm = () => {
             className={styles.toggle}
             onClick={switchAuthModeHandler}
           >
-            {isLogin ? "Create new account" : "Login with existing account"}
+            {/* {isLogin ? "Create new account" : "Login with existing account"} */}
           </button>
         </div>
       </form>

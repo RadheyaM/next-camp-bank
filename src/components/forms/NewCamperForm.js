@@ -44,7 +44,7 @@ const NewCamperForm = (props) => {
         <div>
           <TextField
             variant="standard"
-            label="Camper's First Name:"
+            label="First Name:"
             id="firstName"
             type="text"
             required={true}
@@ -54,7 +54,7 @@ const NewCamperForm = (props) => {
         <div>
           <TextField
             variant="standard"
-            label="Camper's Last Name:"
+            label="Last Name:"
             id="lastName"
             type="text"
             required={true}
