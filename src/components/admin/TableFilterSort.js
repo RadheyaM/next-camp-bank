@@ -6,8 +6,13 @@ import Select from "@mui/material/Select";
 import s from "./TableFilterSort.module.css";
 import { Button } from "@mui/material";
 import AdminTransTable from "./AdminTransTable";
-import { filterFn, getDateRange, filterDates } from "../../../lib/helpers";
-import sortBy from 'array-sort-by';
+import {
+  filterFn,
+  dynamicFilterFn,
+  getDateRange,
+  filterDates,
+} from "../../../lib/helpers";
+import sortBy from "array-sort-by";
 
 const TableFilterSort = ({ trans, fifty }) => {
   const dateRange = Array.from(getDateRange(trans));
@@ -19,7 +24,7 @@ const TableFilterSort = ({ trans, fifty }) => {
     amount: "",
   });
   const [filter, setFilter] = React.useState({
-    addedby: "",
+    user: "",
     category: "",
     date: "",
     note: "",
@@ -28,28 +33,27 @@ const TableFilterSort = ({ trans, fifty }) => {
   const handleFilterChange = (identifier, event) => {
     if (identifier === "category") {
       setFilter({ ...filter, category: event.target.value });
-      setFilteredData(filterFn(filteredData, "category", event.target.value));
       setShowData(true);
     } else if (identifier === "date") {
       setFilter({ ...filter, date: event.target.value });
-      setFilteredData(filterDates(filteredData, event.target.value));
       setShowData(true);
-    } else if (identifier === "addedby") {
-      setFilter({ ...filter, addedby: event.target.value });
-      setFilteredData(filterFn(filteredData, "user", event.target.value));
+    } else if (identifier === "user") {
+      setFilter({ ...filter, user: event.target.value });
       setShowData(true);
     } else {
       setFilter({ ...filter, note: event.target.value });
-      setFilteredData(filterFn(filteredData, "note", event.target.value));
       setShowData(true);
     }
   };
+  React.useEffect(() => {
+    setFilteredData(dynamicFilterFn(trans, filter));
+  }, [filter])
   const handleSortChange = (identifier, event) => {
     if (identifier === "name") {
       if (event.target.value === "A-Z") {
-        setFilteredData(sortBy(filteredData, data => data.name))
+        setFilteredData(sortBy(filteredData, (data) => data.name));
       } else {
-        setFilteredData(sortBy(filteredData, data => -data.name))
+        setFilteredData(sortBy(filteredData, (data) => -data.name));
       }
       setSort({
         name: event.target.value,
@@ -58,9 +62,13 @@ const TableFilterSort = ({ trans, fifty }) => {
       });
     } else if (identifier === "date") {
       if (event.target.value === "Old-New") {
-        setFilteredData(sortBy(filteredData, data => new Date(data.timeStamp)))
+        setFilteredData(
+          sortBy(filteredData, (data) => new Date(data.timeStamp))
+        );
       } else {
-        setFilteredData(sortBy(filteredData, data => -new Date(data.timeStamp)))
+        setFilteredData(
+          sortBy(filteredData, (data) => -new Date(data.timeStamp))
+        );
       }
       setSort({
         name: "",
@@ -69,9 +77,13 @@ const TableFilterSort = ({ trans, fifty }) => {
       });
     } else {
       if (event.target.value === "Most-Least") {
-        setFilteredData(sortBy(filteredData, data => -new Number(data.amount)))
+        setFilteredData(
+          sortBy(filteredData, (data) => -new Number(data.amount))
+        );
       } else {
-        setFilteredData(sortBy(filteredData, data => new Number(data.amount)))
+        setFilteredData(
+          sortBy(filteredData, (data) => new Number(data.amount))
+        );
       }
       setSort({
         name: "",
@@ -100,15 +112,15 @@ const TableFilterSort = ({ trans, fifty }) => {
       <div className={s.filterContainer}>
         <h2>Filter(s): </h2>
         <FormControl className={s.formControl} variant="standard">
-          <InputLabel id="addedby-label">Added By</InputLabel>
+          <InputLabel id="user-label">Added By</InputLabel>
           <Select
-            labelId="addedby-label"
-            id="addedby-filter"
-            value={filter.addedby}
+            labelId="user-label"
+            id="user-filter"
+            value={filter.user}
             onChange={(event) => {
-              handleFilterChange("addedby", event);
+              handleFilterChange("user", event);
             }}
-            label="Added By"
+            label="user"
           >
             <MenuItem value={""}>All</MenuItem>
             <MenuItem value={"Staff"}>Staff</MenuItem>
@@ -170,8 +182,8 @@ const TableFilterSort = ({ trans, fifty }) => {
             label="note"
           >
             <MenuItem value={""}>All</MenuItem>
-            <MenuItem value={true}>With Notes</MenuItem>
-            <MenuItem value={false}>Without Notes</MenuItem>
+            <MenuItem value={"With"}>With Notes</MenuItem>
+            <MenuItem value={"Without"}>Without Notes</MenuItem>
           </Select>
         </FormControl>
       </div>

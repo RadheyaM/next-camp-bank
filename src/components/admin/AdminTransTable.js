@@ -18,8 +18,8 @@ const AdminTransTable = ({trans}) => {
 				</tr>
 			</thead>
 			<tbody>
-				{trans && trans.map((trans) => (
-					<AllTransRows key={trans._id} trans={trans} />
+				{trans && trans.map((tran) => (
+					<AllTransRows key={tran._id} trans={tran} />
 				))}
 				{!trans && 
 					<tr id="unique">
