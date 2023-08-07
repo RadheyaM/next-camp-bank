@@ -46,7 +46,8 @@ const TableFilterSort = ({ trans, fifty }) => {
     }
   };
   React.useEffect(() => {
-    setFilteredData(dynamicFilterFn(trans, filter));
+    const fd = setFilteredData(dynamicFilterFn(trans, filter));
+    console.log("useeffect fd: ", filteredData);
   }, [filter])
   const handleSortChange = (identifier, event) => {
     if (identifier === "name") {
@@ -122,7 +123,6 @@ const TableFilterSort = ({ trans, fifty }) => {
             }}
             label="user"
           >
-            <MenuItem value={""}>All</MenuItem>
             <MenuItem value={"Staff"}>Staff</MenuItem>
             <MenuItem value={"Dylan"}>Dylan</MenuItem>
           </Select>
@@ -138,7 +138,6 @@ const TableFilterSort = ({ trans, fifty }) => {
             }}
             label="category"
           >
-            <MenuItem value={""}>All</MenuItem>
             <MenuItem value="Deposit">Deposits</MenuItem>
             <MenuItem value="Book">Book Sales</MenuItem>
             <MenuItem value="Tuckshop">Tuckshop Sales</MenuItem>
@@ -158,7 +157,6 @@ const TableFilterSort = ({ trans, fifty }) => {
             }}
             label="date"
           >
-            <MenuItem value={""}>All</MenuItem>
             {dateRange &&
               dateRange.map((date) => {
                 return (
@@ -181,7 +179,6 @@ const TableFilterSort = ({ trans, fifty }) => {
             }}
             label="note"
           >
-            <MenuItem value={""}>All</MenuItem>
             <MenuItem value={"With"}>With Notes</MenuItem>
             <MenuItem value={"Without"}>Without Notes</MenuItem>
           </Select>
