@@ -59,7 +59,7 @@ const AuthForm = () => {
   };
   return (
     <section className={styles.auth}>
-      <h1>{isLogin ? "Login" : "Sign Up"}</h1>
+      <h1>{isLogin ? "Log In" : "Sign Up"}</h1>
       <form onSubmit={submitHandler}>
         <div className={styles.control}>
           <label htmlFor="email">Username</label>
@@ -73,6 +73,9 @@ const AuthForm = () => {
             required
             ref={passwordInputRef}
           />
+        </div>
+        <div className={styles.actions}>
+          <button>{isLogin ? "Log In" : "Create Account"}</button>
         </div>
       </form>
     </section>
