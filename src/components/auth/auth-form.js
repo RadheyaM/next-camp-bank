@@ -73,9 +73,9 @@ const AuthForm = () => {
             required
             ref={passwordInputRef}
           />
-        </div>
-        <div className={styles.actions}>
-          <button>{isLogin ? "Log In" : "Create Account"}</button>
+          <div className={styles.actions}>
+            <button>Log In</button>
+          </div>
         </div>
       </form>
     </section>
