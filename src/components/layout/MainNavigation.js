@@ -38,7 +38,7 @@ const MainNavigation = (props) => {
             <Button size="small" variant="contained" onClick={logoutHandler}>
               {session.user.email} | Logout
             </Button>
-            {session.user.email === "Superuser" && <Button onClick={() => {}} size="small" variant="contained">
+            {session.user.email === "Rodeo" && <Button onClick={() => {}} size="small" variant="contained">
               Site Settings
             </Button>}
           </div>
