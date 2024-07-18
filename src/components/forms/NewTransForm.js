@@ -25,7 +25,7 @@ const NewTransForm = (props) => {
   const [withNote, setWithNote] = useState("");
   const [adjNote, setAdjNote] = useState("");
   const [alert, setAlert] = useState(false);
-  const [complete, setComplet] = (false);
+  const [complete, setComplete] = useState(false);
   const [enoughCheck, setEnoughCheck] = useState("");
   const inputHandler = (identifier, event) => {
     if (identifier === "deposit") {
