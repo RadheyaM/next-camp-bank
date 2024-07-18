@@ -18,7 +18,7 @@ const AddCamper = (props) => {
     console.log("data about to be posted: ", data);
     console.log("newCamperData", newCamperData);
     console.log("Welcome to the pre-axios waiting room....");
-    const response = await fetch("/api/campers/addCamper", {
+    const response = await fetch("/api/campers/addInitialData", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
