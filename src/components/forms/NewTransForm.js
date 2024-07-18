@@ -25,6 +25,7 @@ const NewTransForm = (props) => {
   const [withNote, setWithNote] = useState("");
   const [adjNote, setAdjNote] = useState("");
   const [alert, setAlert] = useState(false);
+  const [complete, setComplet] = (false);
   const [enoughCheck, setEnoughCheck] = useState("");
   const inputHandler = (identifier, event) => {
     if (identifier === "deposit") {
@@ -49,6 +50,7 @@ const NewTransForm = (props) => {
       setWithNote(event.target.value);
     }
   };
+  const [liveCalc, setLiveCalc] = useState(props.balance.data.data.data);
   const submitHandler = (event) => {
     event.preventDefault();
     // calc balance, return if balance negative.
@@ -319,6 +321,9 @@ const NewTransForm = (props) => {
             multiline
           />
         </div>
+      </div>
+      <div>
+        <Button size="large" variant="contained" onClick={() => setLiveCalc(liveCalc - enteredDeposit - enteredTuckshop + enteredAdj -enteredWithdrawal)}>Complete Transaction</Button>
       </div>
       <div className={styles.submitBtn}>
         <Button size="large" variant="contained" type="submit">
