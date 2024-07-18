@@ -17,7 +17,7 @@ const MainNavigation = (props) => {
             <Link href="/">
               <div className={styles.logoImage}>
                 {/* <FestivalIcon sx={{ fontSize: 60 }} /> */}
-                <h3 className={styles.logoSubtext}>...intense banking</h3>
+                <h3 className={styles.logoSubtext}>banking intense...</h3>
               </div>
             </Link>
           </div>
@@ -25,9 +25,9 @@ const MainNavigation = (props) => {
       </div>
       <nav>
         <ul className={styles.navLinkBar}>
-          <Link href="/">Find Camper</Link>
+          <Link href="/">Camper By Code</Link>
           <Link href="/campers" replace>
-            All Campers
+            Find By Name
           </Link>
           <Link href="/campers/transactions" replace>
             Recent Transactions
