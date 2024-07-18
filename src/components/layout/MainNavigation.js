@@ -27,7 +27,7 @@ const MainNavigation = (props) => {
         <ul className={styles.navLinkBar}>
           <Link href="/">Camper By Code</Link>
           <Link href="/campers" replace>
-            Find By Name
+            Camper By Name
           </Link>
           <Link href="/campers/transactions" replace>
             Recent Transactions
