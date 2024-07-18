@@ -10,6 +10,13 @@ import { euro } from "../../../lib/helpers";
 
 const NewTransForm = (props) => {
   const { camper } = props;
+  let calcBalance;
+  const calcBalanceStart = Number(props.balance.data.data.data);
+  if (calcBalanceStart != undefined) {
+    calcBalance = 0
+  } else {
+    calcBalance = calcBalanceStart
+  };
   const camperId = camper.accountId;
   const firstName = camper.firstName;
   const lastName = camper.lastName;
@@ -55,7 +62,7 @@ const NewTransForm = (props) => {
     event.preventDefault();
     // calc balance, return if balance negative.
     const enoughCheck =
-      Number(props.balance.data.data.data) +
+      calcBalanceStart +
       Number(enteredDeposit) -
       (Number(enteredBook) +
         Number(enteredTuckshop) +
