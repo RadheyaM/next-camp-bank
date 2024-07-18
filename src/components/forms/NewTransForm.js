@@ -83,6 +83,7 @@ const NewTransForm = (props) => {
         type: "Deposit",
         category: "Deposit",
         amount: enteredDeposit,
+        balance: enoughCheck,
         note: depNote,
         user: user,
       };
@@ -94,6 +95,7 @@ const NewTransForm = (props) => {
         type: "Payment",
         category: "Book",
         amount: enteredBook,
+        balance: enoughCheck,
         note: bookNote,
         user: user,
       };
@@ -105,6 +107,7 @@ const NewTransForm = (props) => {
         type: "Payment",
         category: "Tuckshop",
         amount: enteredTuckshop,
+        balance: enoughCheck,
         note: tuckNote,
         user: user,
       };
@@ -116,6 +119,7 @@ const NewTransForm = (props) => {
         type: "Payment",
         category: "Withdrawal",
         amount: enteredWithdrawal,
+        balance: enoughCheck,
         note: withNote,
         user: user,
       };
@@ -127,6 +131,7 @@ const NewTransForm = (props) => {
         type: "Adjustment",
         category: "Adjustment",
         amount: enteredAdj,
+        balance: enoughCheck,
         note: adjNote,
         user: user,
       };
