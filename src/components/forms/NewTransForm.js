@@ -13,9 +13,9 @@ const NewTransForm = (props) => {
   let calcBalance;
   const calcBalanceStart = Number(props.balance.data.data.data);
   if (calcBalanceStart != undefined) {
-    calcBalance = 0
-  } else {
     calcBalance = calcBalanceStart
+  } else {
+    calcBalance = 0
   };
   const camperId = camper.accountId;
   const firstName = camper.firstName;
