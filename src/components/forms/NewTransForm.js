@@ -10,13 +10,15 @@ import { euro } from "../../../lib/helpers";
 
 const NewTransForm = (props) => {
   const { camper } = props;
-  let calcBalance;
-  const calcBalanceStart = Number(props.balance.data.data.data);
-  if (calcBalanceStart != undefined) {
-    calcBalance = calcBalanceStart
-  } else {
-    calcBalance = 0
-  };
+  try {
+    let calcBalanceStart = Number(props.balance.data.data.data);
+  } catch (error) {
+    console.log("data.data.data:")
+    console.log(Number(props.balance.data.data.data))
+    console.log(error)
+  } finally {
+    let calcBalanceStart = 0
+  }
   const camperId = camper.accountId;
   const firstName = camper.firstName;
   const lastName = camper.lastName;
@@ -57,7 +59,7 @@ const NewTransForm = (props) => {
       setWithNote(event.target.value);
     }
   };
-  const [liveCalc, setLiveCalc] = useState(Number(props.balance.data.data.data));
+  const [liveCalc, setLiveCalc] = useState(calcBalanceStart);
   const submitHandler = (event) => {
     event.preventDefault();
     // calc balance, return if balance negative.
@@ -330,7 +332,7 @@ const NewTransForm = (props) => {
         </div>
       </div>
       <div>
-        <Button size="large" variant="contained" onClick={() => setLiveCalc(liveCalc - enteredDeposit - enteredTuckshop + enteredAdj -enteredWithdrawal)}>Complete Transaction</Button>
+        <Button size="large" variant="contained" onClick={() => setLiveCalc(liveCalc + enteredDeposit - enteredTuckshop + enteredAdj - enteredWithdrawal)}>Complete Transaction</Button>
       </div>
       <div className={styles.submitBtn}>
         <Button size="large" variant="contained" type="submit">
