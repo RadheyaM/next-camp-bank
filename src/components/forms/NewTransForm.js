@@ -50,7 +50,7 @@ const NewTransForm = (props) => {
       setWithNote(event.target.value);
     }
   };
-  const [liveCalc, setLiveCalc] = useState(props.balance.data.data.data);
+  const [liveCalc, setLiveCalc] = useState(Number(props.balance.data.data.data));
   const submitHandler = (event) => {
     event.preventDefault();
     // calc balance, return if balance negative.
