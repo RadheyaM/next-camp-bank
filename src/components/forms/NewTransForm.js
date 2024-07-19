@@ -242,7 +242,7 @@ const NewTransForm = (props) => {
             type="text"
             id="depNote"
             value={depNote}
-            variant="outlined"
+            variant="standard"
             label="Deposit Note"
             multiline
           />
@@ -255,7 +255,7 @@ const NewTransForm = (props) => {
             type="text"
             id="bookNote"
             value={bookNote}
-            variant="outlined"
+            variant="standard"
             label="Book Note"
             multiline
           />
@@ -268,7 +268,7 @@ const NewTransForm = (props) => {
             type="text"
             id="tuckNote"
             value={tuckNote}
-            variant="outlined"
+            variant="standard"
             label="Tuckshop Note"
             multiline
           />
@@ -281,7 +281,7 @@ const NewTransForm = (props) => {
             type="text"
             id="withNote"
             value={withNote}
-            variant="outlined"
+            variant="standard"
             label="Withdraw Note"
             multiline
           />
