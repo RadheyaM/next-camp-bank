@@ -163,6 +163,7 @@ const NewTransForm = (props) => {
         Leave fields blank where not applicable, e.g. no withdrawal, leave
         blank...
       </p>
+      <p>To adjust use Withdraw or deposit and add a note...</p>
       <div className={styles.inputs}>
         <div>
           <TextField
@@ -177,7 +178,7 @@ const NewTransForm = (props) => {
             id="deposit"
             value={enteredDeposit}
             variant="outlined"
-            label="Deposit € Amt"
+            label="Deposit €"
           />
         </div>
         <div>
@@ -193,7 +194,7 @@ const NewTransForm = (props) => {
             id="book"
             value={enteredBook}
             variant="outlined"
-            label="Book € Amt"
+            label="Book €"
           />
         </div>
         <div>
@@ -209,7 +210,7 @@ const NewTransForm = (props) => {
             id="tuckshop"
             value={enteredTuckshop}
             variant="outlined"
-            label="Tuckshop € Amt"
+            label="Tuckshop €"
           />
         </div>
         <div>
@@ -225,10 +226,10 @@ const NewTransForm = (props) => {
             id="withdraw"
             value={enteredWithdrawal}
             variant="outlined"
-            label="Withdraw € Amt"
+            label="Withdraw €"
           />
         </div>
-        <div>
+        <div hidden>
           <TextField
             onWheel={() => document.activeElement.blur()}
             onChange={(event) => {
@@ -312,6 +313,7 @@ const NewTransForm = (props) => {
             variant="outlined"
             label="Adj Note"
             multiline
+            hidden
           />
         </div>
       </div>
