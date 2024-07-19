@@ -229,23 +229,6 @@ const NewTransForm = (props) => {
             label="Withdraw €"
           />
         </div>
-        <div>
-          <TextField
-            onWheel={() => document.activeElement.blur()}
-            onChange={(event) => {
-              inputHandler("adjustment", event);
-            }}
-            inputProps={{
-              step: 0.01,
-            }}
-            type="number"
-            id="adjustment"
-            value={enteredAdj}
-            variant="outlined"
-            label="Adjustment € - / + "
-            hidden
-          />
-        </div>
       </div>
       <div>
         <h3>Add a short note for special transactions</h3>
@@ -301,20 +284,6 @@ const NewTransForm = (props) => {
             variant="outlined"
             label="Withdraw Note"
             multiline
-          />
-        </div>
-        <div>
-          <TextField
-            onChange={(event) => {
-              inputHandler("adjNote", event);
-            }}
-            type="text"
-            id="adjNote"
-            value={adjNote}
-            variant="outlined"
-            label="Adj Note"
-            multiline
-            hidden
           />
         </div>
       </div>

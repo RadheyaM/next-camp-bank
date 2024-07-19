@@ -73,7 +73,7 @@ const ScanCamperCode = () => {
             Find
           </Button>
         </div>
-          <Stack sx={{ width: "60%" }} spacing={5}>
+          <Stack sx={{ width: "25%" }} spacing={5}>
             <Alert
               severity="info"
               onClose={() => {
@@ -81,11 +81,10 @@ const ScanCamperCode = () => {
               }}
             >
               <AlertTitle>
-                <strong>See Recent Transactions: </strong>
+                <Link href="/campers/transactions" replace>
+                  Recent Transactions
+                </Link>
               </AlertTitle>
-              <Link href="/campers/transactions" replace>
-                Recent Transactions
-              </Link>
             </Alert>
           </Stack>
       </form>
