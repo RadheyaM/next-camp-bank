@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from "./ScanCamperCode.module.css";
 import Card from "../UI/Card";
