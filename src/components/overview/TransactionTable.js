@@ -21,7 +21,6 @@ const TransactionsTable = props => {
           <th>Date</th>
           <th>Category</th>
           <th>Amount</th>
-          <th>Balance After</th>
           <th>Note</th>
         </tr>
       </thead>

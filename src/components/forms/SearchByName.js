@@ -41,7 +41,7 @@ const SearchByName = (props) => {
         </Grid>
         <Grid>
           <Button className={styles.filter} type="submit" variant="contained">
-            Filter
+            Search
           </Button>
           <Button onClick={clearHandler}>Clear</Button>
         </Grid>

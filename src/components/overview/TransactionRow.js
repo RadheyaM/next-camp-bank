@@ -12,7 +12,6 @@ const TransactionRow = (props) => {
       <td suppressHydrationWarning>{humanDate + " " + humanTime}</td>
       <td>{category}</td>
       <td>{euro.format(Number(amount))}</td>
-      <td>{euro.format(Number(0))}</td>
       <td>{note}</td>
     </tr>
   );

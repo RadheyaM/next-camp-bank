@@ -28,7 +28,6 @@ const AllTransactionsTable = (props) => {
             <th>Type</th>
             <th>Category</th>
             <th>Amount</th>
-            <th>Balance After</th>
             <th>Note</th>
           </tr>
         </thead>

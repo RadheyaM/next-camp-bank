@@ -10,15 +10,6 @@ import { euro } from "../../../lib/helpers";
 
 const NewTransForm = (props) => {
   const { camper } = props;
-  try {
-    let calcBalanceStart = Number(props.balance.data.data.data);
-  } catch (error) {
-    console.log("data.data.data:")
-    console.log(Number(props.balance.data.data.data))
-    console.log(error)
-  } finally {
-    let calcBalanceStart = 0
-  }
   const camperId = camper.accountId;
   const firstName = camper.firstName;
   const lastName = camper.lastName;
@@ -34,7 +25,6 @@ const NewTransForm = (props) => {
   const [withNote, setWithNote] = useState("");
   const [adjNote, setAdjNote] = useState("");
   const [alert, setAlert] = useState(false);
-  const [complete, setComplete] = useState(false);
   const [enoughCheck, setEnoughCheck] = useState("");
   const inputHandler = (identifier, event) => {
     if (identifier === "deposit") {
@@ -59,12 +49,11 @@ const NewTransForm = (props) => {
       setWithNote(event.target.value);
     }
   };
-  const [liveCalc, setLiveCalc] = useState(calcBalanceStart);
   const submitHandler = (event) => {
     event.preventDefault();
     // calc balance, return if balance negative.
     const enoughCheck =
-      calcBalanceStart +
+      Number(props.balance.data.data.data) +
       Number(enteredDeposit) -
       (Number(enteredBook) +
         Number(enteredTuckshop) +
@@ -94,7 +83,6 @@ const NewTransForm = (props) => {
         type: "Deposit",
         category: "Deposit",
         amount: enteredDeposit,
-        balance: enoughCheck,
         note: depNote,
         user: user,
       };
@@ -106,7 +94,6 @@ const NewTransForm = (props) => {
         type: "Payment",
         category: "Book",
         amount: enteredBook,
-        balance: enoughCheck,
         note: bookNote,
         user: user,
       };
@@ -118,7 +105,6 @@ const NewTransForm = (props) => {
         type: "Payment",
         category: "Tuckshop",
         amount: enteredTuckshop,
-        balance: enoughCheck,
         note: tuckNote,
         user: user,
       };
@@ -130,7 +116,6 @@ const NewTransForm = (props) => {
         type: "Payment",
         category: "Withdrawal",
         amount: enteredWithdrawal,
-        balance: enoughCheck,
         note: withNote,
         user: user,
       };
@@ -142,7 +127,6 @@ const NewTransForm = (props) => {
         type: "Adjustment",
         category: "Adjustment",
         amount: enteredAdj,
-        balance: enoughCheck,
         note: adjNote,
         user: user,
       };
@@ -330,9 +314,6 @@ const NewTransForm = (props) => {
             multiline
           />
         </div>
-      </div>
-      <div>
-        <Button size="large" variant="contained" onClick={() => setLiveCalc(liveCalc + enteredDeposit - enteredTuckshop + enteredAdj - enteredWithdrawal)}>Complete Transaction</Button>
       </div>
       <div className={styles.submitBtn}>
         <Button size="large" variant="contained" type="submit">

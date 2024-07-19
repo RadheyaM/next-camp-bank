@@ -16,7 +16,6 @@ const AllTransRows = (props) => {
       <td>{type}</td>
       <td>{category}</td>
       <td>{euro.format(Number(amount))}</td>
-      <td>{euro.format(Number(balance))}</td>
       <td>{note}</td>
     </tr>
   );
