@@ -17,7 +17,7 @@ const handler = async (req, res) => {
   const trans = await col.find({}).sort({timeStamp: -1}).limit(50).toArray();
   // const trans = await col.find({}).toArray();
   const data = JSON.parse(JSON.stringify(trans));
-  writeLocal(data);
+  //writeLocal(data);
   res.status(201).json({ data: data });
 };
 
