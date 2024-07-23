@@ -1,5 +1,5 @@
 import clientPromise from "../../../lib/db";
-import AllTransactionsTable from "@/components/transactions/AllTransactionsTable";
+import Dashboard from "@/components/overview/Dashboard";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -16,7 +16,7 @@ const Transactions = (props) => {
   const query = useQuery(
     ["transactions"],
     () => {
-      return axios("/api/campers/get-all-trans");
+      return axios("/api/campers/dashboard");
     },
     {
       initialData: {
@@ -27,7 +27,7 @@ const Transactions = (props) => {
     }
   );
   if (status === "authenticated") {
-    return <AllTransactionsTable query={query} />;
+    return <Dashboard query={query} />;
   }
 };
 
