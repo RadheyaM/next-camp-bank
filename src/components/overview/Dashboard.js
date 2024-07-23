@@ -1,5 +1,4 @@
 import { Fragment } from "react";
-import styles from "./Dashbaord.module.css";
 import { euro } from "../../../lib/helpers";
 
 const Dashboard = (props) => {
