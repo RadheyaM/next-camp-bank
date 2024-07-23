@@ -10,10 +10,8 @@ const handler = async (req, res) => {
   const depCount = await col.find({category: "Deposit" }).count();
   const tuckCount = await col.find({category: "Tuckshop" }).count();
   const withCount = await col.find({category: "Withdrawal" }).count();
-  const totals = calcTotals(transData, depCount, bookCount, tuckCount, withCount)
-  const data = JSON.parse(JSON.stringify(totals));
-  console.log("Data:")
-  console.log(data)
+  const data = calcTotals(transData, depCount, bookCount, tuckCount, withCount)
+  // const data = JSON.parse(JSON.stringify(totals));
   res.status(201).json({ data: data });
 };
 
