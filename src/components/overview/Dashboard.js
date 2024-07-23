@@ -7,7 +7,7 @@ const Dashboard = (props) => {
 
     return (
         <Fragment>
-            <h2>Bank Total: {euro.format(data.total)}</h2>
+            <h2>Bank Total: {euro.format(data[0].total)}</h2>
             <div>
 
                 <h3>Deposit Total: {euro.format(data.dep)}</h3>
