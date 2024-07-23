@@ -2,9 +2,8 @@ import { Fragment } from "react";
 import { euro } from "../../../lib/helpers";
 
 const Dashboard = (props) => {
-    const {camper, query} = props;
+    const {query} = props;
     const data = query.data.data.data;
-    const camperId = camper.accountId
 
     return (
         <Fragment>
