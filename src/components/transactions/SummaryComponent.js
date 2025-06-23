@@ -258,7 +258,7 @@ const SummaryComponent = (props) => {
                 <Table>
                     <thead>
                         <tr>
-                            <th className={styles.headers}>Bank Balance</th>
+                            <th className={styles.totals}>Bank Balance</th>
                             <th className={styles.totals}>Deposits</th>
                             <th className={styles.totals}>Tuckshop</th>
                             <th className={styles.totals}>Books</th>
@@ -267,11 +267,11 @@ const SummaryComponent = (props) => {
                     </thead>
                     <tbody>
                         <tr>
-                            <td className={styles.totals}>{euro.format(filteredData.bankBalance)}</td>
-                            <td className={styles.totals}>{euro.format(-filteredData.depCurrent)}</td>
-                            <td className={styles.totals}>{euro.format(-filteredData.tuckCurrent)}</td>
-                            <td className={styles.totals}>{euro.format(-filteredData.bookCurrent)}</td>
-                            <td className={styles.totals}>{euro.format(-filteredData.outCurrent)}</td>
+                            <td className={styles.totalsDataAdd}>{euro.format(filteredData.bankBalance)}</td>
+                            <td className={styles.totalsDataAdd}>{euro.format(filteredData.depCurrent)}</td>
+                            <td className={styles.totalsDataSub}>{euro.format(-filteredData.tuckCurrent)}</td>
+                            <td className={styles.totalsDataSub}>{euro.format(-filteredData.bookCurrent)}</td>
+                            <td className={styles.totalsDataSub}>{euro.format(-filteredData.outCurrent)}</td>
                         </tr>
                     </tbody>
                 </Table>
@@ -281,12 +281,12 @@ const SummaryComponent = (props) => {
                 <Table>
                     <thead>
                         <tr>
-                            <th className={styles.totals}>Day</th>
-                            <th className={styles.totals}>Balance</th>
-                            <th className={styles.totals}>Deposits</th>
-                            <th className={styles.totals}>Tuckshop</th>
-                            <th className={styles.totals}>Books</th>
-                            <th className={styles.totals}>Withdrawals</th>
+                            <th className={styles.headers}>Day</th>
+                            <th className={styles.headers}>Balance</th>
+                            <th className={styles.headers}>Deposits</th>
+                            <th className={styles.headers}>Tuckshop</th>
+                            <th className={styles.headers}>Books</th>
+                            <th className={styles.headers}>Withdrawals</th>
                         </tr>
                     </thead>
                     <tbody>
