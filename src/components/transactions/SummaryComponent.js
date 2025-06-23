@@ -1,4 +1,5 @@
 import Card from "../UI/Card";
+import styles from "./SummaryComponent.module.css"
 import { euro } from "../../../lib/helpers";
 
 const SummaryComponent = (props) => {
@@ -235,22 +236,25 @@ const SummaryComponent = (props) => {
 
     return (
         <Card>
-            <h1>SUMMARY</h1>
-            <Card>
+            <div className={styles.accountDetails}>
                 <h2>BANK CURRENT TOTALS</h2>
-                <h3>Bank Balance: {filteredData.bankBalance}</h3>
-                <h3>Total Deposits: {filteredData.depCurrent}</h3>
-            </Card>
-            <Card>
+                <div>
+                    <h3>Bank Balance: {filteredData.bankBalance}</h3>
+                    <h3>Total Deposits: {filteredData.depCurrent}</h3>
+                </div>
+            </div>
+            <div className={styles.accountDetails}>
                 <h3>Deposits</h3>
-                <h3>{filteredData.monTot.dep}</h3>
-                <h3>Tuckshop</h3>
-                <h3>{filteredData.monTot.tuck}</h3>
-                <h3>Books</h3>
-                <h3>{filteredData.monTot.book}</h3>
-                <h3>Withdrawals</h3>
-                <h3>{filteredData.monTot.out}</h3>
-            </Card>
+                <div>
+                    <h3>{filteredData.monTot.dep}</h3>
+                    <h3>Tuckshop</h3>
+                    <h3>{filteredData.monTot.tuck}</h3>
+                    <h3>Books</h3>
+                    <h3>{filteredData.monTot.book}</h3>
+                    <h3>Withdrawals</h3>
+                    <h3>{filteredData.monTot.out}</h3>
+                </div>
+            </div>
         </Card>
     )
 

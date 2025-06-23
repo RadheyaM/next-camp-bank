@@ -1,0 +1,9 @@
+.accountDetails {
+  display: flex;
+  flex-direction: row;
+}
+
+.accountDetails h3 {
+  padding: 0 1rem 1rem 0;
+  font-size: 2rem;
+}
