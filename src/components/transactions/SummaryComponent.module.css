@@ -7,3 +7,15 @@
   padding: 0 1rem 1rem 0;
   font-size: 2rem;
 }
+
+.totals {
+    font-size: 2rem;
+}
+
+.additions {
+    color: blue;
+}
+
+.subtractions {
+    color: red
+}
