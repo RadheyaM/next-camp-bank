@@ -235,8 +235,8 @@ const SummaryComponent = (props) => {
             <h1>SUMMARY</h1>
             <Card>
                 <h2>BANK CURRENT TOTALS</h2>
-                <h3>Bank Balance: {euro.Format(Number(filteredData.bankBalance))}</h3>
-                <h3>Total Deposits: {euro.Format((filteredData.depCurrent))}</h3>
+                <h3>Bank Balance: {filteredData.bankBalance}</h3>
+                <h3>Total Deposits: {filteredData.depCurrent}</h3>
             </Card>
             <Card>
                 <h3>Deposits</h3>
