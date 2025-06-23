@@ -258,20 +258,20 @@ const SummaryComponent = (props) => {
                 <Table>
                     <thead>
                         <tr>
-                            <th>Bank Balance</th>
-                            <th>Deposits</th>
-                            <th>Tuckshop</th>
-                            <th>Books</th>
-                            <th>Withdrawals</th>
+                            <th className={styles.headers}>Bank Balance</th>
+                            <th className={styles.totals}>Deposits</th>
+                            <th className={styles.totals}>Tuckshop</th>
+                            <th className={styles.totals}>Books</th>
+                            <th className={styles.totals}>Withdrawals</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td >{euro.format(filteredData.bankBalance)}</td>
-                            <td className={styles.additions}>{euro.format(filteredData.depCurrent)}</td>
-                            <td className={styles.subtractions}>{euro.format(filteredData.tuckCurrent)}</td>
-                            <td className={styles.subtractions}>{euro.format(filteredData.bookCurrent)}</td>
-                            <td className={styles.subtractions}>{euro.format(filteredData.outCurrent)}</td>
+                            <td className={styles.totals}>{euro.format(filteredData.bankBalance)}</td>
+                            <td className={styles.totals}>{euro.format(-filteredData.depCurrent)}</td>
+                            <td className={styles.totals}>{euro.format(-filteredData.tuckCurrent)}</td>
+                            <td className={styles.totals}>{euro.format(-filteredData.bookCurrent)}</td>
+                            <td className={styles.totals}>{euro.format(-filteredData.outCurrent)}</td>
                         </tr>
                     </tbody>
                 </Table>
@@ -281,54 +281,54 @@ const SummaryComponent = (props) => {
                 <Table>
                     <thead>
                         <tr>
-                            <th>Day</th>
-                            <th>Balance</th>
-                            <th>Deposits</th>
-                            <th>Tuckshop</th>
-                            <th>Books</th>
-                            <th>Withdrawals</th>
+                            <th className={styles.totals}>Day</th>
+                            <th className={styles.totals}>Balance</th>
+                            <th className={styles.totals}>Deposits</th>
+                            <th className={styles.totals}>Tuckshop</th>
+                            <th className={styles.totals}>Books</th>
+                            <th className={styles.totals}>Withdrawals</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Monday</td>
-                            <td>{euro.format(monday)}</td>
+                            <td className={styles.totals}>Monday</td>
+                            <td className={styles.totals}>{euro.format(monday)}</td>
                             <td className={styles.additions}>{euro.format(filteredData.monTot.dep)}</td>
-                            <td className={styles.subtractions}>{euro.format(filteredData.monTot.tuck)}</td>
-                            <td className={styles.subtractions}>{euro.format(filteredData.monTot.book)}</td>
-                            <td className={styles.subtractions}>{euro.format(filteredData.monTot.out)}</td>
+                            <td className={styles.subtractions}>{euro.format(-filteredData.monTot.tuck)}</td>
+                            <td className={styles.subtractions}>{euro.format(-filteredData.monTot.book)}</td>
+                            <td className={styles.subtractions}>{euro.format(-filteredData.monTot.out)}</td>
                         </tr>
                         <tr>
-                            <td>Tuesday</td>
-                            <td>{euro.format(tuesday)}</td>
+                            <td className={styles.totals}>Tuesday</td>
+                            <td className={styles.totals}>{euro.format(tuesday)}</td>
                             <td className={styles.additions}>{euro.format(filteredData.tueTot.dep)}</td>
-                            <td className={styles.subtractions}>{euro.format(filteredData.tueTot.tuck)}</td>
-                            <td className={styles.subtractions}>{euro.format(filteredData.tueTot.book)}</td>
-                            <td className={styles.subtractions}>{euro.format(filteredData.tueTot.out)}</td>
+                            <td className={styles.subtractions}>{euro.format(-filteredData.tueTot.tuck)}</td>
+                            <td className={styles.subtractions}>{euro.format(-filteredData.tueTot.book)}</td>
+                            <td className={styles.subtractions}>{euro.format(-filteredData.tueTot.out)}</td>
                         </tr>
                         <tr>
-                            <td>Wednesday</td>
-                            <td>{euro.format(wednesday)}</td>
+                            <td className={styles.totals}>Wednesday</td>
+                            <td className={styles.totals}>{euro.format(wednesday)}</td>
                             <td className={styles.additions}>{euro.format(filteredData.wedTot.dep)}</td>
-                            <td className={styles.subtractions}>{euro.format(filteredData.wedTot.tuck)}</td>
-                            <td className={styles.subtractions}>{euro.format(filteredData.wedTot.book)}</td>
-                            <td className={styles.subtractions}>{euro.format(filteredData.wedTot.out)}</td>
+                            <td className={styles.subtractions}>{euro.format(-filteredData.wedTot.tuck)}</td>
+                            <td className={styles.subtractions}>{euro.format(-filteredData.wedTot.book)}</td>
+                            <td className={styles.subtractions}>{euro.format(-filteredData.wedTot.out)}</td>
                         </tr>
                         <tr>
-                            <td>Thursday</td>
-                            <td>{euro.format(thursday)}</td>
+                            <td className={styles.totals}>Thursday</td>
+                            <td className={styles.totals}>{euro.format(thursday)}</td>
                             <td className={styles.additions}>{euro.format(filteredData.thuTot.dep)}</td>
-                            <td className={styles.subtractions}>{euro.format(filteredData.thuTot.tuck)}</td>
-                            <td className={styles.subtractions}>{euro.format(filteredData.thuTot.book)}</td>
-                            <td className={styles.subtractions}>{euro.format(filteredData.thuTot.out)}</td>
+                            <td className={styles.subtractions}>{euro.format(-filteredData.thuTot.tuck)}</td>
+                            <td className={styles.subtractions}>{euro.format(-filteredData.thuTot.book)}</td>
+                            <td className={styles.subtractions}>{euro.format(-filteredData.thuTot.out)}</td>
                         </tr>
                         <tr>
-                            <td>Friday</td>
-                            <td>{euro.format(friday)}</td>
+                            <td className={styles.totals}>Friday</td>
+                            <td className={styles.totals}>{euro.format(friday)}</td>
                             <td className={styles.additions}>{euro.format(filteredData.friTot.dep)}</td>
-                            <td className={styles.subtractions}>{euro.format(filteredData.friTot.tuck)}</td>
-                            <td className={styles.subtractions}>{euro.format(filteredData.friTot.book)}</td>
-                            <td className={styles.subtractions}>{euro.format(filteredData.friTot.out)}</td>
+                            <td className={styles.subtractions}>{euro.format(-filteredData.friTot.tuck)}</td>
+                            <td className={styles.subtractions}>{euro.format(-filteredData.friTot.book)}</td>
+                            <td className={styles.subtractions}>{euro.format(-filteredData.friTot.out)}</td>
                         </tr>
                     </tbody>
                 </Table>
