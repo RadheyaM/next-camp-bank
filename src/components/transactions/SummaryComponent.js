@@ -1,6 +1,4 @@
-import Table from "../UI/Table";
 import Card from "../UI/Card";
-import sortBy from "array-sort-by";
 import { euro } from "../../../lib/helpers";
 
 const SummaryComponent = (props) => {
@@ -237,8 +235,8 @@ const SummaryComponent = (props) => {
             <h1>SUMMARY</h1>
             <Card>
                 <h2>BANK CURRENT TOTALS</h2>
-                <h3>Bank Balance: euro({filteredData.bankBalance})</h3>
-                <h3>Total Deposits: euro({filteredData.depCurrent})</h3>
+                <h3>Bank Balance: {euro(filteredData.bankBalance)}</h3>
+                <h3>Total Deposits: {euro(filteredData.depCurrent)}</h3>
             </Card>
             <Card>
                 <h3>Deposits</h3>

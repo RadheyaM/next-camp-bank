@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { getTransaction } from "@/pages/api/campers/get";
+import { getTransaction } from "../../../api/campers/get"
 
 const deleteTransaction = props => {
   const router = useRouter();
