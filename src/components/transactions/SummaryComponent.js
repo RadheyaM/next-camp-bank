@@ -267,11 +267,11 @@ const SummaryComponent = (props) => {
                     </thead>
                     <tbody>
                         <tr>
-                            <td>{filteredData.bankBalance}</td>
-                            <td>{filteredData.depCurrent}</td>
-                            <td>{filteredData.tuckCurrent}</td>
-                            <td>{filteredData.bookCurrent}</td>
-                            <td>{filteredData.outCurrent}</td>
+                            <td>{euro.format(filteredData.bankBalance)}</td>
+                            <td>{euro.format(filteredData.depCurrent)}</td>
+                            <td>{euro.format(filteredData.tuckCurrent)}</td>
+                            <td>{euro.format(filteredData.bookCurrent)}</td>
+                            <td>{euro.format(filteredData.outCurrent)}</td>
                         </tr>
                     </tbody>
                 </Table>
@@ -292,43 +292,43 @@ const SummaryComponent = (props) => {
                     <tbody>
                         <tr>
                             <td>Monday</td>
-                            <td></td>
-                            <td>{filteredData.monTot.dep}</td>
-                            <td>{filteredData.monTot.tuck}</td>
-                            <td>{filteredData.monTot.book}</td>
-                            <td>{filteredData.monTot.out}</td>
+                            <td>{euro.format(monday)}</td>
+                            <td>{euro.format(filteredData.monTot.dep)}</td>
+                            <td>{euro.format(filteredData.monTot.tuck)}</td>
+                            <td>{euro.format(filteredData.monTot.book)}</td>
+                            <td>{euro.format(filteredData.monTot.out)}</td>
                         </tr>
                         <tr>
                             <td>Tuesday</td>
-                            <td></td>
-                            <td>{filteredData.tueTot.dep}</td>
-                            <td>{filteredData.tueTot.tuck}</td>
-                            <td>{filteredData.tueTot.book}</td>
-                            <td>{filteredData.tueTot.out}</td>
+                            <td>{euro.format(tuesday)}</td>
+                            <td>{euro.format(filteredData.tueTot.dep)}</td>
+                            <td>{euro.format(filteredData.tueTot.tuck)}</td>
+                            <td>{euro.format(filteredData.tueTot.book)}</td>
+                            <td>{euro.format(filteredData.tueTot.out)}</td>
                         </tr>
                         <tr>
                             <td>Wednesday</td>
-                            <td></td>
-                            <td>{filteredData.wedTot.dep}</td>
-                            <td>{filteredData.wedTot.tuck}</td>
-                            <td>{filteredData.wedTot.book}</td>
-                            <td>{filteredData.wedTot.out}</td>
+                            <td>{euro.format(wednesday)}</td>
+                            <td>{euro.format(filteredData.wedTot.dep)}</td>
+                            <td>{euro.format(filteredData.wedTot.tuck)}</td>
+                            <td>{euro.format(filteredData.wedTot.book)}</td>
+                            <td>{euro.format(filteredData.wedTot.out)}</td>
                         </tr>
                         <tr>
                             <td>Thursday</td>
-                            <td></td>
-                            <td>{filteredData.thuTot.dep}</td>
-                            <td>{filteredData.thuTot.tuck}</td>
-                            <td>{filteredData.thuTot.book}</td>
-                            <td>{filteredData.thuTot.out}</td>
+                            <td>{euro.format(thursday)}</td>
+                            <td>{euro.format(filteredData.thuTot.dep)}</td>
+                            <td>{euro.format(filteredData.thuTot.tuck)}</td>
+                            <td>{euro.format(filteredData.thuTot.book)}</td>
+                            <td>{euro.format(filteredData.thuTot.out)}</td>
                         </tr>
                         <tr>
                             <td>Friday</td>
-                            <td></td>
-                            <td>{filteredData.friTot.dep}</td>
-                            <td>{filteredData.friTot.tuck}</td>
-                            <td>{filteredData.friTot.book}</td>
-                            <td>{filteredData.friTot.out}</td>
+                            <td>{euro.format(friday)}</td>
+                            <td>{euro.format(filteredData.friTot.dep)}</td>
+                            <td>{euro.format(filteredData.friTot.tuck)}</td>
+                            <td>{euro.format(filteredData.friTot.book)}</td>
+                            <td>{euro.format(filteredData.friTot.out)}</td>
                         </tr>
                     </tbody>
                 </Table>
