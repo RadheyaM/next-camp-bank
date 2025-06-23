@@ -4,8 +4,8 @@ import { euro } from "../../../lib/helpers";
 const AllTransRows = (props) => {
   const { accountId, user, name, timeStamp, type, category, amount, balance, note } = props.trans;
   const linkPath = `/campers/${accountId}`
-  const humanTime = new Date(timeStamp).toLocaleTimeString();
-  const humanDate = new Date(timeStamp).toLocaleDateString();
+  const humanTime = new Date(timeStamp).toLocaleTimeString("en-GB");
+  const humanDate = new Date(timeStamp).toLocaleDateString("en-GB");
   
   return (
     <tr>
