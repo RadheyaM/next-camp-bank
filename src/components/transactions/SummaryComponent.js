@@ -1,5 +1,6 @@
 import Card from "../UI/Card";
 import styles from "./SummaryComponent.module.css"
+import Table from "../UI/Table";
 import { euro } from "../../../lib/helpers";
 
 const SummaryComponent = (props) => {
@@ -232,29 +233,106 @@ const SummaryComponent = (props) => {
         filteredData.depCurrent - filteredData.tuckCurrent - filteredData.bookCurrent - filteredData.outCurrent
     )
 
+    const monday = (
+        filteredData.monTot.dep - filteredData.monTot.tuck - filteredData.monTot.book - filteredData.monTot.out
+    )
+    const tuesday = (
+        filteredData.tueTot.dep - filteredData.tueTot.tuck - filteredData.tueTot.book - filteredData.tueTot.out
+    )
+    const wednesday = (
+        filteredData.wedTot.dep - filteredData.wedTot.tuck - filteredData.wedTot.book - filteredData.wedTot.out
+    )
+    const thursday = (
+        filteredData.thuTot.dep - filteredData.thuTot.tuck - filteredData.thuTot.book - filteredData.thuTot.out
+    )
+    const friday = (
+        filteredData.friTot.dep - filteredData.friTot.tuck - filteredData.friTot.book - filteredData.friTot.out
+    )
+
     console.log("filteredData: ", filteredData)
 
     return (
         <Card>
-            <div className={styles.accountDetails}>
+            <Card>
                 <h2>BANK CURRENT TOTALS</h2>
-                <div>
-                    <h3>Bank Balance: {filteredData.bankBalance}</h3>
-                    <h3>Total Deposits: {filteredData.depCurrent}</h3>
-                </div>
-            </div>
-            <div className={styles.accountDetails}>
-                <h3>Deposits</h3>
-                <div>
-                    <h3>{filteredData.monTot.dep}</h3>
-                    <h3>Tuckshop</h3>
-                    <h3>{filteredData.monTot.tuck}</h3>
-                    <h3>Books</h3>
-                    <h3>{filteredData.monTot.book}</h3>
-                    <h3>Withdrawals</h3>
-                    <h3>{filteredData.monTot.out}</h3>
-                </div>
-            </div>
+                <Table>
+                    <thead>
+                        <tr>
+                            <th>Bank Balance</th>
+                            <th>Deposits</th>
+                            <th>Tuckshop</th>
+                            <th>Books</th>
+                            <th>Withdrawals</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{filteredData.bankBalance}</td>
+                            <td>{filteredData.depCurrent}</td>
+                            <td>{filteredData.tuckCurrent}</td>
+                            <td>{filteredData.bookCurrent}</td>
+                            <td>{filteredData.outCurrent}</td>
+                        </tr>
+                    </tbody>
+                </Table>
+            </Card>
+            <Card>
+                <h2>DAILY TOTALS</h2>
+                <Table>
+                    <thead>
+                        <tr>
+                            <th>Day</th>
+                            <th>Balance</th>
+                            <th>Deposits</th>
+                            <th>Tuckshop</th>
+                            <th>Books</th>
+                            <th>Withdrawals</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Monday</td>
+                            <td></td>
+                            <td>{filteredData.monTot.dep}</td>
+                            <td>{filteredData.monTot.tuck}</td>
+                            <td>{filteredData.monTot.book}</td>
+                            <td>{filteredData.monTot.out}</td>
+                        </tr>
+                        <tr>
+                            <td>Tuesday</td>
+                            <td></td>
+                            <td>{filteredData.tueTot.dep}</td>
+                            <td>{filteredData.tueTot.tuck}</td>
+                            <td>{filteredData.tueTot.book}</td>
+                            <td>{filteredData.tueTot.out}</td>
+                        </tr>
+                        <tr>
+                            <td>Wednesday</td>
+                            <td></td>
+                            <td>{filteredData.wedTot.dep}</td>
+                            <td>{filteredData.wedTot.tuck}</td>
+                            <td>{filteredData.wedTot.book}</td>
+                            <td>{filteredData.wedTot.out}</td>
+                        </tr>
+                        <tr>
+                            <td>Thursday</td>
+                            <td></td>
+                            <td>{filteredData.thuTot.dep}</td>
+                            <td>{filteredData.thuTot.tuck}</td>
+                            <td>{filteredData.thuTot.book}</td>
+                            <td>{filteredData.thuTot.out}</td>
+                        </tr>
+                        <tr>
+                            <td>Friday</td>
+                            <td></td>
+                            <td>{filteredData.friTot.dep}</td>
+                            <td>{filteredData.friTot.tuck}</td>
+                            <td>{filteredData.friTot.book}</td>
+                            <td>{filteredData.friTot.out}</td>
+                        </tr>
+                    </tbody>
+                </Table>
+            </Card>
         </Card>
     )
 

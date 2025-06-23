@@ -32,6 +32,9 @@ const MainNavigation = (props) => {
           <Link href="/campers/transactions" replace>
             Recent Transactions
           </Link>
+          <Link href="/campers/summary" replace>
+            Bank Summary
+          </Link>
         </ul>
         {session && (
           <div className={styles.logoutBtnDiv}>
