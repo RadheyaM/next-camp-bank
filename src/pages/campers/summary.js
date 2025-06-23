@@ -46,6 +46,7 @@ export const getStaticProps = async () => {
   const col = db.collection("Transactions");
   const trans = await col.find({}).toArray();
   const dayAdded = addDay(trans)
+  console.log("summary api: ", dayAdded)
   return {
     props: {
       data: JSON.parse(JSON.stringify(dayAdded)),

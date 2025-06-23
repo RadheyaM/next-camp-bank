@@ -4,6 +4,7 @@ import { euro } from "../../../lib/helpers";
 const SummaryComponent = (props) => {
     const { query } = props;
     const allData = query.data.data.data;
+    console.log("allData: ", allData)
 
     const dayNames = {
         0: "Sunday",
@@ -229,6 +230,8 @@ const SummaryComponent = (props) => {
     filteredData.bankBalance = (
         filteredData.depCurrent - filteredData.tuckCurrent - filteredData.bookCurrent - filteredData.outCurrent
     )
+
+    console.log("filteredData: ", filteredData)
 
     return (
         <Card>
