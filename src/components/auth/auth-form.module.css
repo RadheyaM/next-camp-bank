@@ -2,7 +2,7 @@
   margin: 3rem auto;
   width: 95%;
   max-width: 25rem;
-  border-radius: 6px;
+  border-radius: 12px;
   background-color: #1d3557;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   padding: 1rem;
@@ -11,7 +11,7 @@
 
 .auth h1 {
   text-align: center;
-  color: #ffb703;
+  color: #f8f8ff;
   padding-bottom: 1rem;
 }
 
@@ -23,16 +23,18 @@
   display: block;
   color: #2a9d8f;
   font-weight: bold;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
+  padding-left: 3rem;
+  text-align: left;
 }
 
 .control input {
   font: inherit;
-  background-color: white;
+  background-color: #f8f8ff;
   color: #38015c;
   border-radius: 4px;
-  border: 1px solid white;
-  width: 100%;
+  border: 1px solid #f8f8ff;
+  width: 75%;
   text-align: left;
   padding: 0.25rem;
   margin-bottom: 1rem;
@@ -48,10 +50,10 @@
 .actions button {
   cursor: pointer;
   font: inherit;
-  color: white;
-  background-color: #83c5be;
-  border: 1px solid #83c5be;
-  border-radius: 4px;
+  color: #f8f8ff;
+  background-color: #00B9E8;
+  border: 1px solid #00B9E8;
+  border-radius: 8px;
   padding: 0.5rem 2.5rem;
 }
 
