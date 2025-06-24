@@ -22,7 +22,7 @@ const SearchByName = (props) => {
   };
   return (
     <React.Fragment>
-      <Typography variant="h6" gutterBottom className={styles.title}>
+      <Typography variant="h4" gutterBottom className={styles.title}>
         Filter By Name
       </Typography>
       <form onSubmit={submitHandler} className={styles.searchByName}>

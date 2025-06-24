@@ -323,7 +323,7 @@ const NewTransForm = (props) => {
               id="candyfloss"
               value={enteredCandyfloss}
               variant="outlined"
-              label="Candyfloss €"
+              label="Candy Floss €"
             />
           </div>
           <div>
@@ -343,6 +343,26 @@ const NewTransForm = (props) => {
             />
           </div> 
         </div>
+        <h2 className={styles.btnHeader}>Check Out</h2>
+        <div className={styles.submitBtn}>
+          <Button size="large" variant="contained" type="submit">
+            Complete Transaction(s)
+          </Button>
+        </div>
+        {alert && (
+          <Stack sx={{ width: "25%" }} spacing={2}>
+            <Alert
+              severity="warning"
+              onClose={() => {
+                setAlert(false);
+              }}
+            >
+              <AlertTitle>Warning</AlertTitle>
+              Cannot proceed: Balance will be negative:
+              {euro.format(enoughCheck)}.
+            </Alert>
+          </Stack>
+        )}
         <h3>Add a short note for special transactions</h3>
         <div className={styles.inputs}>
           <div>
@@ -398,25 +418,6 @@ const NewTransForm = (props) => {
             />
           </div>
         </div>
-        <div className={styles.submitBtn}>
-          <Button size="large" variant="contained" type="submit">
-            Complete Transaction(s)
-          </Button>
-        </div>
-        {alert && (
-          <Stack sx={{ width: "25%" }} spacing={2}>
-            <Alert
-              severity="warning"
-              onClose={() => {
-                setAlert(false);
-              }}
-            >
-              <AlertTitle>Warning</AlertTitle>
-              Cannot proceed: Balance will be negative:
-              {euro.format(enoughCheck)}.
-            </Alert>
-          </Stack>
-        )}
       </form>
     </>
     

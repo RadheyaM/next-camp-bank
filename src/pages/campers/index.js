@@ -6,6 +6,7 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import Router from "next/router";
+import Paper from '@mui/material/Paper';
 
 const Campers = (props) => {
   const { status, data } = useSession();
@@ -30,9 +31,12 @@ const Campers = (props) => {
   // console.log(query.data.data.data);
   if (status === "authenticated") {
     return (
-      <Card>
-        <AllCampersTable campers={props.campers} query={query} />
-      </Card>
+      <Paper elevation={6} sx={{width: "95%", display: "flex", padding: "2rem", backgroundColor: "#f8f8ff"}}>
+        <Card>
+          <AllCampersTable campers={props.campers} query={query} />
+        </Card>
+      </Paper>
+      
     );
   }
 };

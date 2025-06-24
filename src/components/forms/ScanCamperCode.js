@@ -8,7 +8,8 @@ import TextField from "@mui/material/TextField";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
-import { euro } from "../../../lib/helpers";
+import Paper from '@mui/material/Paper';
+
 
 const ScanCamperCode = () => {
   const [alert, setAlert] = useState(true);
@@ -55,40 +56,42 @@ const ScanCamperCode = () => {
   };
   console.log(enteredCode);
   return (
-    <Card>
-      <form onSubmit={submitHandler} className={styles.enterCodeForm}>
-        <div className={styles.inputWrapper}>
-          <TextField
-            onChange={codeInputHandler}
-            id="code-input"
-            label="Scan or Enter ID manually..."
-            variant="standard"
-            autoFocus={true}
-          />
-          {/* <label htmlFor='code-input'>Scan or Enter Code Manually</label>
-          <input autoFocus={true} id='code-input' className={styles.codeInput} type="text" onChange={codeInputHandler}/> */}
-        </div>
-        <div className={styles.findBtnDiv}>
-          <Button size="large" variant="contained" type="submit">
-            Find
-          </Button>
-        </div>
-          <Stack sx={{ width: "25%" }} spacing={5}>
-            <Alert
-              severity="info"
-              onClose={() => {
-                setAlert(false);
-              }}
-            >
-              <AlertTitle>
-                <Link href="/campers/transactions" replace>
-                  Recent Transactions
-                </Link>
-              </AlertTitle>
-            </Alert>
-          </Stack>
-      </form>
-    </Card>
+    <Paper elevation={6} sx={{width: "95%", height: "100vh", display: "flex", padding: "5rem", backgroundColor: "#f8f8ff"}}>
+      <Card sx={{width: "100%"}}>
+        <form onSubmit={submitHandler} className={styles.enterCodeForm}>
+          <div className={styles.inputWrapper}>
+            <TextField
+              onChange={codeInputHandler}
+              id="code-input"
+              label="Scan or Enter ID manually..."
+              variant="standard"
+              autoFocus={true}
+            />
+            {/* <label htmlFor='code-input'>Scan or Enter Code Manually</label>
+            <input autoFocus={true} id='code-input' className={styles.codeInput} type="text" onChange={codeInputHandler}/> */}
+          </div>
+          <div className={styles.findBtnDiv}>
+            <Button size="large" variant="contained" type="submit">
+              Find
+            </Button>
+          </div>
+            <Stack sx={{ width: "30%", textAlign: "center" }} spacing={5}>
+              <Alert
+                severity="info"
+                onClose={() => {
+                  setAlert(false);
+                }}
+              >
+                <AlertTitle>
+                  <Link href="/campers/transactions" replace>
+                    Recent Transactions
+                  </Link>
+                </AlertTitle>
+              </Alert>
+            </Stack>
+        </form>
+      </Card>
+    </Paper>
   );
 };
 

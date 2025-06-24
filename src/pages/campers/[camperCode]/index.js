@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import Router from "next/router";
 import axios from "axios";
+import Paper from '@mui/material/Paper';
 
 const CamperOverview = (props) => {
   const { status, data } = useSession();
@@ -59,13 +60,25 @@ const CamperOverview = (props) => {
   console.log("query:", query.data.data.data);
   if (status === "authenticated") {
     return (
-      <CamperDetail
-        trans={props.trans}
-        camper={props.camper}
-        query={query}
-        balance={balanceQuery}
-        onAddTransactions={postTransactionsHandler}
-      />
+      <Paper elevation={12} sx={{
+        width: "95%",
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "2rem",
+        padding: "6rem",
+        backgroundColor: "#f8f8ff"}}
+    >
+        <CamperDetail
+          trans={props.trans}
+          camper={props.camper}
+          query={query}
+          balance={balanceQuery}
+          onAddTransactions={postTransactionsHandler}
+        />
+      </Paper>
     );
   }
 };
