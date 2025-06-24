@@ -50,6 +50,7 @@ const MainNavigation = (props) => {
                 Bank Summary
               </Link>
             </ul>
+            <hr></hr>
             {session && (
               <div className={styles.logoutBtnDiv}>
                 <Button size="small" variant="contained" onClick={logoutHandler}>
