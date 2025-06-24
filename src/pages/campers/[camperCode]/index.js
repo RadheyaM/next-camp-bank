@@ -62,7 +62,6 @@ const CamperOverview = (props) => {
     return (
       <Paper elevation={12} sx={{
         width: "95%",
-        height: "100vh",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
