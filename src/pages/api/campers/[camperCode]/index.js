@@ -7,7 +7,7 @@ export const postCamperTransactions = async (transData) => {
     console.log("connected to server");
     const db = client.db("Campers");
     const col = db.collection("Transactions");
-    const { dT, bT, tT, wT, aT } = transData;
+    const { dT, bT, tT, pT, cT, iT, wT, aT } = transData;
     if (dT.accountId) {
       const d = await col.insertOne({
         accountId: dT.accountId,
@@ -43,6 +43,45 @@ export const postCamperTransactions = async (transData) => {
         amount: tT.amount.toString(),
         note: tT.note,
         user: tT.user,
+        timeStamp: new Date(),
+      });
+      console.log("tuck added");
+    }
+    if (pT.accountId) {
+      const p = await col.insertOne({
+        accountId: pT.accountId,
+        name: pT.name,
+        type: pT.type,
+        category: pT.category,
+        amount: pT.amount.toString(),
+        note: pT.note,
+        user: pT.user,
+        timeStamp: new Date(),
+      });
+      console.log("tuck added");
+    }
+    if (cT.accountId) {
+      const c = await col.insertOne({
+        accountId: cT.accountId,
+        name: cT.name,
+        type: cT.type,
+        category: cT.category,
+        amount: cT.amount.toString(),
+        note: cT.note,
+        user: cT.user,
+        timeStamp: new Date(),
+      });
+      console.log("tuck added");
+    }
+    if (iT.accountId) {
+      const c = await col.insertOne({
+        accountId: iT.accountId,
+        name: iT.name,
+        type: iT.type,
+        category: iT.category,
+        amount: iT.amount.toString(),
+        note: iT.note,
+        user: iT.user,
         timeStamp: new Date(),
       });
       console.log("tuck added");

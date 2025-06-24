@@ -17,7 +17,7 @@ const MainNavigation = (props) => {
             <Link href="/">
               <div className={styles.logoImage}>
                 {/* <FestivalIcon sx={{ fontSize: 60 }} /> */}
-                <h3 className={styles.logoSubtext}>banking intense...</h3>
+                <h3 className={styles.logoSubtext}><strong>BANKING</strong></h3>
               </div>
             </Link>
           </div>

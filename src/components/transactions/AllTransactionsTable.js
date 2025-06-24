@@ -1,7 +1,6 @@
 import Table from "../UI/Table";
 import AllTransRows from "./AllTransRows";
 import Card from "../UI/Card";
-import styles from "./AllTransactionsTable.module.css";
 import sortBy from 'array-sort-by';
 
 const AllTransactionsTable = (props) => {
@@ -12,12 +11,6 @@ const AllTransactionsTable = (props) => {
   return (
     <Card>
       <h2>Recent Transactions</h2>
-      {/* <div className={styles.totalsContainer}>
-        <div>Total Deposits: </div>
-        <div>Total Books: </div>
-        <div>Total Tuckshop: </div>
-        <div>Total Withdrawn: </div>
-      </div> */}
       <Table>
         <thead>
           <tr>

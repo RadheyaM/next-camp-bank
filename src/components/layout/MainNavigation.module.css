@@ -5,6 +5,7 @@
   justify-content: center;
   display: flex;
   gap: 4rem;
+  font-weight: bold;
 }
 
 .header nav {
@@ -16,7 +17,7 @@
 .logoSubtext {
   padding-left: 2rem;
   margin: 0;
-  color:black
+  color:black;
 }
 
 .logoSubtext:hover {
@@ -36,17 +37,20 @@
   list-style: none;
   display: flex;
   flex-direction: row;
+  border: 15%;
   gap: 3rem;
   justify-content: center;
   align-items: center;
+
 }
 
 .navLinkBar a,
 .navLinkBar p {
   color: #1d3557;
   border-radius: 10%;
-  padding: 1rem;
-  background-color: #83c5be;
+  padding: 0.5rem;
+  background-color: #98cfe9;
+  box-shadow: 2px 2px 2px 2px rgba(36, 122, 202, 0.1);
 }
 
 .navLinkBar a:hover {
@@ -71,6 +75,7 @@
 .logoutBtnDiv a:hover{
   background-color: #fcbf49; 
   color:#14213d;
+  transition: center ease-in-out 2s;
 }
 
 .logoImage {
