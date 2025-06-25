@@ -135,17 +135,6 @@ const NewTransForm = (props) => {
         user: user,
       };
     }
-    if (enteredCandyfloss !== "" && enteredCandyfloss !== 0) {
-      cT = {
-        accountId: camperId,
-        name: name,
-        type: "Payment",
-        category: "Candyfloss",
-        amount: enteredCandyfloss,
-        note: tuckNote,
-        user: user,
-      };
-    }
     if (enteredIcecream !== "" && enteredIcecream !== 0) {
       iT = {
         accountId: camperId,
@@ -185,7 +174,6 @@ const NewTransForm = (props) => {
       bT,
       tT,
       pT,
-      cT,
       iT,
       wT,
       aT,
@@ -194,12 +182,11 @@ const NewTransForm = (props) => {
     //save for 'last transaction' message.
     localStorage.setItem(
       "Alert",
-      JSON.stringify([dT, bT, tT, pT, cT, iT, wT, aT, bal, localName])
+      JSON.stringify([dT, bT, tT, pT, iT, wT, aT, bal, localName])
     );
     setEnteredDeposit("");
     setEnteredBook("");
     setEnteredTuckshop("");
-    setEnteredCandyfloss("");
     setEnteredPopcorn("");
     setEnteredIcecream("");
     setEnteredWithdrawal("");
@@ -307,23 +294,7 @@ const NewTransForm = (props) => {
               id="popcorn"
               value={enteredPopcorn}
               variant="outlined"
-              label="Popcorn €"
-            />
-          </div>
-          <div>
-            <TextField
-              onWheel={() => document.activeElement.blur()}
-              onChange={(event) => {
-                inputHandler("candyfloss", event);
-              }}
-              inputProps={{
-                step: 0.01,
-              }}
-              type="number"
-              id="candyfloss"
-              value={enteredCandyfloss}
-              variant="outlined"
-              label="Candy Floss €"
+              label="Pop/Candy €"
             />
           </div>
           <div>

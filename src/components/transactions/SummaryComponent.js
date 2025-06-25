@@ -389,9 +389,8 @@ const SummaryComponent = (props) => {
                                 <th className={styles.totals}>Bank Balance</th>
                                 <th className={styles.totals}>Deposits</th>
                                 <th className={styles.totals}>Tuckshop</th>
-                                <th className={styles.totals}>Candy Floss</th>
                                 <th className={styles.totals}>Ice Cream</th>
-                                <th className={styles.totals}>Popcorn</th>
+                                <th className={styles.totals}>Popcorn/Candy Floss</th>
                                 <th className={styles.totals}>Books</th>
                                 <th className={styles.totals}>Withdrawals</th>
                             </tr>
@@ -401,7 +400,6 @@ const SummaryComponent = (props) => {
                                 <td className={styles.totalsDataAdd}>{euro.format(filteredData.bankBalance)}</td>
                                 <td className={styles.totalsDataAdd}>{euro.format(filteredData.depCurrent)}</td>
                                 <td className={styles.totalsDataSub}>{euro.format(-filteredData.tuckCurrent)}</td>
-                                <td className={styles.totalsDataSub}>{euro.format(-filteredData.candyCurrent)}</td>
                                 <td className={styles.totalsDataSub}>{euro.format(-filteredData.iceCurrent)}</td>
                                 <td className={styles.totalsDataSub}>{euro.format(-filteredData.popCurrent)}</td>
                                 <td className={styles.totalsDataSub}>{euro.format(-filteredData.bookCurrent)}</td>
@@ -419,9 +417,8 @@ const SummaryComponent = (props) => {
                                 <th className={styles.totals}>Balance</th>
                                 <th className={styles.totals}>Deposits</th>
                                 <th className={styles.totals}>Tuckshop</th>
-                                <th className={styles.totals}>Candy Floss</th>
                                 <th className={styles.totals}>Ice Cream</th>
-                                <th className={styles.totals}>Popcorn</th>
+                                <th className={styles.totals}>Popcorn/Candy Floss</th>
                                 <th className={styles.totals}>Books</th>
                                 <th className={styles.totals}>Withdrawals</th>
                             </tr>
@@ -432,7 +429,6 @@ const SummaryComponent = (props) => {
                                 <td className={styles.additions}>{euro.format(monday)}</td>
                                 <td className={styles.additions}>{euro.format(filteredData.monTot.dep)}</td>
                                 <td className={styles.subtractions}>{euro.format(-filteredData.monTot.tuck)}</td>
-                                <td className={styles.subtractions}>{euro.format(-filteredData.monTot.candy)}</td>
                                 <td className={styles.subtractions}>{euro.format(-filteredData.monTot.ice)}</td>
                                 <td className={styles.subtractions}>{euro.format(-filteredData.monTot.pop)}</td>
                                 <td className={styles.subtractions}>{euro.format(-filteredData.monTot.book)}</td>
@@ -443,7 +439,6 @@ const SummaryComponent = (props) => {
                                 <td className={styles.additions}>{euro.format(tuesday)}</td>
                                 <td className={styles.additions}>{euro.format(filteredData.tueTot.dep)}</td>
                                 <td className={styles.subtractions}>{euro.format(-filteredData.tueTot.tuck)}</td>
-                                <td className={styles.subtractions}>{euro.format(-filteredData.tueTot.candy)}</td>
                                 <td className={styles.subtractions}>{euro.format(-filteredData.tueTot.ice)}</td>
                                 <td className={styles.subtractions}>{euro.format(-filteredData.tueTot.pop)}</td>
                                 <td className={styles.subtractions}>{euro.format(-filteredData.tueTot.book)}</td>
@@ -454,7 +449,6 @@ const SummaryComponent = (props) => {
                                 <td className={styles.additions}>{euro.format(wednesday)}</td>
                                 <td className={styles.additions}>{euro.format(filteredData.wedTot.dep)}</td>
                                 <td className={styles.subtractions}>{euro.format(-filteredData.wedTot.tuck)}</td>
-                                <td className={styles.subtractions}>{euro.format(-filteredData.wedTot.candy)}</td>
                                 <td className={styles.subtractions}>{euro.format(-filteredData.wedTot.ice)}</td>
                                 <td className={styles.subtractions}>{euro.format(-filteredData.wedTot.pop)}</td>
                                 <td className={styles.subtractions}>{euro.format(-filteredData.wedTot.book)}</td>
@@ -465,7 +459,6 @@ const SummaryComponent = (props) => {
                                 <td className={styles.additions}>{euro.format(thursday)}</td>
                                 <td className={styles.additions}>{euro.format(filteredData.thuTot.dep)}</td>
                                 <td className={styles.subtractions}>{euro.format(-filteredData.thuTot.tuck)}</td>
-                                <td className={styles.subtractions}>{euro.format(-filteredData.thuTot.candy)}</td>
                                 <td className={styles.subtractions}>{euro.format(-filteredData.thuTot.ice)}</td>
                                 <td className={styles.subtractions}>{euro.format(-filteredData.thuTot.pop)}</td>
                                 <td className={styles.subtractions}>{euro.format(-filteredData.thuTot.book)}</td>
@@ -476,7 +469,6 @@ const SummaryComponent = (props) => {
                                 <td className={styles.additions}>{euro.format(friday)}</td>
                                 <td className={styles.additions}>{euro.format(filteredData.friTot.dep)}</td>
                                 <td className={styles.subtractions}>{euro.format(-filteredData.friTot.tuck)}</td>
-                                <td className={styles.subtractions}>{euro.format(-filteredData.friTot.candy)}</td>
                                 <td className={styles.subtractions}>{euro.format(-filteredData.friTot.ice)}</td>
                                 <td className={styles.subtractions}>{euro.format(-filteredData.friTot.pop)}</td>
                                 <td className={styles.subtractions}>{euro.format(-filteredData.friTot.book)}</td>
