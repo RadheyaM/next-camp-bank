@@ -50,7 +50,7 @@ const Campers = (props) => {
       initialData: {
         data: {
           data: {
-            data: [""]
+            data: props.campers
           }
         },
       },
