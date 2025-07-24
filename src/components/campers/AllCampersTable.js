@@ -4,25 +4,21 @@ import { Fragment } from "react";
 import SearchByName from "@/components/forms/SearchByName";
 import { useState } from "react";
 import styles from './AllCampersTable.module.css'
+import {CSVLink} from 'react-csv'
 
 const AllCampersTable = (props) => {
-  const {campers, query} = props;
+  const {campers, query, csvData} = props;
   const [filteredData, setFilteredData] = useState("");
   const [clearFilter, setClearFilter] = useState(true);
-  // const apiData = query.data.data.campers;
-  // you can fetch data from the api here...
 
   const searchFilterHandler = (filterName) => {
-    // console.log("Filter: ", filterName);
     const lst = [];
     const names = query.data.data.data.map((camper) => {
-      // console.log("here is the name: ", camper.name)
       const name = camper.firstName + " " + camper.lastName
       if (name.toLowerCase().includes(filterName)) {
         lst.push(camper)
       }
     });
-    // console.log("the l list: ", lst)
     setFilteredData(lst);
     setClearFilter(false);
   };
@@ -30,9 +26,16 @@ const AllCampersTable = (props) => {
     setClearFilter(true);
     setFilteredData("")
   }
+  const downloadData = csvData.data.data.data
+  console.log(downloadData)
   return (
     <Fragment>
       <SearchByName onSearch={searchFilterHandler} onClear={clearFilterHandler}/>
+      <CSVLink 
+        data={downloadData}
+        filename={"all-camper-balances.csv"}
+      >Download All Balances
+      </CSVLink>
       <Table className={styles.transTable}>
         <caption>
           <h2>All Campers</h2>

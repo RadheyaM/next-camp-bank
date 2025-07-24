@@ -20,11 +20,13 @@
     "axios": "^1.4.0",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.3.1",
+    "json-2-csv": "^5.5.9",
     "mongodb": "^5.7.0",
     "next": "^13.5.11",
     "next-auth": "^4.22.1",
     "nextjs-cors": "^2.1.2",
     "react": "18.2.0",
+    "react-csv": "^2.2.2",
     "react-dom": "^18.2.0",
     "styled-components": "^5.3.11",
     "xlsx": "^0.18.5"

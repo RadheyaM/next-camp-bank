@@ -41,13 +41,29 @@ const Campers = (props) => {
       },
     }
   );
+  const csvDataQuery = useQuery(
+    ["allCamperData"],
+    () => {
+      return axios("/api/campers/getAllCamperBalances");
+    },
+    {
+      initialData: {
+        data: {
+          data: {
+            data: []
+          }
+        },
+      },
+    }
+  )
+  
 
   // console.log(query.data.data.data);
   if (status === "authenticated") {
     return (
       <Paper elevation={6} sx={{width: "95%", display: "flex", padding: "2rem", backgroundColor: "#f8f8ff"}}>
         <Card>
-          <AllCampersTable campers={props.campers} query={query} />
+          <AllCampersTable campers={props.campers} query={query} csvData={csvDataQuery}/>
         </Card>
       </Paper>
       
