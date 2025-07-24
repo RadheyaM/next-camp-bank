@@ -86,6 +86,9 @@ const AuthForm = () => {
             <div className={styles.actions}>
               <button>Login</button>
             </div>
+            {/* <div className={styles.actions} onClick={switchAuthModeHandler}>
+              <button>Sign Up</button>
+            </div> */}
           </div>
         </form>
       </section>

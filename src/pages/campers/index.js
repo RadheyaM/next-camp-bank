@@ -15,6 +15,19 @@ const Campers = (props) => {
       Router.replace("/auth");
     }
   }, [status]);
+  // const query = useQuery(
+  //   ["campers"],
+  //   () => {
+  //     return axios("/api/campers/addInitialData");
+  //   },
+  //   {
+  //     initialData: {
+  //       data: {
+  //         data: props.campers,
+  //       },
+  //     },
+  //   }
+  // );
   const query = useQuery(
     ["campers"],
     () => {
@@ -28,6 +41,7 @@ const Campers = (props) => {
       },
     }
   );
+
   // console.log(query.data.data.data);
   if (status === "authenticated") {
     return (
