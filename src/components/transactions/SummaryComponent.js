@@ -7,7 +7,6 @@ import Paper from '@mui/material/Paper';
 const SummaryComponent = (props) => {
     const { query } = props;
     const allData = query.data.data.data;
-    console.log("allData: ", allData)
 
     const dayNames = {
         0: "Sunday",
@@ -375,8 +374,6 @@ const SummaryComponent = (props) => {
         filteredData.friTot.candy - 
         filteredData.friTot.out
     )
-
-    console.log("filteredData: ", filteredData)
 
     return (
         <Paper elevation={6} sx={{width: "95%", height: "100vh", display: "flex", flexBasis: "gap-between", gap: "4rem", padding: "2rem", backgroundColor: "#f8f8ff"}}>

@@ -8,7 +8,6 @@ const AllTransactionsTable = (props) => {
   const { query } = props;
   const allTrans = query.data.data.data;
   const sortByDate = sortBy(allTrans, tran => -new Date(tran.timeStamp))
-  // console.log("CAMPERTRANS", allTrans)
   return (
     <Paper elevation={6} sx={{width: "95%", display: "flex", padding: "5rem", backgroundColor: "#f8f8ff"}}>
       <Card>

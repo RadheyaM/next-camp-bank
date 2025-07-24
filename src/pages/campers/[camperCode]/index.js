@@ -39,7 +39,6 @@ const CamperOverview = (props) => {
       },
     });
     const responseData = await response.json();
-    console.log(responseData);
   };
   const query = useQuery(
     ["transactions"],
@@ -57,7 +56,6 @@ const CamperOverview = (props) => {
   const balanceQuery = useQuery(["balance"], () => {
     return axios(apiBalancePath);
   });
-  console.log("query:", query.data.data.data);
   if (status === "authenticated") {
     return (
       <Paper elevation={12} sx={{
@@ -90,7 +88,6 @@ export const getStaticPaths = async () => {
   const col = db.collection("Campers");
   const data = await col.find({}, { accountId: 1 }).toArray();
   const allCampers = JSON.parse(JSON.stringify(data));
-  console.log("all campers: ");
   return {
     paths: allCampers.map((camperId) => ({
       params: {

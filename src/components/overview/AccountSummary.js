@@ -17,10 +17,8 @@ const AccountSummary = (props) => {
     transData.map((tran) => {
       if (tran.type === "Payment") {
         payLst.push(Number(tran.amount));
-        // console.log("pay", tran.amount);
       } else {
         depLst.push(Number(tran.amount))
-        // console.log("dep", tran.amount);
       }
     });
     for (let i = 0; i < depLst.length; i++) {
@@ -30,7 +28,6 @@ const AccountSummary = (props) => {
     for (let i = 0; i < payLst.length; i++) {
       payTotal += payLst[i];
     }
-    // console.log("depLst, payLst", depLst, payLst);
     return depTotal - payTotal
   }
 
@@ -39,7 +36,6 @@ const AccountSummary = (props) => {
   } catch (err) {
     balance = 0;
   }
-  // console.log("balance: ", balance)
   return (
     <Fragment>
       <h2>Account Details</h2>

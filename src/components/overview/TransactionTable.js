@@ -7,8 +7,6 @@ import sortBy from 'array-sort-by';
 const TransactionsTable = props => {
   const { query, trans } = props;
   const transData = query.data.data.data;
-  // console.log("query", transData)
-  // console.log("trans", props.trans)
   const sortByDate = sortBy(props.query.data.data.data, tran => -new Date(tran.timeStamp))
   return (
     <Table className={styles.transactionTable}>

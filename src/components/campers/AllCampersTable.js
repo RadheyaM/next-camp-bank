@@ -27,7 +27,6 @@ const AllCampersTable = (props) => {
     setFilteredData("")
   }
   const downloadData = csvData.data.data.data
-  console.log(downloadData)
   return (
     <Fragment>
       <SearchByName onSearch={searchFilterHandler} onClear={clearFilterHandler}/>

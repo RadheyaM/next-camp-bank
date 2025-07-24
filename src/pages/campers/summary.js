@@ -23,12 +23,11 @@ const Summary = (props) => {
         {
         initialData: {
             data: {
-            data: props.data,
+              data: props.data,
             },
         },
         }
     );
-    // console.log(query.data.data.data);
     if (status === "authenticated") {
         return (
         <Card>
