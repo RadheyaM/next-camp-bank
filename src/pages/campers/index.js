@@ -7,6 +7,8 @@ import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import Router from "next/router";
 import Paper from '@mui/material/Paper';
+import { allTransactionBalances } from "../../../lib/helpers";
+const converter = require('json-2-csv')
 
 const Campers = (props) => {
   const { status, data } = useSession();
@@ -49,9 +51,7 @@ const Campers = (props) => {
     {
       initialData: {
         data: {
-          data: {
-            data: props.campers
-          }
+          data: props.allCampers,
         },
       },
     }
@@ -78,9 +78,17 @@ export const getStaticProps = async () => {
   const db = client.db("Campers");
   const col = db.collection("Campers");
   const campers = await col.find({}).toArray();
+  const transCol = db.collection("Transactions");
+  const camperCol = db.collection("Campers")
+  const deposits = await col.find({type: "Deposit"}).toArray();
+  const payments = await col.find({type: "Payment"}).toArray();
+  const camperIds = await camperCol.find({}).toArray();
+  const balanceData = allTransactionBalances(deposits, payments, camperIds)
+  const allCampers = converter.json2csv(balanceData)
   return {
     props: {
       campers: JSON.parse(JSON.stringify(campers)),
+      allCampers: JSON.parse(JSON.stringify(allCampers))
     },
   };
 };
