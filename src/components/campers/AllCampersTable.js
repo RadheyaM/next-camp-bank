@@ -13,10 +13,16 @@ const AllCampersTable = (props) => {
 
   const searchFilterHandler = (filterName) => {
     const lst = [];
-    const names = query.data.data.data.map((camper) => {
-      const name = camper.firstName + " " + camper.lastName
-      if (name.toLowerCase().includes(filterName)) {
-        lst.push(camper)
+    query.data.data.data.forEach((camper) => {
+      const name = (camper.firstName || camper.lastName)
+        ? `${camper.firstName || ""} ${camper.lastName || ""}`.trim()
+        : "Unassigned Account";
+      const accountId = camper.accountId || "";
+      if (
+        name.toLowerCase().includes(filterName) ||
+        accountId.toLowerCase().includes(filterName)
+      ) {
+        lst.push(camper);
       }
     });
     setFilteredData(lst);

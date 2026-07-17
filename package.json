@@ -21,7 +21,7 @@
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.3.1",
     "json-2-csv": "^5.5.9",
-    "mongodb": "^5.7.0",
+    "mongodb": "^5.9.2",
     "next": "^13.5.11",
     "next-auth": "^4.22.1",
     "nextjs-cors": "^2.1.2",
@@ -32,6 +32,8 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
-    "@types/bcryptjs": "^2.4.2"
+    "@types/bcryptjs": "^2.4.2",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.2.10"
   }
 }

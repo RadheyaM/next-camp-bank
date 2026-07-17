@@ -94,7 +94,7 @@ export const getStaticPaths = async () => {
         camperCode: camperId.accountId.toString(),
       },
     })),
-    fallback: false,
+    fallback: 'blocking',
   };
 };
 

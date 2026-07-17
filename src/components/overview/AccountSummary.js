@@ -36,12 +36,16 @@ const AccountSummary = (props) => {
   } catch (err) {
     balance = 0;
   }
+  const camperName = (camper.firstName || camper.lastName)
+    ? `${camper.firstName || ""} ${camper.lastName || ""}`.trim()
+    : "Unassigned Account";
+
   return (
     <Fragment>
       <h2>Account Details</h2>
       <div className={styles.accountDetails}>
         <h3>{camper.accountId}&nbsp;|&nbsp;</h3>
-        <h3>{camper.firstName + " " + camper.lastName}&nbsp;|&nbsp;</h3>
+        <h3>{camperName}&nbsp;|&nbsp;</h3>
         <h3>{euro.format(Number(balance))}</h3>
       </div>
     </Fragment>

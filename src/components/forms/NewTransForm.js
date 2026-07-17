@@ -13,7 +13,7 @@ const NewTransForm = (props) => {
   const camperId = camper.accountId;
   const firstName = camper.firstName;
   const lastName = camper.lastName;
-  const name = firstName + " " + lastName;
+  const name = (firstName || lastName) ? `${firstName || ""} ${lastName || ""}`.trim() : `Account ${camperId}`;
   const [enteredDeposit, setEnteredDeposit] = useState("");
   const [enteredBook, setEnteredBook] = useState("");
   const [enteredTuckshop, setEnteredTuckshop] = useState("");
