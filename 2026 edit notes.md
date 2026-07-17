@@ -105,16 +105,24 @@ To display which rostered campers are mapped to each banking account, we integra
   ---
 
   ## 8. Account Roster Filtering & Navigation Rename
-  To accurately align the terminology with the single-primary family account architecture:
+  To accurately align the terminology and display aesthetics with the single-primary family account architecture:
 
   * **Top Navbar Rename (`src/components/layout/MainNavigation.js`)**:
     * Changed the text of the landing page search link from `"Camper By Code"` to `"Account By Code"`.
     * Changed the text of the directory index link from `"Camper By Name"` to `"Account By Name"`.
+  * **Interactive Tab Filtering (`src/components/campers/AllCampersTable.js`)**:
+    * Restructured and centered the directory index page exactly in the requested layout sequence:
+      1. **Filter By Name Title / search input box / action buttons** (centered `<SearchByName>` form at the top).
+      2. **📥 Download All Balances CSV link** (centered on its own row).
+      3. **`"All Accounts ([selectedCategory])"` h2 heading** (centered).
+      4. **Category Tab selectors** (centered and capped at **75% width / max 600px**).
+      5. **The Roster Table itself** (centered with 75% width alignment).
+    * **Four Filter Options:** Expanded the filter tabs to **four distinct views** by adding a new `"All"` category tab to display all banking accounts simultaneously, alongside `Primary`, `Secondary`, and `Unassigned` accounts.
+    * Reduced the padding, height (`minHeight: "36px"`), and font size (`0.82rem`) on the tab buttons for a highly clean and compact aesthetic.
   * **Primary Accounts Only Filter**:
     * Updated the index page's static rendering (`src/pages/campers/index.js`) and dynamic query endpoint (`src/pages/api/campers/get.js`).
-    * Queries the `CamperDetails` collection to build an exclusion list of any `accountQRCode` where a non-empty `linkedQRCode` is assigned (meaning they are shared/linked accounts, not independent bank accounts).
-    * Performs a MongoDB `$nin` exclusion query on the banking `Campers` collection to return only primary banking accounts.
-    * This hides redundant family linked accounts, keeping the "Account By Name" view clean and showing only unique primary financial accounts.
+    * Decorates each banking account with its category (`Primary`, `Secondary`, or `Unassigned`) based on roster matches in `CamperDetails`.
+    * This allows the interactive frontend tab selector to toggle between viewports instantly, defaulting to the Primary Accounts roster view on load.
 
   ---
 
@@ -140,7 +148,46 @@ To display which rostered campers are mapped to each banking account, we integra
 
   ---
 
-  ## 10. Pre-existing Codebase Warnings / Errors Identified
+  ## 10. Dynamic Bank Summary Date Totals
+  To future-proof the camp accounting system and support multiple weeks or arbitrary start dates, we modernized the Bank Summary dashboard page:
+
+  * **Dynamic Date Grouping (`src/components/transactions/SummaryComponent.js`)**:
+    * Replaced the 300-line hardcoded static "Monday" to "Friday" switch-case layout with a fully dynamic date parser.
+    * Scans all transactional timestamps, aggregates their details, and dynamically groups transactions under their exact calendar dates.
+    * Only active days containing at least one transaction record are shown, automatically hiding blank days.
+    * **Capitalization and Visual Alignments:** Capitalized all table headers in both summary tables (e.g. `BANK BALANCE`, `DEPOSITS`, `TUCKSHOP`, `DAY`, `BALANCE`, etc.) for absolute typographic symmetry.
+    * **Centered Alignment:** Aligned all table headers, rows, and cells to the perfect center (`textAlign: "center"`) for maximum aesthetic balance.
+    * **Decreased Text Scale:** Scaled down the summary table font sizes to **`0.85rem`** so that columns dynamically adapt to the parent card widths and fit cleanly on standard viewports.
+  * **Chronological Calendar Ordering & Running Balances**:
+    * Groups are sorted chronologically from oldest to newest.
+    * Keeps the original cumulative running balance algorithm fully intact, dynamically computing the net change per active day (deposits minus all payments and withdrawals) and accumulating it sequentially row-by-row.
+  * **Beautiful Date Formatter**:
+    * Formats date keys dynamically using custom local date parsing to output the visual string in exactly the format requested (e.g. *"Monday 7th Oct"*, *"Friday 17th Jul"*, etc.), complete with correct ordinal suffix rules (`st`, `nd`, `rd`, `th`).
+  * **Unassigned/Empty Fallback states**:
+    * Handles empty rosters or zero transactions gracefully with styled, friendly placeholder rows.
+  * **Bank Current Totals Preserved**:
+    * Retained the "Bank Current Totals" block identically at the top, showing the total bank balance, cumulative deposits, and individual category deductions.
+
+  ---
+
+  ## 11. Interactive Transaction & Summary CSV Exporters
+  To support granular bookkeeping, we built dynamic, timestamped CSV download controls across the Bank Summary and Recent Transactions screens:
+
+  * **Centered Bank Current Totals CSV Download (`src/components/transactions/SummaryComponent.js`)**:
+    * Structured the `"BANK CURRENT TOTALS"` card's title and its CSV download link to stack vertically and center perfectly on separate lines.
+    * Downloads a 1-row CSV of overall aggregates, saved with a live-timestamped filename (e.g. `Current Balance 17-Jul-2026_15-45-12.csv`).
+  * **Surgical Row-Level Daily Totals Downloads**:
+    * Added a new `DOWNLOAD` column to the right side of the `"DAILY TOTALS"` table.
+    * Renders an individual `📥 CSV` download link on every active day row.
+    * Clicking a row-level link downloads a single-row CSV of only that specific day's records, with a formatted, timestamped filename (e.g. `Daily Totals Friday_17th_Jul 17-Jul-2026_15-45-12.csv`). This gives operators surgical control to export single-day balance sheets.
+  * **Recent Transactions Downloader (`src/components/transactions/AllTransactionsTable.js`)**:
+    * Added a "Download All Transactions" CSV button centered directly underneath the main heading.
+    * Generates a fully detailed CSV log containing all transaction details beautifully formatted (including Transaction ID, Added By, Account ID, Name, Timestamp, Type, Category, Amount, and Note).
+    * Filenames are timestamped with the down-to-the-second download time (e.g. `All Transactions 17-Jul-2026_15-45-12.csv`).
+
+  ---
+
+  ## 12. Pre-existing Codebase Warnings / Errors Identified
   During the validation build process, the following pre-existing issue was detected:
   * **Dynamic Transaction Deletion Route (`src/pages/campers/[camperCode]/[transCode]/delete.js`)**:
   * **Error:** `Attempted import error: 'getTransaction' is not exported from '../../../api/campers/get'`

@@ -26,8 +26,8 @@ const AllCampersTable = (props) => {
 
   // Filter accounts dynamically based on active Tab and active search text query
   const displayedCampers = allData.filter((camper) => {
-    // 1. Filter by the active category tab
-    if (camper.category !== selectedCategory) return false;
+    // 1. Filter by the active category tab (skip if "All" is selected)
+    if (selectedCategory !== "All" && camper.category !== selectedCategory) return false;
 
     // 2. Filter by search query if text has been typed
     if (!searchTerm) return true;
@@ -44,38 +44,55 @@ const AllCampersTable = (props) => {
 
   return (
     <Fragment>
-      {/* Category Selection Tab Bar */}
-      <Box sx={{ borderBottom: 1, borderColor: "divider", mb: 3 }}>
-        <Tabs
-          value={selectedCategory}
-          onChange={(event, newValue) => setSelectedCategory(newValue)}
-          aria-label="Account category tabs"
-          variant="fullWidth"
-          indicatorColor="primary"
-          textColor="primary"
-        >
-          <Tab value="Primary" label="Primary Accounts" sx={{ fontWeight: "bold" }} />
-          <Tab value="Secondary" label="Secondary Accounts" sx={{ fontWeight: "bold" }} />
-          <Tab value="Unassigned" label="Unassigned Accounts" sx={{ fontWeight: "bold" }} />
-        </Tabs>
+      {/* 1-3. Centered Search Form (Filter By Name Title, input box, buttons) */}
+      <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%", mb: 2 }}>
+        <SearchByName onSearch={searchFilterHandler} onClear={clearFilterHandler}/>
       </Box>
 
-      <SearchByName onSearch={searchFilterHandler} onClear={clearFilterHandler}/>
-      
-      <div style={{ marginTop: "1rem", marginBottom: "1rem" }}>
+      {/* 4. Centered CSV Download link */}
+      <Box sx={{ display: "flex", justifyContent: "center", width: "100%", mb: 4 }}>
         <CSVLink 
           data={downloadData}
           filename={"all-camper-balances.csv"}
-          style={{ textDecoration: "none", color: "#1976d2", fontWeight: "bold" }}
+          style={{ textDecoration: "none", color: "#1976d2", fontWeight: "bold", fontSize: "0.9rem" }}
         >
           📥 Download All Balances
         </CSVLink>
-      </div>
+      </Box>
 
-      <Table className={styles.transTable}>
-        <caption>
-          <h2>All Accounts ({selectedCategory})</h2>
-        </caption>
+      {/* 5-6. Centered Title and Category Selector Tab Bar (Matches Table Width) */}
+      <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%", mb: 3 }}>
+        <h2 style={{ margin: "0 0 1rem 0", textAlign: "center" }}>All Accounts ({selectedCategory})</h2>
+        
+        <Box sx={{ width: "100%", maxWidth: "550px", borderBottom: 1, borderColor: "divider" }}>
+          <Tabs
+            value={selectedCategory}
+            onChange={(event, newValue) => setSelectedCategory(newValue)}
+            aria-label="Account category tabs"
+            variant="fullWidth"
+            indicatorColor="primary"
+            textColor="primary"
+            sx={{
+              minHeight: "36px",
+              "& .MuiTab-root": {
+                py: 0.5,
+                fontSize: "0.82rem", // slightly smaller font to fit 4 options beautifully
+                fontWeight: "bold",
+                minHeight: "36px",
+                px: 1
+              }
+            }}
+          >
+            <Tab value="Primary" label="Primary" />
+            <Tab value="Secondary" label="Secondary" />
+            <Tab value="Unassigned" label="Unassigned" />
+            <Tab value="All" label="All" />
+          </Tabs>
+        </Box>
+      </Box>
+
+      {/* 7. The Table centered with 550px max width alignment */}
+      <Table className={styles.transTable} style={{ margin: "0 auto", width: "100%", maxWidth: "550px" }}>
         <thead>
           <tr>
             <th>Account Id</th>

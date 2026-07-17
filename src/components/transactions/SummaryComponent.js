@@ -3,482 +3,264 @@ import styles from "./SummaryComponent.module.css"
 import Table from "../UI/Table";
 import { euro } from "../../../lib/helpers";
 import Paper from '@mui/material/Paper';
+import { CSVLink } from 'react-csv';
+import { Box } from '@mui/material';
 
 const SummaryComponent = (props) => {
-    const { query } = props;
-    const allData = query.data.data.data;
+  const { query } = props;
+  const allData = query.data?.data?.data || props.data || [];
 
-    const dayNames = {
-        0: "Sunday",
-        1: "Monday",
-        2: "Tuesday",
-        3: "Wednesday",
-        4: "Thursday",
-        5: "Friday",
-        6: "Saturday"
-    };
+  // 1. Helper function to get local date key YYYY-MM-DD
+  const getDateKey = (timeStamp) => {
+    const d = new Date(timeStamp);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
 
-    const filteredData = {
-        bankBalance: 0,
-        depCurrent: 0,
-        bookCurrent: 0,
-        tuckCurrent: 0,
-        popCurrent: 0,
-        iceCurrent: 0,
-        candyCurrent: 0,
-        outCurrent: 0,
-        monday: [],
-        tuesday: [],
-        wednesday: [],
-        thursday: [],
-        friday: [],
-        saturday: [],
-        sunday: [],
-        monTot: {
-            dep: 0,
-            tuck: 0,
-            candy: 0,
-            pop: 0,
-            ice: 0,
-            book: 0,
-            out: 0,
-        },
-        tueTot: {
-            dep: 0,
-            tuck: 0,
-            candy: 0,
-            pop: 0,
-            ice: 0,
-            book: 0,
-            out: 0,
-        },
-        wedTot: {
-            dep: 0,
-            tuck: 0,
-            candy: 0,
-            pop: 0,
-            ice: 0,
-            book: 0,
-            out: 0,
-        },
-        thuTot: {
-            dep: 0,
-            tuck: 0,
-            candy: 0,
-            pop: 0,
-            ice: 0,
-            book: 0,
-            out: 0,
-        },
-        friTot: {
-            dep: 0,
-            tuck: 0,
-            candy: 0,
-            pop: 0,
-            ice: 0,
-            book: 0,
-            out: 0,
-        },
-        satTot: {
-            dep: 0,
-            tuck: 0,
-            candy: 0,
-            pop: 0,
-            ice: 0,
-            book: 0,
-            out: 0,
-        },
-        sunTot: {
-            dep: 0,
-            tuck: 0,
-            candy: 0,
-            pop: 0,
-            ice: 0,
-            book: 0,
-            out: 0,
-        },
+  // 2. Helper function to format date as "Monday 7th Oct"
+  const formatDate = (dateString) => {
+    const d = new Date(dateString);
+    if (isNaN(d.getTime())) return "Unknown Date";
+
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const dayName = days[d.getDay()];
+
+    const dayNum = d.getDate();
+    let suffix = "th";
+    if (dayNum === 1 || dayNum === 21 || dayNum === 31) suffix = "st";
+    else if (dayNum === 2 || dayNum === 22) suffix = "nd";
+    else if (dayNum === 3 || dayNum === 23) suffix = "rd";
+
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const monthName = months[d.getMonth()];
+
+    return `${dayName} ${dayNum}${suffix} ${monthName}`;
+  };
+
+  // 3. Overall bank aggregates
+  let depCurrent = 0;
+  let tuckCurrent = 0;
+  let iceCurrent = 0;
+  let popCurrent = 0;
+  let candyCurrent = 0;
+  let bookCurrent = 0;
+  let outCurrent = 0;
+
+  // Grouped transaction data by date
+  const dailyGroups = {};
+
+  allData.forEach((tran) => {
+    const amount = Number(tran.amount) || 0;
+    const cat = tran.category;
+
+    // Track overall aggregates
+    if (cat === "Deposit") depCurrent += amount;
+    else if (cat === "Tuckshop") tuckCurrent += amount;
+    else if (cat === "Icecream") iceCurrent += amount;
+    else if (cat === "Popcorn") popCurrent += amount;
+    else if (cat === "Candyfloss") candyCurrent += amount;
+    else if (cat === "Book") bookCurrent += amount;
+    else if (cat === "Withdrawal") outCurrent += amount;
+
+    // Group transactions dynamically by date
+    const dateKey = getDateKey(tran.timeStamp);
+    if (!dailyGroups[dateKey]) {
+      dailyGroups[dateKey] = {
+        dateKey,
+        dep: 0,
+        tuck: 0,
+        ice: 0,
+        pop: 0,
+        candy: 0,
+        book: 0,
+        out: 0
+      };
     }
 
-    // filter for days and calc totals
-    for (let i = 0; i < allData.length; i++) {
-        const dep = "Deposit"
-        const tuck = "Tuckshop"
-        const pop = "Popcorn"
-        const ice = "Icecream"
-        const candy = "Candyfloss"
-        const book = "Book"
-        const out = "Withdrawal"
+    if (cat === "Deposit") dailyGroups[dateKey].dep += amount;
+    else if (cat === "Tuckshop") dailyGroups[dateKey].tuck += amount;
+    else if (cat === "Icecream") dailyGroups[dateKey].ice += amount;
+    else if (cat === "Popcorn") dailyGroups[dateKey].pop += amount;
+    else if (cat === "Candyfloss") dailyGroups[dateKey].candy += amount;
+    else if (cat === "Book") dailyGroups[dateKey].book += amount;
+    else if (cat === "Withdrawal") dailyGroups[dateKey].out += amount;
+  });
 
-        switch (allData[i].day) {
-            case 0:
-                filteredData.sunday.push(allData[i]);
-                switch (allData[i].category) {
-                    case dep:
-                        filteredData.sunTot.dep += Number(allData[i].amount)
-                        break;
-                    case tuck:
-                        filteredData.sunTot.tuck += Number(allData[i].amount)
-                        break;
-                    case pop:
-                        filteredData.sunTot.pop += Number(allData[i].amount)
-                        break;
-                    case ice:
-                        filteredData.sunTot.ice += Number(allData[i].amount)
-                        break;
-                    case candy:
-                        filteredData.sunTot.candy += Number(allData[i].amount)
-                        break;
-                    case book:
-                        filteredData.sunTot.book += Number(allData[i].amount)
-                        break;
-                    case out:
-                        filteredData.sunTot.out += Number(allData[i].amount)
-                        break;
-                }
-                break;
-            case 1:
-                filteredData.monday.push(allData[i]);
-                switch (allData[i].category) {
-                    case dep:
-                        filteredData.monTot.dep += Number(allData[i].amount)
-                        break;
-                    case tuck:
-                        filteredData.monTot.tuck += Number(allData[i].amount)
-                        break;
-                    case pop:
-                        filteredData.monTot.pop += Number(allData[i].amount)
-                        break;
-                    case ice:
-                        filteredData.monTot.ice += Number(allData[i].amount)
-                        break;
-                    case candy:
-                        filteredData.monTot.candy += Number(allData[i].amount)
-                        break;
-                    case book:
-                        filteredData.monTot.book += Number(allData[i].amount)
-                        break;
-                    case out:
-                        filteredData.monTot.out += Number(allData[i].amount)
-                        break;
-                }
-                break;
-            case 2:
-                filteredData.tuesday.push(allData[i]);
-                switch (allData[i].category) {
-                    case dep:
-                        filteredData.tueTot.dep += Number(allData[i].amount)
-                        break;
-                    case tuck:
-                        filteredData.tueTot.tuck += Number(allData[i].amount)
-                        break;
-                    case pop:
-                        filteredData.tueTot.pop += Number(allData[i].amount)
-                        break;
-                    case ice:
-                        filteredData.tueTot.ice += Number(allData[i].amount)
-                        break;
-                    case candy:
-                        filteredData.tueTot.candy += Number(allData[i].amount)
-                        break;
-                    case book:
-                        filteredData.tueTot.book += Number(allData[i].amount)
-                        break;
-                    case out:
-                        filteredData.tueTot.out += Number(allData[i].amount)
-                        break;
-                }
-                break;
-            case 3:
-                filteredData.wednesday.push(allData[i]);
-                switch (allData[i].category) {
-                    case dep:
-                        filteredData.wedTot.dep += Number(allData[i].amount)
-                        break;
-                    case tuck:
-                        filteredData.wedTot.tuck += Number(allData[i].amount)
-                        break;
-                    case pop:
-                        filteredData.wedTot.pop += Number(allData[i].amount)
-                        break;
-                    case ice:
-                        filteredData.wedTot.ice += Number(allData[i].amount)
-                        break;
-                    case candy:
-                        filteredData.wedTot.candy += Number(allData[i].amount)
-                        break;
-                    case book:
-                        filteredData.wedTot.book += Number(allData[i].amount)
-                        break;
-                    case out:
-                        filteredData.wedTot.out += Number(allData[i].amount)
-                        break;
-                }
-                break;
-            case 4:
-                filteredData.thursday.push(allData[i]);
-                switch (allData[i].category) {
-                    case dep:
-                        filteredData.thuTot.dep += Number(allData[i].amount)
-                        break;
-                    case tuck:
-                        filteredData.thuTot.tuck += Number(allData[i].amount)
-                        break;
-                    case pop:
-                        filteredData.thuTot.pop += Number(allData[i].amount)
-                        break;
-                    case ice:
-                        filteredData.thuTot.ice += Number(allData[i].amount)
-                        break;
-                    case candy:
-                        filteredData.thuTot.candy += Number(allData[i].amount)
-                        break;
-                    case book:
-                        filteredData.thuTot.book += Number(allData[i].amount)
-                        break;
-                    case out:
-                        filteredData.thuTot.out += Number(allData[i].amount)
-                        break;
-                }
-                break;
-            case 5:
-                filteredData.friday.push(allData[i]);
-                switch (allData[i].category) {
-                    case dep:
-                        filteredData.friTot.dep += Number(allData[i].amount)
-                        break;
-                    case tuck:
-                        filteredData.friTot.tuck += Number(allData[i].amount)
-                        break;
-                    case pop:
-                        filteredData.friTot.pop += Number(allData[i].amount)
-                        break;
-                    case ice:
-                        filteredData.friTot.ice += Number(allData[i].amount)
-                        break;
-                    case candy:
-                        filteredData.friTot.candy += Number(allData[i].amount)
-                        break;
-                    case book:
-                        filteredData.friTot.book += Number(allData[i].amount)
-                        break;
-                    case out:
-                        filteredData.friTot.out += Number(allData[i].amount)
-                        break;
-                }
-                break;
-            case 6:
-                filteredData.saturday.push(allData[i]);
-                switch (allData[i].category) {
-                    case dep:
-                        filteredData.satTot.dep += Number(allData[i].amount)
-                        break;
-                    case tuck:
-                        filteredData.satTot.tuck += Number(allData[i].amount)
-                        break;
-                    case pop:
-                        filteredData.satTot.pop += Number(allData[i].amount)
-                        break;
-                    case ice:
-                        filteredData.satTot.ice += Number(allData[i].amount)
-                        break;
-                    case candy:
-                        filteredData.satTot.candy += Number(allData[i].amount)
-                        break;
-                    case book:
-                        filteredData.satTot.book += Number(allData[i].amount)
-                        break;
-                    case out:
-                        filteredData.satTot.out += Number(allData[i].amount)
-                        break;
-                }
-                break;
-        };
+  const bankBalance = depCurrent - tuckCurrent - bookCurrent - popCurrent - candyCurrent - iceCurrent - outCurrent;
 
-        switch (allData[i].category) {
-            case dep:
-                filteredData.depCurrent += Number(allData[i].amount)
-                break;
-            case tuck:
-                filteredData.tuckCurrent += Number(allData[i].amount)
-                break;
-            case pop:
-                filteredData.popCurrent += Number(allData[i].amount)
-                break;
-            case candy:
-                filteredData.candyCurrent += Number(allData[i].amount)
-                break;
-            case ice:
-                filteredData.iceCurrent += Number(allData[i].amount)
-                break;
-            case book:
-                filteredData.bookCurrent += Number(allData[i].amount)
-                break;
-            case out:
-                filteredData.outCurrent += Number(allData[i].amount)
-                break;
-        }
+  // 4. Calculate Running Cumulative Balance
+  // Sort keys chronologically (oldest to newest)
+  const sortedDateKeys = Object.keys(dailyGroups).sort();
+  
+  let runningBalance = 0;
+  const processedDailyTotals = sortedDateKeys.map((dateKey) => {
+    const g = dailyGroups[dateKey];
+    // Calculate net change for this day
+    const netChange = g.dep - g.tuck - g.ice - g.pop - g.candy - g.book - g.out;
+    runningBalance += netChange;
+
+    return {
+      dateText: formatDate(dateKey),
+      runningBalance,
+      dep: g.dep,
+      tuck: g.tuck,
+      ice: g.ice,
+      popCandy: g.pop + g.candy, // Combine Popcorn and Candyfloss under Popcorn/Candy Floss
+      book: g.book,
+      out: g.out
     };
+  });
 
-    filteredData.bankBalance = (
-        filteredData.depCurrent - 
-        filteredData.tuckCurrent - 
-        filteredData.bookCurrent - 
-        filteredData.popCurrent -
-        filteredData.candyCurrent -
-        filteredData.iceCurrent -
-        filteredData.outCurrent
-    )
+  // 5. Generate Safe Timestamp String (DD-MMM-YYYY_HH-mm-ss)
+  const getTimestampString = () => {
+    const d = new Date();
+    const pad = (n) => String(n).padStart(2, "0");
+    const day = pad(d.getDate());
+    
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const month = months[d.getMonth()];
+    const year = d.getFullYear();
+    
+    const hr = pad(d.getHours());
+    const min = pad(d.getMinutes());
+    const sec = pad(d.getSeconds());
+    
+    return `${day}-${month}-${year}_${hr}-${min}-${sec}`;
+  };
 
-    const monday = (
-        filteredData.monTot.dep - 
-        filteredData.monTot.tuck - 
-        filteredData.monTot.book - 
-        filteredData.monTot.ice - 
-        filteredData.monTot.pop - 
-        filteredData.monTot.candy - 
-        filteredData.monTot.out
-    )
-    const tuesday = (
-        monday + filteredData.tueTot.dep - 
-        filteredData.tueTot.tuck - 
-        filteredData.tueTot.book - 
-        filteredData.tueTot.ice - 
-        filteredData.tueTot.pop - 
-        filteredData.tueTot.candy - 
-        filteredData.tueTot.out
-    )
-    const wednesday = (
-        tuesday + filteredData.wedTot.dep - 
-        filteredData.wedTot.tuck - 
-        filteredData.wedTot.book - 
-        filteredData.wedTot.ice - 
-        filteredData.wedTot.pop - 
-        filteredData.wedTot.candy - 
-        filteredData.wedTot.out
-    )
-    const thursday = (
-        wednesday + filteredData.thuTot.dep - 
-        filteredData.thuTot.tuck - 
-        filteredData.thuTot.book - 
-        filteredData.thuTot.ice - 
-        filteredData.thuTot.pop - 
-        filteredData.thuTot.candy - 
-        filteredData.thuTot.out
-    )
-    const friday = (
-        thursday + filteredData.friTot.dep - 
-        filteredData.friTot.tuck - 
-        filteredData.friTot.book - 
-        filteredData.friTot.ice - 
-        filteredData.friTot.pop - 
-        filteredData.friTot.candy - 
-        filteredData.friTot.out
-    )
+  const currentTimestamp = getTimestampString();
+  const currentFilename = `Current Balance ${currentTimestamp}.csv`;
 
-    return (
-        <Paper elevation={6} sx={{width: "95%", height: "100vh", display: "flex", flexBasis: "gap-between", gap: "4rem", padding: "2rem", backgroundColor: "#f8f8ff"}}>
-            <Card>
-                <Card>
-                    <h2>BANK CURRENT TOTALS</h2>
-                    <Table>
-                        <thead>
-                            <tr>
-                                <th className={styles.totals}>Bank Balance</th>
-                                <th className={styles.totals}>Deposits</th>
-                                <th className={styles.totals}>Tuckshop</th>
-                                <th className={styles.totals}>Ice Cream</th>
-                                <th className={styles.totals}>Popcorn/Candy Floss</th>
-                                <th className={styles.totals}>Books</th>
-                                <th className={styles.totals}>Withdrawals</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td className={styles.totalsDataAdd}>{euro.format(filteredData.bankBalance)}</td>
-                                <td className={styles.totalsDataAdd}>{euro.format(filteredData.depCurrent)}</td>
-                                <td className={styles.totalsDataSub}>{euro.format(-filteredData.tuckCurrent)}</td>
-                                <td className={styles.totalsDataSub}>{euro.format(-filteredData.iceCurrent)}</td>
-                                <td className={styles.totalsDataSub}>{euro.format(-filteredData.popCurrent)}</td>
-                                <td className={styles.totalsDataSub}>{euro.format(-filteredData.bookCurrent)}</td>
-                                <td className={styles.totalsDataSub}>{euro.format(-filteredData.outCurrent)}</td>
-                            </tr>
-                        </tbody>
-                    </Table>
-                </Card>
-                <Card>
-                    <h2>DAILY TOTALS</h2>
-                    <Table>
-                        <thead>
-                            <tr>
-                                <th className={styles.totals}>Day</th>
-                                <th className={styles.totals}>Balance</th>
-                                <th className={styles.totals}>Deposits</th>
-                                <th className={styles.totals}>Tuckshop</th>
-                                <th className={styles.totals}>Ice Cream</th>
-                                <th className={styles.totals}>Popcorn/Candy Floss</th>
-                                <th className={styles.totals}>Books</th>
-                                <th className={styles.totals}>Withdrawals</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td className={styles.headers}>Monday</td>
-                                <td className={styles.additions}>{euro.format(monday)}</td>
-                                <td className={styles.additions}>{euro.format(filteredData.monTot.dep)}</td>
-                                <td className={styles.subtractions}>{euro.format(-filteredData.monTot.tuck)}</td>
-                                <td className={styles.subtractions}>{euro.format(-filteredData.monTot.ice)}</td>
-                                <td className={styles.subtractions}>{euro.format(-filteredData.monTot.pop)}</td>
-                                <td className={styles.subtractions}>{euro.format(-filteredData.monTot.book)}</td>
-                                <td className={styles.subtractions}>{euro.format(-filteredData.monTot.out)}</td>
-                            </tr>
-                            <tr>
-                                <td className={styles.headers}>Tuesday</td>
-                                <td className={styles.additions}>{euro.format(tuesday)}</td>
-                                <td className={styles.additions}>{euro.format(filteredData.tueTot.dep)}</td>
-                                <td className={styles.subtractions}>{euro.format(-filteredData.tueTot.tuck)}</td>
-                                <td className={styles.subtractions}>{euro.format(-filteredData.tueTot.ice)}</td>
-                                <td className={styles.subtractions}>{euro.format(-filteredData.tueTot.pop)}</td>
-                                <td className={styles.subtractions}>{euro.format(-filteredData.tueTot.book)}</td>
-                                <td className={styles.subtractions}>{euro.format(-filteredData.tueTot.out)}</td>
-                            </tr>
-                            <tr>
-                                <td className={styles.headers}>Wednesday</td>
-                                <td className={styles.additions}>{euro.format(wednesday)}</td>
-                                <td className={styles.additions}>{euro.format(filteredData.wedTot.dep)}</td>
-                                <td className={styles.subtractions}>{euro.format(-filteredData.wedTot.tuck)}</td>
-                                <td className={styles.subtractions}>{euro.format(-filteredData.wedTot.ice)}</td>
-                                <td className={styles.subtractions}>{euro.format(-filteredData.wedTot.pop)}</td>
-                                <td className={styles.subtractions}>{euro.format(-filteredData.wedTot.book)}</td>
-                                <td className={styles.subtractions}>{euro.format(-filteredData.wedTot.out)}</td>
-                            </tr>
-                            <tr>
-                                <td className={styles.headers}>Thursday</td>
-                                <td className={styles.additions}>{euro.format(thursday)}</td>
-                                <td className={styles.additions}>{euro.format(filteredData.thuTot.dep)}</td>
-                                <td className={styles.subtractions}>{euro.format(-filteredData.thuTot.tuck)}</td>
-                                <td className={styles.subtractions}>{euro.format(-filteredData.thuTot.ice)}</td>
-                                <td className={styles.subtractions}>{euro.format(-filteredData.thuTot.pop)}</td>
-                                <td className={styles.subtractions}>{euro.format(-filteredData.thuTot.book)}</td>
-                                <td className={styles.subtractions}>{euro.format(-filteredData.thuTot.out)}</td>
-                            </tr>
-                            <tr>
-                                <td className={styles.headers}>Friday</td>
-                                <td className={styles.additions}>{euro.format(friday)}</td>
-                                <td className={styles.additions}>{euro.format(filteredData.friTot.dep)}</td>
-                                <td className={styles.subtractions}>{euro.format(-filteredData.friTot.tuck)}</td>
-                                <td className={styles.subtractions}>{euro.format(-filteredData.friTot.ice)}</td>
-                                <td className={styles.subtractions}>{euro.format(-filteredData.friTot.pop)}</td>
-                                <td className={styles.subtractions}>{euro.format(-filteredData.friTot.book)}</td>
-                                <td className={styles.subtractions}>{euro.format(-filteredData.friTot.out)}</td>
-                            </tr>
-                        </tbody>
-                    </Table>
-                </Card>
-            </Card>
-        </Paper>
+  // Map Bank Current Totals CSV row
+  const currentTotalsCSVData = [
+    {
+      "BANK BALANCE": bankBalance,
+      "DEPOSITS": depCurrent,
+      "TUCKSHOP": -tuckCurrent,
+      "ICE CREAM": -iceCurrent,
+      "POPCORN/CANDY FLOSS": -(popCurrent + candyCurrent),
+      "BOOKS": -bookCurrent,
+      "WITHDRAWALS": -outCurrent
+    }
+  ];
+
+  return (
+    <Paper elevation={6} sx={{ width: "95%", height: "100%", display: "flex", flexDirection: "column", gap: "2rem", padding: "2rem", backgroundColor: "#f8f8ff" }}>
+      <Card>
+        {/* BANK CURRENT TOTALS Card centered */}
+        <Card sx={{ mb: 4 }}>
+          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", mb: 2 }}>
+            <h2 style={{ margin: 0, textAlign: "center" }}>BANK CURRENT TOTALS</h2>
+            <CSVLink 
+              data={currentTotalsCSVData}
+              filename={currentFilename}
+              style={{ textDecoration: "none", color: "#1976d2", fontWeight: "bold", fontSize: "0.9rem", marginTop: "0.5rem" }}
+            >
+              📥 Download Current Balance CSV
+            </CSVLink>
+          </Box>
+          
+          <Table style={{ width: "100%", maxWidth: "980px", margin: "0 auto", borderCollapse: "collapse", textAlign: "center" }}>
+            <thead>
+              <tr>
+                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>BANK BALANCE</th>
+                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>DEPOSITS</th>
+                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>TUCKSHOP</th>
+                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>ICE CREAM</th>
+                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>POPCORN/CANDY FLOSS</th>
+                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>BOOKS</th>
+                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>WITHDRAWALS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className={styles.totalsDataAdd} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(bankBalance)}</td>
+                <td className={styles.totalsDataAdd} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(depCurrent)}</td>
+                <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-tuckCurrent)}</td>
+                <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-iceCurrent)}</td>
+                <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-(popCurrent + candyCurrent))}</td>
+                <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-bookCurrent)}</td>
+                <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-outCurrent)}</td>
+              </tr>
+            </tbody>
+          </Table>
+        </Card>
         
-    )
+        {/* DAILY TOTALS Card with row-level downloads */}
+        <Card>
+          <Box sx={{ mb: 2, textAlign: "center" }}>
+            <h2 style={{ margin: 0 }}>DAILY TOTALS</h2>
+          </Box>
+          
+          <Table style={{ width: "100%", maxWidth: "980px", margin: "0 auto", borderCollapse: "collapse", textAlign: "center" }}>
+            <thead>
+              <tr>
+                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>DAY</th>
+                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>BALANCE</th>
+                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>DEPOSITS</th>
+                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>TUCKSHOP</th>
+                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>ICE CREAM</th>
+                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>POPCORN/CANDY FLOSS</th>
+                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>BOOKS</th>
+                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>WITHDRAWALS</th>
+                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>DOWNLOAD</th>
+              </tr>
+            </thead>
+            <tbody>
+              {processedDailyTotals.map((dayData, idx) => {
+                // Prepare single row CSV data for this specific day
+                const singleDayCSVData = [
+                  {
+                    "DAY": dayData.dateText,
+                    "BALANCE": dayData.runningBalance,
+                    "DEPOSITS": dayData.dep,
+                    "TUCKSHOP": -dayData.tuck,
+                    "ICE CREAM": -dayData.ice,
+                    "POPCORN/CANDY FLOSS": -dayData.popCandy,
+                    "BOOKS": -dayData.book,
+                    "WITHDRAWALS": -dayData.out
+                  }
+                ];
+                const sanitizedDateText = dayData.dateText.replace(/\s+/g, "_");
+                const rowFilename = `Daily Totals ${sanitizedDateText} ${currentTimestamp}.csv`;
 
+                return (
+                  <tr key={idx}>
+                    <td className={styles.headers} style={{ whiteSpace: "nowrap", fontSize: "0.95rem", textAlign: "center" }}>{dayData.dateText}</td>
+                    <td className={styles.additions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(dayData.runningBalance)}</td>
+                    <td className={styles.additions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(dayData.dep)}</td>
+                    <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-dayData.tuck)}</td>
+                    <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-dayData.ice)}</td>
+                    <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-dayData.popCandy)}</td>
+                    <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-dayData.book)}</td>
+                    <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-dayData.out)}</td>
+                    <td style={{ fontSize: "0.95rem", textAlign: "center", padding: "8px 6px" }}>
+                      <CSVLink
+                        data={singleDayCSVData}
+                        filename={rowFilename}
+                        style={{ textDecoration: "none", color: "#1976d2", fontWeight: "bold", fontSize: "0.85rem" }}
+                      >
+                        📥 CSV
+                      </CSVLink>
+                    </td>
+                  </tr>
+                );
+              })}
+              {processedDailyTotals.length === 0 && (
+                <tr>
+                  <td colSpan={9} style={{ textAlign: "center", padding: "2rem", color: "#666", fontStyle: "italic" }}>
+                    No transaction data found.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </Table>
+        </Card>
+      </Card>
+    </Paper>
+  );
 };
 
-export default SummaryComponent
+export default SummaryComponent;
