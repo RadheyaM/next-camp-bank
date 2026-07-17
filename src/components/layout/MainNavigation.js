@@ -39,9 +39,9 @@ const MainNavigation = (props) => {
           </div>
           <nav className={styles.nav}>
             <ul className={styles.navLinkBar}>
-              <Link href="/">Camper By Code</Link>
+              <Link href="/">Account By Code</Link>
               <Link href="/campers" replace>
-                Camper By Name
+                Account By Name
               </Link>
               <Link href="/campers/transactions" replace>
                 Recent Transactions

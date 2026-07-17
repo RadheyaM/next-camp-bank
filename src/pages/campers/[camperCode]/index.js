@@ -24,7 +24,7 @@ const CamperOverview = (props) => {
   const postTransactionsHandler = async (trans) => {
     // console.log("trans here now: ", trans);
     setTimeout(() => {Router.replace("/")}, 2000);
-    const response = await fetch("/api/campers/[campersCode]", {
+    const response = await fetch(`/api/campers/${camperId}`, {
       method: "POST",
       body: JSON.stringify(trans),
       headers: {
@@ -72,13 +72,13 @@ const CamperOverview = (props) => {
   if (status === "authenticated") {
     return (
       <Paper elevation={12} sx={{
-        width: "95%",
+        width: "100%",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
+        alignItems: "stretch",
         justifyContent: "center",
-        gap: "2rem",
-        padding: "6rem",
+        gap: "1.5rem",
+        padding: { xs: "1rem", md: "2rem" },
         backgroundColor: "#f8f8ff"}}
     >
         <CamperDetail

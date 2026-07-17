@@ -104,7 +104,43 @@ To display which rostered campers are mapped to each banking account, we integra
 
   ---
 
-  ## 8. Pre-existing Codebase Warnings / Errors Identified
+  ## 8. Account Roster Filtering & Navigation Rename
+  To accurately align the terminology with the single-primary family account architecture:
+
+  * **Top Navbar Rename (`src/components/layout/MainNavigation.js`)**:
+    * Changed the text of the landing page search link from `"Camper By Code"` to `"Account By Code"`.
+    * Changed the text of the directory index link from `"Camper By Name"` to `"Account By Name"`.
+  * **Primary Accounts Only Filter**:
+    * Updated the index page's static rendering (`src/pages/campers/index.js`) and dynamic query endpoint (`src/pages/api/campers/get.js`).
+    * Queries the `CamperDetails` collection to build an exclusion list of any `accountQRCode` where a non-empty `linkedQRCode` is assigned (meaning they are shared/linked accounts, not independent bank accounts).
+    * Performs a MongoDB `$nin` exclusion query on the banking `Campers` collection to return only primary banking accounts.
+    * This hides redundant family linked accounts, keeping the "Account By Name" view clean and showing only unique primary financial accounts.
+
+  ---
+
+  ## 9. Account Details Layout Optimization
+  To provide a highly professional, compact, and cohesive bank-teller experience, we refactored the `/campers/[camperCode]` page layout and its main input form:
+
+  * **Grid Dashboard Layout (`src/components/campers/CamperDetail.js`)**:
+    * Replaced the vertical stack of three gigantic `Paper` containers with a responsive 2-column dashboard grid.
+    * Expanded the dashboard's `maxWidth` from `1200px` to **`1400px`** to let cards sit side-by-side spaciously.
+    * Reduced the wrapper container's padding from a squeezed `6rem` to a responsive, balanced **`1rem/2rem`** and set `alignItems` to **`stretch`** so the content fully utilizes the monitor width.
+    * **Left Column (width: 5):** Renders the customer/account details and roster table compactly.
+    * **Right Column (width: 7):** Renders the transaction processing form.
+    * **Bottom Row (width: 12):** Spans the entire screen width to display the transaction history table.
+  * **Teller-Slip Transaction Form (`src/components/forms/NewTransForm.js`)**:
+    * Changed the main header from `"Quick Teller slip"` to `"Create Transaction"` styled as an `<h2>` for cohesive uniformity.
+    * Added an informative, centered italicized subtitle banner directly underneath the form heading: *"You can enter multiple transaction types at once and the account will balance out automatically."*
+    * Restructured the inputs into a cohesive grid divided into colored financial ledger cards (e.g. Blue card for Deposit/Withdrawal, Light Gray card for Bookshop/Adjustment, Yellow card for Tuckshop/Snacks).
+    * Paired each optional Note input field directly underneath its corresponding Amount input (e.g. Book Note is nested in the Bookshop card), making the flow highly intuitive and eliminating huge vertical space.
+    * Integrated a unified transaction submission footer, maintaining the exact same backend API schemas, validation ranges, negative balance warning alerts, and localStorage notifications.
+  * **Centered Transaction History Table (`src/components/overview/TransactionTable.js`)**:
+    * Cleaned up the table by replacing the standard browser caption with an elegant, centered Material-UI `Typography` heading.
+    * Wrapped the transaction history ledger table inside a beautifully centered responsive Box container with a `maxWidth` of `850px` and horizontal scroll support, keeping the bottom history perfectly balanced and centered under the dashboard column blocks.
+
+  ---
+
+  ## 10. Pre-existing Codebase Warnings / Errors Identified
   During the validation build process, the following pre-existing issue was detected:
   * **Dynamic Transaction Deletion Route (`src/pages/campers/[camperCode]/[transCode]/delete.js`)**:
   * **Error:** `Attempted import error: 'getTransaction' is not exported from '../../../api/campers/get'`

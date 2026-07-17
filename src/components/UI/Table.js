@@ -3,7 +3,7 @@ import styles from './Table.module.css'
 const Table = props => {
   const tableClasses = `${styles.myTable} ${props.className}`
   return (
-    <table className={tableClasses}>{props.children}</table>
+    <table className={tableClasses} style={props.style}>{props.children}</table>
   )
 }
 

@@ -1,11 +1,6 @@
 import { useState } from "react";
-import styles from "./NewTransForm.module.css";
 import Button from "@mui/material/Button";
-import { TextField } from "@mui/material";
-import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
-import Badge from '@mui/material/Badge';
-import Stack from "@mui/material/Stack";
+import { TextField, Grid, Box, Typography, Alert, AlertTitle, Stack, Divider, Paper } from "@mui/material";
 import { euro } from "../../../lib/helpers";
 
 const NewTransForm = (props) => {
@@ -14,84 +9,94 @@ const NewTransForm = (props) => {
   const firstName = camper.firstName;
   const lastName = camper.lastName;
   const name = (firstName || lastName) ? `${firstName || ""} ${lastName || ""}`.trim() : `Account ${camperId}`;
+  
+  // State variables for amounts
   const [enteredDeposit, setEnteredDeposit] = useState("");
   const [enteredBook, setEnteredBook] = useState("");
   const [enteredTuckshop, setEnteredTuckshop] = useState("");
   const [enteredPopcorn, setEnteredPopcorn] = useState("");
-  const [enteredCandyfloss, setEnteredCandyfloss] = useState("");
   const [enteredIcecream, setEnteredIcecream] = useState("");
   const [enteredWithdrawal, setEnteredWithdrawal] = useState("");
   const [enteredAdj, setEnteredAdj] = useState("");
+  
+  // State variables for notes
   const [depNote, setDepNote] = useState("");
   const [bookNote, setBookNote] = useState("");
   const [tuckNote, setTuckNote] = useState("");
   const [withNote, setWithNote] = useState("");
   const [adjNote, setAdjNote] = useState("");
+  
+  // State variables for warnings
   const [alert, setAlert] = useState(false);
   const [enoughCheck, setEnoughCheck] = useState("");
+
   const inputHandler = (identifier, event) => {
+    const val = event.target.value;
     if (identifier === "deposit") {
-      setEnteredDeposit(event.target.value);
+      setEnteredDeposit(val);
     } else if (identifier === "book") {
-      setEnteredBook(event.target.value);
+      setEnteredBook(val);
     } else if (identifier === "tuckshop") {
-      setEnteredTuckshop(event.target.value);
+      setEnteredTuckshop(val);
     } else if (identifier === "popcorn") {
-      setEnteredPopcorn(event.target.value);
-    } else if (identifier === "candyfloss") {
-      setEnteredCandyfloss(event.target.value)
+      setEnteredPopcorn(val);
     } else if (identifier === "icecream") {
-      setEnteredIcecream(event.target.value)
+      setEnteredIcecream(val);
     } else if (identifier === "withdrawal") {
-      setEnteredWithdrawal(event.target.value.toString());
+      setEnteredWithdrawal(val.toString());
     } else if (identifier === "adjustment") {
-      setEnteredAdj(event.target.value);
+      setEnteredAdj(val);
     } else if (identifier === "depNote") {
-      setDepNote(event.target.value);
+      setDepNote(val);
     } else if (identifier === "bookNote") {
-      setBookNote(event.target.value);
+      setBookNote(val);
     } else if (identifier === "tuckNote") {
-      setTuckNote(event.target.value);
+      setTuckNote(val);
     } else if (identifier === "adjNote") {
-      setAdjNote(event.target.value);
+      setAdjNote(val);
     } else {
-      setWithNote(event.target.value);
+      setWithNote(val);
     }
   };
+
   const submitHandler = (event) => {
     event.preventDefault();
-    // calc balance, return if balance negative.
-    const enoughCheck =
+
+    // calculate balance, return if balance negative.
+    const calculatedDiff =
       Number(props.balance.data.data.data) +
       Number(enteredDeposit) -
       (Number(enteredBook) +
         Number(enteredPopcorn) +
-        Number(enteredCandyfloss) +
         Number(enteredIcecream) +
         Number(enteredTuckshop) +
         Number(enteredWithdrawal) +
         Number(enteredAdj));
-    if (enoughCheck < 0) {
+
+    if (calculatedDiff < 0) {
       setAlert(true);
-      setEnoughCheck(enoughCheck);
+      setEnoughCheck(calculatedDiff);
       return;
     }
+
     let dT = {};
     let bT = {};
     let tT = {};
-    let cT = {};
     let pT = {};
     let iT = {};
     let wT = {};
     let aT = {};
+    
     let bal = {
-      balance: enoughCheck,
+      balance: calculatedDiff,
     };
     let localName = {
       name: name,
     };
+    
     const user = localStorage.getItem("User");
-    if (enteredDeposit !== "" && enteredDeposit !== 0) {
+
+    if (enteredDeposit !== "" && Number(enteredDeposit) !== 0) {
       dT = {
         accountId: camperId,
         name: name,
@@ -102,7 +107,7 @@ const NewTransForm = (props) => {
         user: user,
       };
     }
-    if (enteredBook !== "" && enteredBook !== 0) {
+    if (enteredBook !== "" && Number(enteredBook) !== 0) {
       bT = {
         accountId: camperId,
         name: name,
@@ -113,7 +118,7 @@ const NewTransForm = (props) => {
         user: user,
       };
     }
-    if (enteredTuckshop !== "" && enteredTuckshop !== 0) {
+    if (enteredTuckshop !== "" && Number(enteredTuckshop) !== 0) {
       tT = {
         accountId: camperId,
         name: name,
@@ -124,29 +129,29 @@ const NewTransForm = (props) => {
         user: user,
       };
     }
-    if (enteredPopcorn !== "" && enteredPopcorn !== 0) {
+    if (enteredPopcorn !== "" && Number(enteredPopcorn) !== 0) {
       pT = {
         accountId: camperId,
         name: name,
         type: "Payment",
         category: "Popcorn",
         amount: enteredPopcorn,
-        note: tuckNote,
+        note: tuckNote, // shares tuckNote
         user: user,
       };
     }
-    if (enteredIcecream !== "" && enteredIcecream !== 0) {
+    if (enteredIcecream !== "" && Number(enteredIcecream) !== 0) {
       iT = {
         accountId: camperId,
         name: name,
         type: "Payment",
         category: "Icecream",
         amount: enteredIcecream,
-        note: tuckNote,
+        note: tuckNote, // shares tuckNote
         user: user,
       };
     }
-    if (enteredWithdrawal !== "" && enteredWithdrawal !== 0) {
+    if (enteredWithdrawal !== "" && Number(enteredWithdrawal) !== 0) {
       wT = {
         accountId: camperId,
         name: name,
@@ -156,8 +161,8 @@ const NewTransForm = (props) => {
         note: withNote,
         user: user,
       };
-    };
-    if (enteredAdj !== "" && enteredAdj !== 0) {
+    }
+    if (enteredAdj !== "" && Number(enteredAdj) !== 0) {
       aT = {
         accountId: camperId,
         name: name,
@@ -167,7 +172,8 @@ const NewTransForm = (props) => {
         note: adjNote,
         user: user,
       };
-    };
+    }
+
     // transfer transaction data up to parent.
     props.onAddTransactions({
       dT,
@@ -179,219 +185,270 @@ const NewTransForm = (props) => {
       aT,
       bal,
     });
-    //save for 'last transaction' message.
+
+    // save for 'last transaction' message.
     localStorage.setItem(
       "Alert",
       JSON.stringify([dT, bT, tT, pT, iT, wT, aT, bal, localName])
     );
+
+    // Reset amounts
     setEnteredDeposit("");
     setEnteredBook("");
     setEnteredTuckshop("");
     setEnteredPopcorn("");
     setEnteredIcecream("");
     setEnteredWithdrawal("");
+    setEnteredAdj("");
+    
+    // Reset notes
     setDepNote("");
     setBookNote("");
     setTuckNote("");
     setWithNote("");
+    setAdjNote("");
+    
+    setAlert(false);
   };
 
   return (
-    <>
-      <form onSubmit={submitHandler} className={styles.newTransForm}>
-        <h2>Create Transactions</h2>
-        {/* <h2>{props.balance.data.data.data}</h2> */}
-        <Alert severity="info" variant="outlined">
-            You can process multiple transactions at the same time as long as there is enough money in the account.
+    <Box component="form" onSubmit={submitHandler} noValidate sx={{ width: "100%" }}>
+      <h2 style={{ textAlign: "center", marginBottom: "0.5rem" }}>Create Transaction</h2>
+      <Typography variant="body2" color="textSecondary" align="center" sx={{ fontStyle: "italic", mb: 3 }}>
+        You can enter multiple transaction types at once and the account will balance out automatically.
+      </Typography>
+
+      {/* Dynamic negative balance error */}
+      {alert && (
+        <Alert severity="warning" onClose={() => setAlert(false)} sx={{ mb: 2 }}>
+          <AlertTitle>Insufficient Funds</AlertTitle>
+          Cannot proceed. Account balance will go negative: <strong>{euro.format(enoughCheck)}</strong>.
         </Alert>
-        <p></p>
-        <Alert severity="info" variant="outlined">
-            Leave fields blank where not applicable, e.g. no withdrawal, leave
-            blank.
-        </Alert>
-        <h3 className={styles.subheader}>Deposit & Withdraw</h3>
-        <div className={styles.inputsCenter}>
-          <div>
+      )}
+
+      <Grid container spacing={3}>
+        
+        {/* Core Actions: Deposit & Withdrawal */}
+        <Grid item xs={12} sm={6}>
+          <Paper variant="outlined" sx={{ p: 2, backgroundColor: "#f0f4f8" }}>
+            <Typography variant="subtitle2" sx={{ color: "black", fontWeight: "bold", mb: 1.5, textTransform: "uppercase" }}>
+              📥 Deposit Funds
+            </Typography>
+            <Stack spacing={1.5}>
+              <TextField
+                onWheel={() => document.activeElement.blur()}
+                onChange={(e) => inputHandler("deposit", e)}
+                inputProps={{ step: 0.01 }}
+                type="number"
+                id="deposit"
+                value={enteredDeposit}
+                variant="outlined"
+                label="Deposit €"
+                fullWidth
+                size="small"
+              />
+              <TextField
+                onChange={(e) => inputHandler("depNote", e)}
+                type="text"
+                id="depNote"
+                value={depNote}
+                variant="standard"
+                label="[Optional] Note"
+                InputLabelProps={{ style: { fontStyle: "italic", fontSize: "0.82rem" } }}
+                fullWidth
+                size="small"
+              />
+            </Stack>
+          </Paper>
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
+          <Paper variant="outlined" sx={{ p: 2, backgroundColor: "#f0f4f8" }}>
+            <Typography variant="subtitle2" sx={{ color: "black", fontWeight: "bold", mb: 1.5, textTransform: "uppercase" }}>
+              📤 Cash Withdrawal
+            </Typography>
+            <Stack spacing={1.5}>
+              <TextField
+                onWheel={() => document.activeElement.blur()}
+                onChange={(e) => inputHandler("withdrawal", e)}
+                inputProps={{ step: 0.01 }}
+                type="number"
+                id="withdraw"
+                value={enteredWithdrawal}
+                variant="outlined"
+                label="Withdraw €"
+                fullWidth
+                size="small"
+              />
+              <TextField
+                onChange={(e) => inputHandler("withNote", e)}
+                type="text"
+                id="withNote"
+                value={withNote}
+                variant="standard"
+                label="[Optional] Note"
+                InputLabelProps={{ style: { fontStyle: "italic", fontSize: "0.82rem" } }}
+                fullWidth
+                size="small"
+              />
+            </Stack>
+          </Paper>
+        </Grid>
+
+        {/* Camp Purchases: Bookshop & General Adjustments */}
+        <Grid item xs={12} sm={6}>
+          <Paper variant="outlined" sx={{ p: 2, backgroundColor: "#fafafa" }}>
+            <Typography variant="subtitle2" sx={{ color: "black", fontWeight: "bold", mb: 1.5, textTransform: "uppercase" }}>
+              📖 Bookshop Purchases
+            </Typography>
+            <Stack spacing={1.5}>
+              <TextField
+                onWheel={() => document.activeElement.blur()}
+                onChange={(e) => inputHandler("book", e)}
+                inputProps={{ step: 0.01 }}
+                type="number"
+                id="book"
+                value={enteredBook}
+                variant="outlined"
+                label="Bookshop €"
+                fullWidth
+                size="small"
+              />
+              <TextField
+                onChange={(e) => inputHandler("bookNote", e)}
+                type="text"
+                id="bookNote"
+                value={bookNote}
+                variant="standard"
+                label="[Optional] Note"
+                InputLabelProps={{ style: { fontStyle: "italic", fontSize: "0.82rem" } }}
+                fullWidth
+                size="small"
+              />
+            </Stack>
+          </Paper>
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
+          <Paper variant="outlined" sx={{ p: 2, backgroundColor: "#fafafa" }}>
+            <Typography variant="subtitle2" sx={{ color: "black", fontWeight: "bold", mb: 1.5, textTransform: "uppercase" }}>
+              ⚙️ Account Adjustments
+            </Typography>
+            <Typography variant="caption" color="textSecondary" display="block" sx={{ fontStyle: "italic", mb: 1.5, mt: -1 }}>
+              Adjustments deduct entered amount from account.
+            </Typography>
+            <Stack spacing={1.5}>
+              <TextField
+                onWheel={() => document.activeElement.blur()}
+                onChange={(e) => inputHandler("adjustment", e)}
+                inputProps={{ step: 0.01 }}
+                type="number"
+                id="adjustment"
+                value={enteredAdj}
+                variant="outlined"
+                label="Adjustment €"
+                fullWidth
+                size="small"
+              />
+              <TextField
+                onChange={(e) => inputHandler("adjNote", e)}
+                type="text"
+                id="adjNote"
+                value={adjNote}
+                variant="standard"
+                label="[Optional] Note"
+                InputLabelProps={{ style: { fontStyle: "italic", fontSize: "0.82rem" } }}
+                fullWidth
+                size="small"
+              />
+            </Stack>
+          </Paper>
+        </Grid>
+
+        {/* Tuckshop & Snack Ledger */}
+        <Grid item xs={12}>
+          <Paper variant="outlined" sx={{ p: 2, backgroundColor: "#fffde7" }}>
+            <Typography variant="subtitle2" sx={{ color: "black", fontWeight: "bold", mb: 1.5, textTransform: "uppercase" }}>
+              🍬 Tuckshop & Snacks Ledger
+            </Typography>
+            
+            <Grid container spacing={2} sx={{ mb: 1.5 }}>
+              <Grid item xs={12} sm={4}>
+                <TextField
+                  onWheel={() => document.activeElement.blur()}
+                  onChange={(e) => inputHandler("tuckshop", e)}
+                  inputProps={{ step: 0.01 }}
+                  type="number"
+                  id="tuckshop"
+                  value={enteredTuckshop}
+                  variant="outlined"
+                  label="Tuckshop €"
+                  fullWidth
+                  size="small"
+                />
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <TextField
+                  onWheel={() => document.activeElement.blur()}
+                  onChange={(e) => inputHandler("popcorn", e)}
+                  inputProps={{ step: 0.01 }}
+                  type="number"
+                  id="popcorn"
+                  value={enteredPopcorn}
+                  variant="outlined"
+                  label="Popcorn/Candy €"
+                  fullWidth
+                  size="small"
+                />
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <TextField
+                  onWheel={() => document.activeElement.blur()}
+                  onChange={(e) => inputHandler("icecream", e)}
+                  inputProps={{ step: 0.01 }}
+                  type="number"
+                  id="icecream"
+                  value={enteredIcecream}
+                  variant="outlined"
+                  label="Ice Cream €"
+                  fullWidth
+                  size="small"
+                />
+              </Grid>
+            </Grid>
+
             <TextField
-              onWheel={() => document.activeElement.blur()}
-              onChange={(event) => {
-                inputHandler("deposit", event);
-              }}
-              inputProps={{
-                step: 0.01,
-              }}
-              type="number"
-              id="deposit"
-              value={enteredDeposit}
-              variant="outlined"
-              label="Deposit €"
-            />
-          </div>
-          <div>
-            <TextField
-              onWheel={() => document.activeElement.blur()}
-              onChange={(event) => {
-                inputHandler("withdrawal", event);
-              }}
-              inputProps={{
-                step: 0.01,
-              }}
-              type="number"
-              id="withdraw"
-              value={enteredWithdrawal}
-              variant="outlined"
-              label="Withdraw €"
-            />
-          </div>
-        </div>
-        <h3>Bookshop</h3>
-        <div className={styles.inputsCenter}>
-          <div>
-            <TextField
-              onWheel={() => document.activeElement.blur()}
-              onChange={(event) => {
-                inputHandler("book", event);
-              }}
-              inputProps={{
-                step: 0.01,
-              }}
-              type="number"
-              id="book"
-              value={enteredBook}
-              variant="outlined"
-              label="Book €"
-            />
-          </div>
-        </div>
-        <h3>Tuckshop</h3>
-        <div className={styles.inputs}>
-          <div>
-            <TextField
-              onWheel={() => document.activeElement.blur()}
-              onChange={(event) => {
-                inputHandler("tuckshop", event);
-              }}
-              inputProps={{
-                step: 0.01,
-              }}
-              type="number"
-              id="tuckshop"
-              value={enteredTuckshop}
-              variant="outlined"
-              label="Tuckshop €"
-            />
-          </div>
-          <div>
-            <TextField
-              onWheel={() => document.activeElement.blur()}
-              onChange={(event) => {
-                inputHandler("popcorn", event);
-              }}
-              inputProps={{
-                step: 0.01,
-              }}
-              type="number"
-              id="popcorn"
-              value={enteredPopcorn}
-              variant="outlined"
-              label="Pop/Candy €"
-            />
-          </div>
-          <div>
-            <TextField
-              onWheel={() => document.activeElement.blur()}
-              onChange={(event) => {
-                inputHandler("icecream", event);
-              }}
-              inputProps={{
-                step: 0.01,
-              }}
-              type="number"
-              id="icecream"
-              value={enteredIcecream}
-              variant="outlined"
-              label="Ice Cream €"
-            />
-          </div> 
-        </div>
-        <h2 className={styles.btnHeader}>Check Out</h2>
-        <div className={styles.submitBtn}>
-          <Button size="large" variant="contained" type="submit">
-            Complete Transaction(s)
-          </Button>
-        </div>
-        {alert && (
-          <Stack sx={{ width: "25%" }} spacing={2}>
-            <Alert
-              severity="warning"
-              onClose={() => {
-                setAlert(false);
-              }}
-            >
-              <AlertTitle>Warning</AlertTitle>
-              Cannot proceed: Balance will be negative:
-              {euro.format(enoughCheck)}.
-            </Alert>
-          </Stack>
-        )}
-        <h3>Add a short note for special transactions</h3>
-        <div className={styles.inputs}>
-          <div>
-            <TextField
-              onChange={(event) => {
-                inputHandler("depNote", event);
-              }}
-              type="text"
-              id="depNote"
-              value={depNote}
-              variant="standard"
-              label="Deposit Note"
-              multiline
-            />
-          </div>
-          <div>
-            <TextField
-              onChange={(event) => {
-                inputHandler("bookNote", event);
-              }}
-              type="text"
-              id="bookNote"
-              value={bookNote}
-              variant="standard"
-              label="Book Note"
-              multiline
-            />
-          </div>
-          <div>
-            <TextField
-              onChange={(event) => {
-                inputHandler("tuckNote", event);
-              }}
+              onChange={(e) => inputHandler("tuckNote", e)}
               type="text"
               id="tuckNote"
               value={tuckNote}
               variant="standard"
-              label="Tuckshop Note"
-              multiline
+              label="[Optional] Note"
+              InputLabelProps={{ style: { fontStyle: "italic", fontSize: "0.82rem" } }}
+              fullWidth
+              size="small"
             />
-          </div>
-          <div>
-            <TextField
-              onChange={(event) => {
-                inputHandler("withNote", event);
-              }}
-              type="text"
-              id="withNote"
-              value={withNote}
-              variant="standard"
-              label="Withdraw Note"
-              multiline
-            />
-          </div>
-        </div>
-      </form>
-    </>
-    
+          </Paper>
+        </Grid>
+
+        {/* Submit Actions */}
+        <Grid item xs={12}>
+          <Box sx={{ mt: 1, display: "flex", justifyContent: "flex-end" }}>
+            <Button
+              type="submit"
+              size="large"
+              variant="contained"
+              color="primary"
+              fullWidth
+              sx={{ py: 1.2, fontWeight: "bold" }}
+            >
+              Complete Transaction Slip
+            </Button>
+          </Box>
+        </Grid>
+
+      </Grid>
+    </Box>
   );
 };
 

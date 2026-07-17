@@ -75,8 +75,43 @@ export default Campers;
 export const getStaticProps = async () => {
   const client = await clientPromise;
   const db = client.db("Campers");
+  
+  // 1. Fetch all camper details from CamperDetails collection
+  const camperDetailsCol = db.collection("CamperDetails");
+  const details = await camperDetailsCol.find({}).toArray();
+  
+  // Build a map of accountQRCode -> camper details for quick category classification
+  const detailByCode = {};
+  for (const d of details) {
+    if (d.accountQRCode) {
+      detailByCode[d.accountQRCode.toString().trim()] = d;
+    }
+  }
+
+  // 2. Fetch all banking accounts from Campers collection
   const col = db.collection("Campers");
   const campers = await col.find({}).toArray();
+
+  // 3. Decorate each banking account with its category
+  const categorizedCampers = campers.map((camper) => {
+    const accountId = (camper.accountId || "").toString().trim();
+    const detail = detailByCode[accountId];
+    
+    let category = "Unassigned";
+    if (detail) {
+      if (detail.linkedQRCode && detail.linkedQRCode.trim() !== "") {
+        category = "Secondary";
+      } else {
+        category = "Primary";
+      }
+    }
+    
+    return {
+      ...camper,
+      category: category
+    };
+  });
+
   const transCol = db.collection("Transactions");
   const camperCol = db.collection("Campers")
   const deposits = await col.find({type: "Deposit"}).toArray();
@@ -86,7 +121,7 @@ export const getStaticProps = async () => {
   const allCampers = converter.json2csv(balanceData)
   return {
     props: {
-      campers: JSON.parse(JSON.stringify(campers)),
+      campers: JSON.parse(JSON.stringify(categorizedCampers)),
       allCampers: JSON.parse(JSON.stringify(allCampers))
     },
   };
