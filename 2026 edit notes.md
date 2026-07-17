@@ -83,9 +83,30 @@ To display which rostered campers are mapped to each banking account, we integra
 
 ---
 
-## 6. Pre-existing Codebase Warnings / Errors Identified
-During the validation build process, the following pre-existing issue was detected:
-* **Dynamic Transaction Deletion Route (`src/pages/campers/[camperCode]/[transCode]/delete.js`)**:
+## 6. Runtime Bug Fixes
+* **Landing Page Code Finder (`src/components/forms/ScanCamperCode.js`)**:
+  * Fix: Corrected an issue where entering an account ID on the home page crashed the browser with `TypeError: localStorage.get is not a function`.
+  * **Resolution:** Changed `localStorage.get("Alert")` to the correct Web Storage API call `localStorage.getItem("Alert")`, completely resolving the crash.
+
+  ---
+
+  ## 7. Dynamic Code Resolution Redirects
+  To support family banking accounts where multiple sibling barcodes link to a single primary parent account:
+
+  * **Backend Resolver API (`src/pages/api/campers/resolve-code.js`)**:
+  * Created a dedicated code-resolution API endpoint.
+  * Checks if the scanned `accountQRCode` is mapped to a rostered camper who has a secondary `linkedQRCode` (indicating family banking linkage).
+  * If a linked primary account code is found, the endpoint resolves the target redirection code to that primary `linkedQRCode`. Otherwise, it resolves back to the entered code itself.
+  * **Frontend Search Form Integration (`src/components/forms/ScanCamperCode.js`)**:
+  * Updated the home page scanner's `submitHandler` to retrieve the dynamically resolved target account from the backend.
+  * Performs the dynamic page transition to the correct resolved primary account page seamlessly.
+  * Employs robust fallbacks to make sure any un-rostered codes or network glitches fall back to standard `/campers/enteredCode` directories, ensuring zero workflow interruptions for operators.
+
+  ---
+
+  ## 8. Pre-existing Codebase Warnings / Errors Identified
+  During the validation build process, the following pre-existing issue was detected:
+  * **Dynamic Transaction Deletion Route (`src/pages/campers/[camperCode]/[transCode]/delete.js`)**:
   * **Error:** `Attempted import error: 'getTransaction' is not exported from '../../../api/campers/get'`
   * **Details:** This route attempts to import `getTransaction` from the `/api/campers/get.js` API route file. However, `get.js` only exports a default handler for fetching campers, and does not define or export `getTransaction`. This route is currently broken in production builds and requires implementing the missing transaction finder query.
 

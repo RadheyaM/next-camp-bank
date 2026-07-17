@@ -46,11 +46,22 @@ const ScanCamperCode = () => {
   const codeInputHandler = (event) => {
     setEnteredCode(event.target.value);
   };
-  const submitHandler = (event) => {
+  const submitHandler = async (event) => {
     event.preventDefault();
-    router.push(`/campers/${enteredCode}`);
+    try {
+      const response = await fetch(`/api/campers/resolve-code?code=${enteredCode.trim()}`);
+      if (response.ok) {
+        const result = await response.json();
+        router.push(`/campers/${result.targetCode}`);
+      } else {
+        router.push(`/campers/${enteredCode.trim()}`);
+      }
+    } catch (err) {
+      console.error("Error resolving scan code:", err);
+      router.push(`/campers/${enteredCode.trim()}`);
+    }
     setAlert(false);
-    if (localStorage.get("Alert")) {
+    if (localStorage.getItem("Alert")) {
       localStorage.removeItem("Alert");
     }
   };
