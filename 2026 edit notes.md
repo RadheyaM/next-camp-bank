@@ -193,3 +193,17 @@ To display which rostered campers are mapped to each banking account, we integra
   * **Error:** `Attempted import error: 'getTransaction' is not exported from '../../../api/campers/get'`
   * **Details:** This route attempts to import `getTransaction` from the `/api/campers/get.js` API route file. However, `get.js` only exports a default handler for fetching campers, and does not define or export `getTransaction`. This route is currently broken in production builds and requires implementing the missing transaction finder query.
 
+  ---
+
+  ## 13. Dynamic Camper Profile Rendering & Router Hydration Fix
+  * **File Modified:** `src/pages/campers/[camperCode]/index.js`
+  * **Changes & Dynamic SSR Migration:**
+    * Replaced Next.js Static Site Generation (SSG) hooks (`getStaticPaths` and `getStaticProps`) with Server-Side Rendering (SSR) via **`getServerSideProps`**.
+    * This ensures that when a physical QR code is newly assigned to a camper's profile, the camper's details (such as names) are fetched in real-time directly from MongoDB on every request rather than relying on Vercel's stale static cache.
+  * **Router Query Hydration Safety:**
+    * Safely updated the reading of `camperId` from the Next.js router query object:
+      ```javascript
+      const camperId = (router.query.camperCode || props.camper?.accountId || "").toString();
+      ```
+    * This robust fallback prevents `TypeError: Cannot read properties of undefined (reading 'toString')` crashes during early hydration phases where the router query parameters are not yet populated.
+

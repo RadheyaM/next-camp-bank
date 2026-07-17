@@ -16,7 +16,7 @@ const CamperOverview = (props) => {
     }
   }, [status]);
   const router = useRouter();
-  const camperId = router.query.camperCode.toString();
+  const camperId = (router.query.camperCode || props.camper?.accountId || "").toString();
   // console.log("CamperId: ", camperId);
   const apiPath = `/api/campers/${camperId}/get-trans`;
   const apiBalancePath = `/api/campers/${camperId}/get-balance`;
@@ -96,24 +96,8 @@ const CamperOverview = (props) => {
 
 export default CamperOverview;
 
-export const getStaticPaths = async () => {
-  const client = await clientPromise;
-  const db = client.db("Campers");
-  const col = db.collection("Campers");
-  const data = await col.find({}, { accountId: 1 }).toArray();
-  const allCampers = JSON.parse(JSON.stringify(data));
-  return {
-    paths: allCampers.map((camperId) => ({
-      params: {
-        camperCode: camperId.accountId.toString(),
-      },
-    })),
-    fallback: 'blocking',
-  };
-};
-
-export const getStaticProps = async (context) => {
-  const camperId = context.params.camperCode;
+export const getServerSideProps = async (context) => {
+  const camperId = context.query.camperCode || context.params?.camperCode;
   const client = await clientPromise;
   const db = client.db("Campers");
   const col = db.collection("Campers");
@@ -129,7 +113,7 @@ export const getStaticProps = async (context) => {
   }).toArray();
   return {
     props: {
-      camper: JSON.parse(JSON.stringify(camper)),
+      camper: JSON.parse(JSON.stringify(camper || null)),
       trans: JSON.parse(JSON.stringify(camperTrans)),
       assignedCampers: JSON.parse(JSON.stringify(assignedCampers)),
     },
