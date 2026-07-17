@@ -56,6 +56,19 @@ const CamperOverview = (props) => {
   const balanceQuery = useQuery(["balance"], () => {
     return axios(apiBalancePath);
   });
+  const assignedQuery = useQuery(
+    ["assignedCampers"],
+    () => {
+      return axios(`/api/campers/${camperId}/get-assigned`);
+    },
+    {
+      initialData: {
+        data: {
+          data: props.assignedCampers,
+        },
+      },
+    }
+  );
   if (status === "authenticated") {
     return (
       <Paper elevation={12} sx={{
@@ -71,6 +84,7 @@ const CamperOverview = (props) => {
         <CamperDetail
           trans={props.trans}
           camper={props.camper}
+          assignedCampers={assignedQuery}
           query={query}
           balance={balanceQuery}
           onAddTransactions={postTransactionsHandler}
@@ -106,10 +120,18 @@ export const getStaticProps = async (context) => {
   const trans = db.collection("Transactions");
   const camper = await col.findOne({ accountId: camperId });
   const camperTrans = await trans.find({ accountId: camperId }).toArray();
+  const camperDetailsCol = db.collection("CamperDetails");
+  const assignedCampers = await camperDetailsCol.find({
+    $or: [
+      { accountQRCode: camperId },
+      { linkedQRCode: camperId }
+    ]
+  }).toArray();
   return {
     props: {
       camper: JSON.parse(JSON.stringify(camper)),
       trans: JSON.parse(JSON.stringify(camperTrans)),
+      assignedCampers: JSON.parse(JSON.stringify(assignedCampers)),
     },
   };
 };

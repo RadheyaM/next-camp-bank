@@ -22,6 +22,7 @@ const CamperDetail = (props) => {
         <AccountSummary
           camper={props.camper}
           trans={props.trans}
+          assignedCampers={props.assignedCampers}
           query={props.query}
           balance={props.balance}
         />

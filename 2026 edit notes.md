@@ -43,9 +43,47 @@ With `firstName` and `lastName` no longer required and starting as empty strings
 * **New Transactions Form (`src/components/forms/NewTransForm.js`)**:
   * Adjusted the transaction creator to default the transaction's name property to `"Account <accountId>"` (e.g., `"Account 10001"`) instead of `"undefined undefined"` or blank when recording deposits or payments. This keeps the `Transactions` database logs clean and searchable.
 
+## 4. Assign QR Codes Feature Implementation
+We built the complete "Assign QR Codes" workflow to bind physical QR barcode/QR tags to the imported roster:
+
+* **Navigation Update (`src/components/layout/MainNavigation.js`)**:
+  * Fixed the top navigation bar's copy-pasted link, pointing `"Assign QR Codes"` to the correct path `/campers/assign-qr`.
+* **Backend API Routes**:
+  * **Roster Data Fetcher (`src/pages/api/campers/get-details.js`)**: Fetches all documents from the `CamperDetails` collection sorted alphabetically by name.
+  * **QR Code Assignment & Syncing Handler (`src/pages/api/campers/assign-qr.js`)**:
+    * Accepts `camperId`, `accountQRCode` and `linkedQRCode`.
+    * Enforces range bounds: any scanned code must be between `10001` and `10375`.
+    * Enforces uniqueness for the primary `accountQRCode` so that no two campers are assigned the same primary financial account code.
+    * Allows non-unique `linkedQRCode` mappings so siblings/families can link to a shared primary account.
+    * **Instant Banking Sync:** Upon primary account assignment, it automatically syncs the camper's `firstName` and `lastName` from `CamperDetails` to the matching financial account `accountId` in the `Campers` collection. This instantly populates their real names across your banking interface!
+* **Frontend Scanning Page (`src/pages/campers/assign-qr.js`)**:
+  * Designed a gorgeous, Material-UI-driven form featuring:
+    * A searchable dropdown `Autocomplete` box to quickly find and select from the 288 camper/leader files.
+    * An informative profile card rendering the selected camper's Camp, Group, and Leader role.
+    * Seamless support for physical barcode scanners (with automatic key-down listeners that focus the linked scanner input after the primary scan).
+    * Comprehensive client-side validation checkups (valid range check, uniqueness warnings, matching ID errors).
+    * Beautiful instant alerts with status results and auto-resets for rapid hands-free sequential scanning.
+
 ---
 
-## 4. Pre-existing Codebase Warnings / Errors Identified
+## 5. Assigned Campers Account Listing
+To display which rostered campers are mapped to each banking account, we integrated an "Assigned Campers" sub-section directly into the account details view:
+
+* **Backend Sub-Route (`src/pages/api/campers/[camperCode]/get-assigned.js`)**:
+  * Added a dynamic sub-route endpoint to query the `CamperDetails` collection.
+  * Searches for documents matching the primary `accountQRCode` OR the shared `linkedQRCode` matching the loaded `camperCode`.
+* **Frontend Real-time Query (`src/pages/campers/[camperCode]/index.js`)**:
+  * Updated `getStaticProps` to pre-fetch the assigned campers list at build/render time for immediate page loading.
+  * Added a `useQuery` hook for `["assignedCampers"]` to perform client-side polling, ensuring that if QR code assignments change, the account overview updates instantly without manual page refreshes.
+  * Passed this query down through `CamperDetail.js` to `AccountSummary.js`.
+* **UI Table Component (`src/components/overview/AccountSummary.js`)**:
+  * Designed an elegant roster table displayed directly below the main account details header.
+  * Lists each assigned camper's full name, role (Camper vs. Leader), camp level, group/team, and assignment type.
+  * Distinguishes the primary account holder from family/linked members using color-coded status badges (`Primary Account` in green, `Linked Account` in blue) for rich and easy tracking.
+
+---
+
+## 6. Pre-existing Codebase Warnings / Errors Identified
 During the validation build process, the following pre-existing issue was detected:
 * **Dynamic Transaction Deletion Route (`src/pages/campers/[camperCode]/[transCode]/delete.js`)**:
   * **Error:** `Attempted import error: 'getTransaction' is not exported from '../../../api/campers/get'`

@@ -49,7 +49,7 @@ const MainNavigation = (props) => {
               <Link href="/campers/summary" replace>
                 Bank Summary
               </Link>
-              <Link href="/campers/summary" replace>
+              <Link href="/campers/assign-qr" replace>
                 Assign QR Codes
               </Link>
             </ul>
