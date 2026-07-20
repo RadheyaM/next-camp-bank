@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -35,6 +37,7 @@
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
     "eslint": "9.39.5",
-    "eslint-config-next": "16.2.10"
+    "eslint-config-next": "16.2.10",
+    "vitest": "^4.1.10"
   }
 }

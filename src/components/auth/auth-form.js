@@ -86,56 +86,41 @@ const AuthForm = () => {
   };
 
   return (
-    <Paper elevation={6} sx={{
-        width: "90%",
-        maxWidth: "400px",
-        height: "auto", 
-        minHeight: "50vh",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "2.5rem 2rem", 
-        backgroundColor: "#f8f8ff",
-        borderRadius: "8px",
-        margin: "4rem auto"
-    }}>
-      <section className={styles.auth} style={{ width: "100%" }}>
-        <h1 style={{ textAlign: "center", marginBottom: "1.5rem" }}>{isLogin ? "Login" : "Sign Up"}</h1>
-        
-        {error && (
-          <Alert severity="error" variant="filled" sx={{ mb: 3, borderRadius: "4px" }}>
-            {error}
-          </Alert>
-        )}
+    <section className={styles.auth}>
+      <h1 style={{ textAlign: "center", marginBottom: "1.5rem" }}>{isLogin ? "Sign In" : "Sign Up"}</h1>
+      
+      {error && (
+        <Alert severity="error" variant="filled" sx={{ mb: 3, borderRadius: "4px" }}>
+          {error}
+        </Alert>
+      )}
 
-        <form onSubmit={submitHandler}>
-          <div className={styles.control}>
-            <label htmlFor="email">Username:</label>
-            <input type="text" id="email" required ref={emailInputRef} disabled={submitting} />
+      <form onSubmit={submitHandler}>
+        <div className={styles.control}>
+          <label htmlFor="email">Username:</label>
+          <input type="text" id="email" required ref={emailInputRef} disabled={submitting} />
+        </div>
+        <div className={styles.control}>
+          <label htmlFor="password">Password:</label>
+          <input
+            type="password"
+            id="password"
+            required
+            ref={passwordInputRef}
+            disabled={submitting}
+          />
+          <div className={styles.actions} style={{ marginTop: "1.5rem" }}>
+            <button disabled={submitting} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem" }}>
+              {submitting && <CircularProgress size={16} color="inherit" />}
+              {isLogin ? "Sign In" : "Sign Up"}
+            </button>
           </div>
-          <div className={styles.control}>
-            <label htmlFor="password">Password:</label>
-            <input
-              type="password"
-              id="password"
-              required
-              ref={passwordInputRef}
-              disabled={submitting}
-            />
-            <div className={styles.actions} style={{ marginTop: "1.5rem" }}>
-              <button disabled={submitting} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem" }}>
-                {submitting && <CircularProgress size={16} color="inherit" />}
-                {isLogin ? "Login" : "Sign Up"}
-              </button>
-            </div>
-            {/* <div className={styles.actions} onClick={switchAuthModeHandler}>
-              <button type="button">Sign Up</button>
-            </div> */}
-          </div>
-        </form>
-      </section>
-    </Paper>
+          {/* <div className={styles.actions} onClick={switchAuthModeHandler}>
+            <button type="button">Sign Up</button>
+          </div> */}
+        </div>
+      </form>
+    </section>
   );
 };
 

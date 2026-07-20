@@ -57,7 +57,7 @@ const MainNavigation = (props) => {
             {session && (
               <div className={styles.logoutBtnDiv}>
                 <Button size="small" variant="contained" onClick={logoutHandler}>
-                  {session.user.email} | Logout
+                  {session.user.email} | Sign Out
                 </Button>
                 {session.user.email === "Rodeo" && <Button onClick={() => {}} size="small" variant="contained">
                   Site Settings

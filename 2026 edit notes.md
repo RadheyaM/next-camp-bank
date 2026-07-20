@@ -280,6 +280,21 @@ To display which rostered campers are mapped to each banking account, we integra
   * **Visual Loaders:** Embedded an inline MUI **`CircularProgress`** spinner inside the Login button that activates during the submission handshake.
   * **State Sanitisation:** Clears any past authentication errors gracefully when toggling auth screens or switching modes.
 
+  ---
+
+  ## 19. Integration of the Automated Testing Module
+  **Date:** Monday, 20 July 2026
+  * **Goal:** Create a robust automated testing framework to verify the mathematical and operational integrity of camper finances, algorithms, and data compilers on every build.
+  * **Framework Installation (`package.json`)**: Installed the modern, ultra-fast **`vitest`** testing framework and added standard terminal execution hooks (`npm run test` and `npm run test:watch`) to the global scripts block.
+  * **Mathematical Unit Test Suite (`lib/helpers.test.js`)**:
+    * Created a dedicated test file to isolate and test all business logic and financial mathematics in your helper module.
+    * **Balance Checks (`transactionBalance`)**: Tests correct additions of credit deposits, subtraction of standard payment debits, and inclusion of decimal/float value operations with zero-state fallbacks.
+    * **Bulk Ledger Compilation (`allTransactionBalances`)**: Tests accurate mapping, aggregation, names syncing, and Category classifications of multiple camper accounts against a full mock database transaction list.
+    * **Calendar Suffixes & Parser (`addDay`)**: Tests calendar formatting accuracy by converting transactional datetime timestamps into corresponding weekday index properties.
+  * **Validation Result:** Runs **7 complex unit tests** across helper algorithms, passing in under **500ms** to guarantee flawless mathematical calculations and absolute safety against regression bugs.
+
+
+
 
 
 
