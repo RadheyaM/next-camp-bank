@@ -168,32 +168,34 @@ const SummaryComponent = (props) => {
             </CSVLink>
           </Box>
           
-          <Table style={{ width: "100%", maxWidth: "980px", margin: "0 auto", borderCollapse: "collapse", textAlign: "center" }}>
-            <thead>
-              <tr>
-                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>BANK BALANCE</th>
-                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>DEPOSITS</th>
-                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>TUCKSHOP</th>
-                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>ICE CREAM</th>
-                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>POPCORN/CANDY FLOSS</th>
-                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>BOOKS</th>
-                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>WITHDRAWALS</th>
-                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>ADJUSTMENTS</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className={styles.totalsDataAdd} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(bankBalance)}</td>
-                <td className={styles.totalsDataAdd} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(depCurrent)}</td>
-                <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-tuckCurrent)}</td>
-                <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-iceCurrent)}</td>
-                <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-(popCurrent + candyCurrent))}</td>
-                <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-bookCurrent)}</td>
-                <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-outCurrent)}</td>
-                <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-adjCurrent)}</td>
-              </tr>
-            </tbody>
-          </Table>
+          <div style={{ overflowX: "auto", width: "100%" }}>
+            <Table style={{ width: "100%", minWidth: "1100px", maxWidth: "1150px", margin: "0 auto", borderCollapse: "collapse", textAlign: "center" }}>
+              <thead>
+                <tr>
+                  <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>BANK BALANCE</th>
+                  <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>DEPOSITS</th>
+                  <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>TUCKSHOP</th>
+                  <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>ICE CREAM</th>
+                  <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>POPCORN/CANDY FLOSS</th>
+                  <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>BOOKS</th>
+                  <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>WITHDRAWALS</th>
+                  <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>ADJUSTMENTS</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className={styles.totalsDataAdd} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(bankBalance)}</td>
+                  <td className={styles.totalsDataAdd} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(depCurrent)}</td>
+                  <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-tuckCurrent)}</td>
+                  <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-iceCurrent)}</td>
+                  <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-(popCurrent + candyCurrent))}</td>
+                  <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-bookCurrent)}</td>
+                  <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-outCurrent)}</td>
+                  <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-adjCurrent)}</td>
+                </tr>
+              </tbody>
+            </Table>
+          </div>
         </Card>
         
         {/* DAILY TOTALS Card with row-level downloads */}
@@ -202,72 +204,74 @@ const SummaryComponent = (props) => {
             <h2 style={{ margin: 0 }}>DAILY TOTALS</h2>
           </Box>
           
-          <Table style={{ width: "100%", maxWidth: "980px", margin: "0 auto", borderCollapse: "collapse", textAlign: "center" }}>
-            <thead>
-              <tr>
-                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>DAY</th>
-                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>BALANCE</th>
-                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>DEPOSITS</th>
-                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>TUCKSHOP</th>
-                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>ICE CREAM</th>
-                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>POPCORN/CANDY FLOSS</th>
-                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>BOOKS</th>
-                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>WITHDRAWALS</th>
-                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>ADJUSTMENTS</th>
-                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>DOWNLOAD</th>
-              </tr>
-            </thead>
-            <tbody>
-              {processedDailyTotals.map((dayData, idx) => {
-                // Prepare single row CSV data for this specific day
-                const singleDayCSVData = [
-                  {
-                    "DAY": dayData.dateText,
-                    "BALANCE": dayData.runningBalance,
-                    "DEPOSITS": dayData.dep,
-                    "TUCKSHOP": -dayData.tuck,
-                    "ICE CREAM": -dayData.ice,
-                    "POPCORN/CANDY FLOSS": -dayData.popCandy,
-                    "BOOKS": -dayData.book,
-                    "WITHDRAWALS": -dayData.out,
-                    "ADJUSTMENTS": -dayData.adj
-                  }
-                ];
-                const sanitizedDateText = dayData.dateText.replace(/\s+/g, "_");
-                const rowFilename = `Daily Totals ${sanitizedDateText} ${currentTimestamp}.csv`;
+          <div style={{ overflowX: "auto", width: "100%" }}>
+            <Table style={{ width: "100%", minWidth: "1100px", maxWidth: "1150px", margin: "0 auto", borderCollapse: "collapse", textAlign: "center" }}>
+              <thead>
+                <tr>
+                  <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>DAY</th>
+                  <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>BALANCE</th>
+                  <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>DEPOSITS</th>
+                  <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>TUCKSHOP</th>
+                  <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>ICE CREAM</th>
+                  <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>POPCORN/CANDY FLOSS</th>
+                  <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>BOOKS</th>
+                  <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>WITHDRAWALS</th>
+                  <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>ADJUSTMENTS</th>
+                  <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>DOWNLOAD</th>
+                </tr>
+              </thead>
+              <tbody>
+                {processedDailyTotals.map((dayData, idx) => {
+                  // Prepare single row CSV data for this specific day
+                  const singleDayCSVData = [
+                    {
+                      "DAY": dayData.dateText,
+                      "BALANCE": dayData.runningBalance,
+                      "DEPOSITS": dayData.dep,
+                      "TUCKSHOP": -dayData.tuck,
+                      "ICE CREAM": -dayData.ice,
+                      "POPCORN/CANDY FLOSS": -dayData.popCandy,
+                      "BOOKS": -dayData.book,
+                      "WITHDRAWALS": -dayData.out,
+                      "ADJUSTMENTS": -dayData.adj
+                    }
+                  ];
+                  const sanitizedDateText = dayData.dateText.replace(/\s+/g, "_");
+                  const rowFilename = `Daily Totals ${sanitizedDateText} ${currentTimestamp}.csv`;
 
-                return (
-                  <tr key={idx}>
-                    <td className={styles.headers} style={{ whiteSpace: "nowrap", fontSize: "0.95rem", textAlign: "center" }}>{dayData.dateText}</td>
-                    <td className={styles.additions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(dayData.runningBalance)}</td>
-                    <td className={styles.additions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(dayData.dep)}</td>
-                    <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-dayData.tuck)}</td>
-                    <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-dayData.ice)}</td>
-                    <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-dayData.popCandy)}</td>
-                    <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-dayData.book)}</td>
-                    <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-dayData.out)}</td>
-                    <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-dayData.adj)}</td>
-                    <td style={{ fontSize: "0.95rem", textAlign: "center", padding: "8px 6px" }}>
-                      <CSVLink
-                        data={singleDayCSVData}
-                        filename={rowFilename}
-                        style={{ textDecoration: "none", color: "#1976d2", fontWeight: "bold", fontSize: "0.85rem" }}
-                      >
-                        📥 CSV
-                      </CSVLink>
+                  return (
+                    <tr key={idx}>
+                      <td className={styles.headers} style={{ whiteSpace: "nowrap", fontSize: "0.95rem", textAlign: "center" }}>{dayData.dateText}</td>
+                      <td className={styles.additions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(dayData.runningBalance)}</td>
+                      <td className={styles.additions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(dayData.dep)}</td>
+                      <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-dayData.tuck)}</td>
+                      <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-dayData.ice)}</td>
+                      <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-dayData.popCandy)}</td>
+                      <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-dayData.book)}</td>
+                      <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-dayData.out)}</td>
+                      <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-dayData.adj)}</td>
+                      <td style={{ fontSize: "0.95rem", textAlign: "center", padding: "8px 6px" }}>
+                        <CSVLink
+                          data={singleDayCSVData}
+                          filename={rowFilename}
+                          style={{ textDecoration: "none", color: "#1976d2", fontWeight: "bold", fontSize: "0.85rem" }}
+                        >
+                          📥 CSV
+                        </CSVLink>
+                      </td>
+                    </tr>
+                  );
+                })}
+                {processedDailyTotals.length === 0 && (
+                  <tr>
+                    <td colSpan={10} style={{ textAlign: "center", padding: "2rem", color: "#666", fontStyle: "italic" }}>
+                      No transaction data found.
                     </td>
                   </tr>
-                );
-              })}
-              {processedDailyTotals.length === 0 && (
-                <tr>
-                  <td colSpan={10} style={{ textAlign: "center", padding: "2rem", color: "#666", fontStyle: "italic" }}>
-                    No transaction data found.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </Table>
+                )}
+              </tbody>
+            </Table>
+          </div>
         </Card>
       </Card>
     </Paper>

@@ -113,11 +113,10 @@ export const getStaticProps = async () => {
   });
 
   const transCol = db.collection("Transactions");
-  const camperCol = db.collection("Campers")
   const deposits = await transCol.find({type: "Deposit"}).toArray();
   const payments = await transCol.find({type: { $in: ["Payment", "Adjustment"] }}).toArray();
-  const camperIds = await camperCol.find({}).toArray();
-  const balanceData = allTransactionBalances(deposits, payments, camperIds)
+  const balanceData = allTransactionBalances(deposits, payments, categorizedCampers)
+  balanceData.sort((a, b) => Number(a.accountId || 0) - Number(b.accountId || 0));
   const allCampers = converter.json2csv(balanceData)
   return {
     props: {

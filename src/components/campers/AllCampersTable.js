@@ -11,7 +11,7 @@ const AllCampersTable = (props) => {
   
   // React states for filtering
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("Primary");
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
   const searchFilterHandler = (filterName) => {
     setSearchTerm(filterName.toLowerCase().trim());
@@ -42,6 +42,24 @@ const AllCampersTable = (props) => {
 
   const downloadData = csvData.data?.data?.data || [];
 
+  const getTimestampString = () => {
+    const d = new Date();
+    const pad = (n) => String(n).padStart(2, "0");
+    const day = pad(d.getDate());
+    
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const month = months[d.getMonth()];
+    const year = d.getFullYear();
+    
+    const hr = pad(d.getHours());
+    const min = pad(d.getMinutes());
+    const sec = pad(d.getSeconds());
+    
+    return `${day}-${month}-${year}_${hr}-${min}-${sec}`;
+  };
+
+  const csvFilename = `All Camper Balances ${getTimestampString()}.csv`;
+
   return (
     <Fragment>
       {/* 1-3. Centered Search Form (Filter By Name Title, input box, buttons) */}
@@ -53,7 +71,7 @@ const AllCampersTable = (props) => {
       <Box sx={{ display: "flex", justifyContent: "center", width: "100%", mb: 4 }}>
         <CSVLink 
           data={downloadData}
-          filename={"all-camper-balances.csv"}
+          filename={csvFilename}
           style={{ textDecoration: "none", color: "#1976d2", fontWeight: "bold", fontSize: "0.9rem" }}
         >
           📥 Download All Balances
@@ -101,9 +119,11 @@ const AllCampersTable = (props) => {
           </tr>
         </thead>
         <tbody>
-          {displayedCampers.map((camper) => (
-            <CamperRow key={camper._id} camper={camper}/>
-          ))}
+          {[...displayedCampers]
+            .sort((a, b) => Number(a.accountId || 0) - Number(b.accountId || 0))
+            .map((camper) => (
+              <CamperRow key={camper._id} camper={camper}/>
+            ))}
         </tbody>
       </Table>
     </Fragment>

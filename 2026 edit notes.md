@@ -258,6 +258,23 @@ To display which rostered campers are mapped to each banking account, we integra
       * If transactions are found, renders a micro-ledger sub-table displaying Date & Time, Category, Amount (with dynamic color coding: positive Green for deposits, negative Red for payments), Note, and Teller User.
       * If zero transactions are found, displays a friendly unassigned placeholder state.
 
+  ---
+
+  ## 17. Default Filter, Account Sorting, and CSV Export Upgrades
+  **Date:** Monday, 20 July 2026
+  * **Goal:** Improve general index navigation and CSV auditing in the "Account By Name" explorer dashboard (`src/components/campers/AllCampersTable.js`).
+  * **Default Category Filter:** Changed the initial React category state of `selectedCategory` from `"Primary"` to `"All"`. The explorer now opens displaying all accounts loaded simultaneously.
+  * **Smallest-to-Largest Sorting:** Implemented an explicit ascending numeric sort on render based on `camper.accountId`. All accounts in the explorer table are now consistently listed from smallest ID to largest ID (smallest at the top).
+  * **CSV Balances Sorting (`src/pages/api/campers/getAllCamperBalances.js` & `src/pages/campers/index.js`)**: Sorted the bulk balance sheet array dynamically on the server-side from smallest to largest Account ID prior to JSON-to-CSV compilation, guaranteeing the exported CSV reflects the identical chronological order.
+  * **Dynamic Timestamp filename (`src/components/campers/AllCampersTable.js`)**: Integrated the `getTimestampString` helper on the exporter link, appending a safe down-to-the-second live datetime stamp to the CSV filename (e.g. `All Camper Balances 20-Jul-2026_16-45-12.csv`).
+  * **Category Inclusion in CSV (`lib/helpers.js`)**: Injected the dynamic `category` field (Primary, Secondary, or Unassigned) into the returned objects of the `allTransactionBalances` helper so that all bulk CSV exports contain a dedicated Category column for rich auditing. Updated the endpoints to populate this categorisation safely.
+
+
+
+
+
+
+
 
 
 
