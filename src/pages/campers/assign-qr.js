@@ -12,7 +12,14 @@ import {
   Alert,
   CircularProgress,
   Divider,
-  Stack
+  Stack,
+  Switch,
+  FormControlLabel,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions
 } from "@mui/material";
 
 const AssignQRCodes = () => {
@@ -33,6 +40,34 @@ const AssignQRCodes = () => {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [notification, setNotification] = useState(null); // { type: 'success' | 'error', message: '' }
+
+  // Allow Unassignment Security Setting State
+  const [unassignmentEnabled, setUnassignmentEnabled] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [passwordInput, setPasswordInput] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [targetToggleVal, setTargetToggleVal] = useState(false);
+
+  // Fetch unassignment setting from DB on mount
+  useEffect(() => {
+    const fetchSetting = async () => {
+      try {
+        const response = await fetch("/api/settings/unassignment");
+        if (response.ok) {
+          const result = await response.json();
+          setUnassignmentEnabled(result.enabled);
+        }
+      } catch (err) {
+        console.error("Error loading unassignment setting:", err);
+      }
+    };
+    if (status === "authenticated") {
+      fetchSetting();
+    }
+  }, [status]);
+
+  // Editing is locked if unassignment is disabled AND the selected camper already has assigned fields
+  const isEditingLocked = !unassignmentEnabled && selectedCamper && (selectedCamper.accountQRCode || selectedCamper.linkedQRCode);
 
   // Refs for scanner focus flow
   const accountQRRef = useRef(null);
@@ -95,6 +130,10 @@ const AssignQRCodes = () => {
     e.preventDefault();
     if (!selectedCamper) {
       showNotification("error", "Please select a camper first.");
+      return;
+    }
+    if (isEditingLocked) {
+      showNotification("error", "Editing is locked for this camper profile. Turn on Allow Unassignment first.");
       return;
     }
 
@@ -162,6 +201,41 @@ const AssignQRCodes = () => {
     }
   };
 
+  const handleToggleClick = (e) => {
+    e.preventDefault();
+    const nextVal = !unassignmentEnabled;
+    setTargetToggleVal(nextVal);
+    setPasswordInput("");
+    setErrorMsg("");
+    setDialogOpen(true);
+  };
+
+  const handlePasswordSubmit = async () => {
+    setErrorMsg("");
+    try {
+      const response = await fetch("/api/settings/unassignment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          password: passwordInput,
+          enabled: targetToggleVal
+        })
+      });
+
+      if (response.ok) {
+        setUnassignmentEnabled(targetToggleVal);
+        setDialogOpen(false);
+        showNotification("success", `Unassignment protection has been ${targetToggleVal ? "Disabled (Unlocked)" : "Enabled (Locked)"}.`);
+      } else {
+        const data = await response.json();
+        setErrorMsg(data.message || "Authentication failed.");
+      }
+    } catch (err) {
+      console.error("Error updating unassignment setting:", err);
+      setErrorMsg("An error occurred during verification.");
+    }
+  };
+
   if (status !== "authenticated") {
     return null;
   }
@@ -180,9 +254,26 @@ const AssignQRCodes = () => {
         borderRadius: "8px"
       }}
     >
-      <Typography variant="h3" component="h1" gutterBottom align="center" sx={{ fontWeight: "bold", mb: 3 }}>
+      <Typography variant="h3" component="h1" gutterBottom align="center" sx={{ fontWeight: "bold", mb: 1 }}>
         Assign QR Codes
       </Typography>
+
+      <Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={unassignmentEnabled}
+              onChange={handleToggleClick}
+              color="warning"
+            />
+          }
+          label={
+            <Typography sx={{ fontWeight: "medium", fontSize: "0.95rem" }}>
+              🔓 Allow Unassignment (Edit Assigned Codes)
+            </Typography>
+          }
+        />
+      </Box>
 
       {loading ? (
         <Box display="flex" justifyContent="center" alignItems="center" my={5}>
@@ -193,6 +284,15 @@ const AssignQRCodes = () => {
         <Box component="form" onSubmit={submitHandler} noValidate>
           <Grid container spacing={3}>
             
+            {/* Editing Lock Alert */}
+            {isEditingLocked && (
+              <Grid item xs={12}>
+                <Alert severity="warning" variant="outlined" sx={{ fontWeight: "medium" }}>
+                  🔒 QR code editing is locked for this camper because they are already assigned. Toggle "Allow Unassignment" below the title and authenticate to edit.
+                </Alert>
+              </Grid>
+            )}
+
             {/* Searchable Dropdown */}
             <Grid item xs={12}>
               <Autocomplete
@@ -289,7 +389,7 @@ const AssignQRCodes = () => {
                     if (linkedQRRef.current) linkedQRRef.current.focus();
                   }
                 }}
-                disabled={!selectedCamper}
+                disabled={!selectedCamper || isEditingLocked}
                 placeholder="Scan or enter code (10001 - 10375)"
                 fullWidth
                 variant="outlined"
@@ -310,7 +410,7 @@ const AssignQRCodes = () => {
                 label="Linked QR Code (Optional)"
                 value={linkedQR}
                 onChange={(e) => setLinkedQR(e.target.value)}
-                disabled={!selectedCamper}
+                disabled={!selectedCamper || isEditingLocked}
                 placeholder="Scan or enter code (10001 - 10375)"
                 fullWidth
                 variant="outlined"
@@ -356,7 +456,7 @@ const AssignQRCodes = () => {
                   variant="contained"
                   color="primary"
                   size="large"
-                  disabled={submitting || !selectedCamper}
+                  disabled={submitting || !selectedCamper || isEditingLocked}
                 >
                   {submitting ? <CircularProgress size={24} /> : "Save QR Codes"}
                 </Button>
@@ -366,6 +466,40 @@ const AssignQRCodes = () => {
           </Grid>
         </Box>
       )}
+
+      {/* Verification Dialog */}
+      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+        <DialogTitle sx={{ fontWeight: "bold" }}>🔒 Authenticate Operator</DialogTitle>
+        <DialogContent>
+          <DialogContentText sx={{ mb: 2 }}>
+            To change the "Allow Unassignment" security setting, please enter user <strong>Dylan's</strong> account password:
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Password"
+            type="password"
+            fullWidth
+            variant="outlined"
+            value={passwordInput}
+            onChange={(e) => setPasswordInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handlePasswordSubmit();
+              }
+            }}
+          />
+          {errorMsg && (
+            <Typography color="error" variant="body2" sx={{ mt: 1, fontWeight: "medium" }}>
+              ⚠️ {errorMsg}
+            </Typography>
+          )}
+        </DialogContent>
+        <DialogActions sx={{ p: 2 }}>
+          <Button onClick={() => setDialogOpen(false)} variant="outlined">Cancel</Button>
+          <Button onClick={handlePasswordSubmit} variant="contained" color="warning">Verify & Toggle</Button>
+        </DialogActions>
+      </Dialog>
     </Paper>
   );
 };
