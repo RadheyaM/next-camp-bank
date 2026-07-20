@@ -1,4 +1,5 @@
 import clientPromise from "../../../../../lib/db";
+import { getToken } from "next-auth/jwt";
 
 export const postCamperTransactions = async (transData) => {
   const mongoClient = await clientPromise;
@@ -119,8 +120,14 @@ export const postCamperTransactions = async (transData) => {
 };
 
 const Handler = async (req, res) => {
+  // Check server-side session authentication
+  const token = await getToken({ req });
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized: Please sign in." });
+  }
+
   await postCamperTransactions(req.body);
-  res.status(201).json({ message: "You added the transactions..." });
+  return res.status(201).json({ message: "You added the transactions..." });
 };
 
 export default Handler;

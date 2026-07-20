@@ -1,9 +1,16 @@
 import { ObjectId } from "mongodb";
 import clientPromise from "../../../../lib/db";
+import { getToken } from "next-auth/jwt";
 
 const handler = async (req, res) => {
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Method not allowed" });
+  }
+
+  // Check server-side session authentication
+  const token = await getToken({ req });
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized: Please sign in." });
   }
 
   const { camperId, accountQRCode, linkedQRCode } = req.body;
