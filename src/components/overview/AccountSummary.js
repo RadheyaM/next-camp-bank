@@ -97,7 +97,7 @@ const AccountSummary = (props) => {
       doc.setTextColor(0, 0, 0);
       doc.text(`Account ID: ${camper.accountId}`, 20, y + 6);
       doc.text(`Account Holder: ${camperName}`, 20, y + 12);
-      doc.text(`Total Family Balance: ${euro.format(Number(balance))}`, 20, y + 18);
+      doc.text(`Total Account Balance: ${euro.format(Number(balance))}`, 20, y + 18);
       y += 32;
 
       assignedList.forEach((member) => {
@@ -181,7 +181,26 @@ const AccountSummary = (props) => {
         y += 6;
       });
 
-      doc.save(`Account_Summary_${camper.accountId}.pdf`);
+      const getPDFTimestamp = () => {
+        const d = new Date();
+        const pad = (n) => String(n).padStart(2, "0");
+        const day = pad(d.getDate());
+        
+        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const month = months[d.getMonth()];
+        const year = d.getFullYear();
+        
+        const hr = pad(d.getHours());
+        const min = pad(d.getMinutes());
+        const sec = pad(d.getSeconds());
+        
+        return `${day}-${month}-${year}_${hr}-${min}-${sec}`;
+      };
+
+      const sanitizedCamperName = camperName.replace(/[^a-zA-Z0-9]/g, "_").replace(/__+/g, "_");
+      const pdfFilename = `Account_Summary_${camper.accountId}_${sanitizedCamperName}_${getPDFTimestamp()}.pdf`;
+
+      doc.save(pdfFilename);
     } catch (err) {
       console.error("Error generating PDF receipt summary:", err);
     }

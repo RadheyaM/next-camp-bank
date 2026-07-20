@@ -246,9 +246,9 @@ To display which rostered campers are mapped to each banking account, we integra
 
   ---
 
-  ## 16. Inline Roster Transaction History Drawers
+  ## 16. Inline Roster Transaction History Drawers & PDF Summaries
   **Date:** Monday, 20 July 2026
-  * **Goal:** Allow bank operators to toggle and view transaction histories completed by individual siblings/rostered members directly inside the account's "Assigned Campers" roster list without navigating away.
+  * **Goal:** Allow bank operators to toggle and view transaction histories completed by individual siblings/rostered members directly inside the account's "Assigned Campers" roster list, and export comprehensive physical PDF receipts.
   * **Implementation (`src/components/overview/AccountSummary.js`)**:
     * **Expanded States:** Added `useState` to track collapsed/expanded toggle triggers for each individual rostered sibling/member using their unique physical card barcodes (`accountQRCode`).
     * **Toggle Mechanism:** Inserted a compact control button column (`▶` / `▼`) on the left side of each camper row in the Assigned Campers table.
@@ -257,6 +257,8 @@ To display which rostered campers are mapped to each banking account, we integra
       * Displays the total transaction count for that sibling.
       * If transactions are found, renders a micro-ledger sub-table displaying Date & Time, Category, Amount (with dynamic color coding: positive Green for deposits, negative Red for payments), Note, and Teller User.
       * If zero transactions are found, displays a friendly unassigned placeholder state.
+    * **Download Account PDF Summary (`jspdf` integration)**: Added a centered link that uses client-side lazily-imported `jsPDF` to compile a beautiful, multi-page accounting statement of the family account.
+    * **Audit-grade Filename Formatting**: Updated the generated PDF filename to include the primary account ID, a URL-safe sanitized camper name, and a safe down-to-the-second live datetime stamp (e.g. `Account_Summary_10010_Dylan_Carleton_20-Jul-2026_14-30-22.pdf`) for pristine audit tracking.
 
   ---
 
