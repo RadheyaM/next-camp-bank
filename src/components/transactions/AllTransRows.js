@@ -10,13 +10,19 @@ const AllTransRows = (props) => {
   return (
     <tr>
       <td><small>{user}</small></td>
-      <td><Link href={linkPath} replace>{accountId}</Link></td>
+      <td>
+        <Link href={linkPath} replace style={{ textDecoration: "none", color: "#1976d2", fontWeight: "bold" }}>
+          {accountId}
+        </Link>
+      </td>
       <td>{name}</td>
       <td>{accessedBy || name}</td>
       <td suppressHydrationWarning>{humanDate + " " + humanTime}</td>
       <td>{type}</td>
       <td>{category}</td>
-      <td>{euro.format(Number(amount))}</td>
+      <td style={{ fontWeight: "bold", color: type === "Deposit" ? "green" : "red" }}>
+        {type === "Deposit" ? "+" : "-"}{euro.format(Number(amount))}
+      </td>
       <td>{note}</td>
     </tr>
   );

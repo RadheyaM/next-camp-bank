@@ -3,6 +3,7 @@ import styles from "./auth-form.module.css";
 import { signIn } from "next-auth/react";
 import Router from "next/router";
 import Paper from '@mui/material/Paper';
+import { Alert, CircularProgress } from '@mui/material';
 
 const createUser = async (email, password) => {
   console.log("you're in the create user fn...")
@@ -18,7 +19,6 @@ const createUser = async (email, password) => {
     console.log("response not ok...")
     throw new Error(data.message || 'Something went wrong...')
   }
-  // console.log("data returned...")
   return data;
 };
 
@@ -26,54 +26,93 @@ const AuthForm = () => {
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const [isLogin, setIsLogin] = useState(true);
+  const [error, setError] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
 
   // toggle between signIn and signUp.
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
+    setError(null);
   };
 
   const submitHandler = async (event) => {
     console.log("submit handler")
     event.preventDefault();
-    const enteredEmail = emailInputRef.current.value;
+    const enteredEmail = emailInputRef.current.value.trim();
     const enteredPassword = passwordInputRef.current.value;
-    // optional validation...
+
+    setError(null);
+    setSubmitting(true);
+
     if (isLogin) {
       console.log("isLogin === true")
-      const result = await signIn("credentials", {
-        email: enteredEmail,
-        password: enteredPassword,
-        redirect: false,
-      });
-      console.log("result: ", result);
+      try {
+        const result = await signIn("credentials", {
+          email: enteredEmail,
+          password: enteredPassword,
+          redirect: false,
+        });
+        console.log("result: ", result);
+
+        if (result.error) {
+          setError("Invalid username or password. Please try again.");
+          setSubmitting(false);
+          return;
+        }
+
+        // Login Success!
+        localStorage.setItem("User", enteredEmail);
+        Router.replace('/');
+      } catch (err) {
+        console.error("Login Error:", err);
+        setError("A network error occurred. Please try again.");
+        setSubmitting(false);
+      }
     } else {
       try {
         console.log("try block")
         const result = await createUser(enteredEmail, enteredPassword);
         console.log(result);
+        
+        // Creation Success! Auto-login
+        localStorage.setItem("User", enteredEmail);
+        Router.replace('/');
       } catch (err) {
         console.log("create user error: ", err);
+        setError(err.message || 'An error occurred during account creation.');
+        setSubmitting(false);
       }
     }
-    localStorage.setItem("User", enteredEmail);
-    Router.replace('/');
   };
+
   return (
     <Paper elevation={6} sx={{
         width: "90%",
-        height: "60vh", 
+        maxWidth: "400px",
+        height: "auto", 
+        minHeight: "50vh",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        padding: "2rem", 
-        backgroundColor: "#f8f8ff"}}>
-      <section className={styles.auth}>
-        <h1>{isLogin ? "Login" : "Sign Up"}</h1>
+        padding: "2.5rem 2rem", 
+        backgroundColor: "#f8f8ff",
+        borderRadius: "8px",
+        margin: "4rem auto"
+    }}>
+      <section className={styles.auth} style={{ width: "100%" }}>
+        <h1 style={{ textAlign: "center", marginBottom: "1.5rem" }}>{isLogin ? "Login" : "Sign Up"}</h1>
+        
+        {error && (
+          <Alert severity="error" variant="filled" sx={{ mb: 3, borderRadius: "4px" }}>
+            {error}
+          </Alert>
+        )}
+
         <form onSubmit={submitHandler}>
           <div className={styles.control}>
             <label htmlFor="email">Username:</label>
-            <input type="text" id="email" required ref={emailInputRef} />
+            <input type="text" id="email" required ref={emailInputRef} disabled={submitting} />
           </div>
           <div className={styles.control}>
             <label htmlFor="password">Password:</label>
@@ -82,18 +121,21 @@ const AuthForm = () => {
               id="password"
               required
               ref={passwordInputRef}
+              disabled={submitting}
             />
-            <div className={styles.actions}>
-              <button>Login</button>
+            <div className={styles.actions} style={{ marginTop: "1.5rem" }}>
+              <button disabled={submitting} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem" }}>
+                {submitting && <CircularProgress size={16} color="inherit" />}
+                {isLogin ? "Login" : "Sign Up"}
+              </button>
             </div>
             {/* <div className={styles.actions} onClick={switchAuthModeHandler}>
-              <button>Sign Up</button>
+              <button type="button">Sign Up</button>
             </div> */}
           </div>
         </form>
       </section>
     </Paper>
-    
   );
 };
 

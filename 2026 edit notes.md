@@ -269,6 +269,19 @@ To display which rostered campers are mapped to each banking account, we integra
   * **Dynamic Timestamp filename (`src/components/campers/AllCampersTable.js`)**: Integrated the `getTimestampString` helper on the exporter link, appending a safe down-to-the-second live datetime stamp to the CSV filename (e.g. `All Camper Balances 20-Jul-2026_16-45-12.csv`).
   * **Category Inclusion in CSV (`lib/helpers.js`)**: Injected the dynamic `category` field (Primary, Secondary, or Unassigned) into the returned objects of the `allTransactionBalances` helper so that all bulk CSV exports contain a dedicated Category column for rich auditing. Updated the endpoints to populate this categorisation safely.
 
+  ---
+
+  ## 18. Graceful Authentication & Error Diagnostics Upgrades
+  **Date:** Monday, 20 July 2026
+  * **Goal:** Improve user feedback and solve silent page-refreshes during failed login attempts in the `/auth` route (`src/components/auth/auth-form.js`).
+  * **Login Error Handling:** Refactored the `submitHandler` to intercept NextAuth's `signIn` response object. If an error is returned (such as `"CredentialsSignin"`), the form now intercepts it, sets an `error` state, stops submission, and blocks the unconditional redirect, preventing the silent, bouncing refresh loop.
+  * **Visual Error Alerts:** Added a styled, warning-filled MUI **`Alert`** component displaying `"Invalid username or password. Please try again."` directly above the form inputs when login fails.
+  * **Input & Action Disabling:** Added a `submitting` loader state that disables all input fields (Username, Password) and the submit button during active sign-in tasks, preventing duplicate clicks.
+  * **Visual Loaders:** Embedded an inline MUI **`CircularProgress`** spinner inside the Login button that activates during the submission handshake.
+  * **State Sanitisation:** Clears any past authentication errors gracefully when toggling auth screens or switching modes.
+
+
+
 
 
 

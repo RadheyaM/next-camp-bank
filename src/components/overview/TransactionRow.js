@@ -12,7 +12,9 @@ const TransactionRow = (props) => {
       <td suppressHydrationWarning>{humanDate + " " + humanTime}</td>
       <td>{accessedBy || name || "Primary"}</td>
       <td>{category}</td>
-      <td>{euro.format(Number(amount))}</td>
+      <td style={{ fontWeight: "bold", color: type === "Deposit" ? "green" : "red" }}>
+        {type === "Deposit" ? "+" : "-"}{euro.format(Number(amount))}
+      </td>
       <td>{note}</td>
     </tr>
   );
