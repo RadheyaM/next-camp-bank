@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import { TextField, Grid, Box, Typography, Alert, AlertTitle, Stack, Divider, Paper } from "@mui/material";
 import { euro } from "../../../lib/helpers";
@@ -10,6 +10,18 @@ const NewTransForm = (props) => {
   const lastName = camper.lastName;
   const name = (firstName || lastName) ? `${firstName || ""} ${lastName || ""}`.trim() : `Account ${camperId}`;
   
+  const roster = props.assignedCampers || [];
+  
+  // Compute selected accessing member purely based on the scanned code
+  let selectedMember = null;
+  if (props.scannedCode && roster.length > 0) {
+    selectedMember = roster.find(c => (c.accountQRCode || "").toString().trim() === props.scannedCode.toString().trim());
+  }
+  if (!selectedMember && roster.length > 0) {
+    // Default to the primary member (who does not have linkedQRCode, meaning they are the root family account)
+    selectedMember = roster.find(c => !(c.linkedQRCode || "").toString().trim()) || roster[0];
+  }
+
   // State variables for amounts
   const [enteredDeposit, setEnteredDeposit] = useState("");
   const [enteredBook, setEnteredBook] = useState("");
@@ -95,6 +107,8 @@ const NewTransForm = (props) => {
     };
     
     const user = localStorage.getItem("User");
+    const activeMemberName = selectedMember ? `${selectedMember.firstName || ""} ${selectedMember.lastName || ""}`.trim() : name;
+    const activeMemberCode = selectedMember ? (selectedMember.accountQRCode || "").toString().trim() : camperId;
 
     if (enteredDeposit !== "" && Number(enteredDeposit) !== 0) {
       dT = {
@@ -105,6 +119,8 @@ const NewTransForm = (props) => {
         amount: enteredDeposit,
         note: depNote,
         user: user,
+        accessedBy: activeMemberName,
+        scannedCode: activeMemberCode,
       };
     }
     if (enteredBook !== "" && Number(enteredBook) !== 0) {
@@ -116,6 +132,8 @@ const NewTransForm = (props) => {
         amount: enteredBook,
         note: bookNote,
         user: user,
+        accessedBy: activeMemberName,
+        scannedCode: activeMemberCode,
       };
     }
     if (enteredTuckshop !== "" && Number(enteredTuckshop) !== 0) {
@@ -127,6 +145,8 @@ const NewTransForm = (props) => {
         amount: enteredTuckshop,
         note: tuckNote,
         user: user,
+        accessedBy: activeMemberName,
+        scannedCode: activeMemberCode,
       };
     }
     if (enteredPopcorn !== "" && Number(enteredPopcorn) !== 0) {
@@ -138,6 +158,8 @@ const NewTransForm = (props) => {
         amount: enteredPopcorn,
         note: tuckNote, // shares tuckNote
         user: user,
+        accessedBy: activeMemberName,
+        scannedCode: activeMemberCode,
       };
     }
     if (enteredIcecream !== "" && Number(enteredIcecream) !== 0) {
@@ -149,6 +171,8 @@ const NewTransForm = (props) => {
         amount: enteredIcecream,
         note: tuckNote, // shares tuckNote
         user: user,
+        accessedBy: activeMemberName,
+        scannedCode: activeMemberCode,
       };
     }
     if (enteredWithdrawal !== "" && Number(enteredWithdrawal) !== 0) {
@@ -160,6 +184,8 @@ const NewTransForm = (props) => {
         amount: enteredWithdrawal,
         note: withNote,
         user: user,
+        accessedBy: activeMemberName,
+        scannedCode: activeMemberCode,
       };
     }
     if (enteredAdj !== "" && Number(enteredAdj) !== 0) {
@@ -171,6 +197,8 @@ const NewTransForm = (props) => {
         amount: enteredAdj,
         note: adjNote,
         user: user,
+        accessedBy: activeMemberName,
+        scannedCode: activeMemberCode,
       };
     }
 

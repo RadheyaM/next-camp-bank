@@ -10,7 +10,7 @@ const handler = async (req, res) => {
   const deposits = await trans.find({ accountId: camperId, type: "Deposit" }, { amount: 1 })
   .toArray();
   console.log("deposits", deposits)
-  const payments = await trans.find({ accountId: camperId, type: "Payment" }, { amount: 1 })
+  const payments = await trans.find({ accountId: camperId, type: { $in: ["Payment", "Adjustment"] } }, { amount: 1 })
   .toArray();
   console.log("payments", payments)
   const currentBalance = transactionBalance(deposits, payments);

@@ -47,6 +47,7 @@ const SummaryComponent = (props) => {
   let candyCurrent = 0;
   let bookCurrent = 0;
   let outCurrent = 0;
+  let adjCurrent = 0;
 
   // Grouped transaction data by date
   const dailyGroups = {};
@@ -63,6 +64,7 @@ const SummaryComponent = (props) => {
     else if (cat === "Candyfloss") candyCurrent += amount;
     else if (cat === "Book") bookCurrent += amount;
     else if (cat === "Withdrawal") outCurrent += amount;
+    else if (cat === "Adjustment") adjCurrent += amount;
 
     // Group transactions dynamically by date
     const dateKey = getDateKey(tran.timeStamp);
@@ -75,7 +77,8 @@ const SummaryComponent = (props) => {
         pop: 0,
         candy: 0,
         book: 0,
-        out: 0
+        out: 0,
+        adj: 0
       };
     }
 
@@ -86,9 +89,10 @@ const SummaryComponent = (props) => {
     else if (cat === "Candyfloss") dailyGroups[dateKey].candy += amount;
     else if (cat === "Book") dailyGroups[dateKey].book += amount;
     else if (cat === "Withdrawal") dailyGroups[dateKey].out += amount;
+    else if (cat === "Adjustment") dailyGroups[dateKey].adj += amount;
   });
 
-  const bankBalance = depCurrent - tuckCurrent - bookCurrent - popCurrent - candyCurrent - iceCurrent - outCurrent;
+  const bankBalance = depCurrent - tuckCurrent - bookCurrent - popCurrent - candyCurrent - iceCurrent - outCurrent - adjCurrent;
 
   // 4. Calculate Running Cumulative Balance
   // Sort keys chronologically (oldest to newest)
@@ -98,7 +102,7 @@ const SummaryComponent = (props) => {
   const processedDailyTotals = sortedDateKeys.map((dateKey) => {
     const g = dailyGroups[dateKey];
     // Calculate net change for this day
-    const netChange = g.dep - g.tuck - g.ice - g.pop - g.candy - g.book - g.out;
+    const netChange = g.dep - g.tuck - g.ice - g.pop - g.candy - g.book - g.out - g.adj;
     runningBalance += netChange;
 
     return {
@@ -109,7 +113,8 @@ const SummaryComponent = (props) => {
       ice: g.ice,
       popCandy: g.pop + g.candy, // Combine Popcorn and Candyfloss under Popcorn/Candy Floss
       book: g.book,
-      out: g.out
+      out: g.out,
+      adj: g.adj
     };
   });
 
@@ -142,7 +147,8 @@ const SummaryComponent = (props) => {
       "ICE CREAM": -iceCurrent,
       "POPCORN/CANDY FLOSS": -(popCurrent + candyCurrent),
       "BOOKS": -bookCurrent,
-      "WITHDRAWALS": -outCurrent
+      "WITHDRAWALS": -outCurrent,
+      "ADJUSTMENTS": -adjCurrent
     }
   ];
 
@@ -172,6 +178,7 @@ const SummaryComponent = (props) => {
                 <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>POPCORN/CANDY FLOSS</th>
                 <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>BOOKS</th>
                 <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>WITHDRAWALS</th>
+                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>ADJUSTMENTS</th>
               </tr>
             </thead>
             <tbody>
@@ -183,6 +190,7 @@ const SummaryComponent = (props) => {
                 <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-(popCurrent + candyCurrent))}</td>
                 <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-bookCurrent)}</td>
                 <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-outCurrent)}</td>
+                <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-adjCurrent)}</td>
               </tr>
             </tbody>
           </Table>
@@ -205,6 +213,7 @@ const SummaryComponent = (props) => {
                 <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>POPCORN/CANDY FLOSS</th>
                 <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>BOOKS</th>
                 <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>WITHDRAWALS</th>
+                <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>ADJUSTMENTS</th>
                 <th className={styles.totals} style={{ fontSize: "0.78rem", textAlign: "center" }}>DOWNLOAD</th>
               </tr>
             </thead>
@@ -220,7 +229,8 @@ const SummaryComponent = (props) => {
                     "ICE CREAM": -dayData.ice,
                     "POPCORN/CANDY FLOSS": -dayData.popCandy,
                     "BOOKS": -dayData.book,
-                    "WITHDRAWALS": -dayData.out
+                    "WITHDRAWALS": -dayData.out,
+                    "ADJUSTMENTS": -dayData.adj
                   }
                 ];
                 const sanitizedDateText = dayData.dateText.replace(/\s+/g, "_");
@@ -236,6 +246,7 @@ const SummaryComponent = (props) => {
                     <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-dayData.popCandy)}</td>
                     <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-dayData.book)}</td>
                     <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-dayData.out)}</td>
+                    <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-dayData.adj)}</td>
                     <td style={{ fontSize: "0.95rem", textAlign: "center", padding: "8px 6px" }}>
                       <CSVLink
                         data={singleDayCSVData}
@@ -250,7 +261,7 @@ const SummaryComponent = (props) => {
               })}
               {processedDailyTotals.length === 0 && (
                 <tr>
-                  <td colSpan={9} style={{ textAlign: "center", padding: "2rem", color: "#666", fontStyle: "italic" }}>
+                  <td colSpan={10} style={{ textAlign: "center", padding: "2rem", color: "#666", fontStyle: "italic" }}>
                     No transaction data found.
                   </td>
                 </tr>

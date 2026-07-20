@@ -52,13 +52,13 @@ const ScanCamperCode = () => {
       const response = await fetch(`/api/campers/resolve-code?code=${enteredCode.trim()}`);
       if (response.ok) {
         const result = await response.json();
-        router.push(`/campers/${result.targetCode}`);
+        router.push(`/campers/${result.targetCode}?scannedCode=${enteredCode.trim()}`);
       } else {
-        router.push(`/campers/${enteredCode.trim()}`);
+        router.push(`/campers/${enteredCode.trim()}?scannedCode=${enteredCode.trim()}`);
       }
     } catch (err) {
       console.error("Error resolving scan code:", err);
-      router.push(`/campers/${enteredCode.trim()}`);
+      router.push(`/campers/${enteredCode.trim()}?scannedCode=${enteredCode.trim()}`);
     }
     setAlert(false);
     if (localStorage.getItem("Alert")) {

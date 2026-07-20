@@ -114,8 +114,8 @@ export const getStaticProps = async () => {
 
   const transCol = db.collection("Transactions");
   const camperCol = db.collection("Campers")
-  const deposits = await col.find({type: "Deposit"}).toArray();
-  const payments = await col.find({type: "Payment"}).toArray();
+  const deposits = await transCol.find({type: "Deposit"}).toArray();
+  const payments = await transCol.find({type: { $in: ["Payment", "Adjustment"] }}).toArray();
   const camperIds = await camperCol.find({}).toArray();
   const balanceData = allTransactionBalances(deposits, payments, camperIds)
   const allCampers = converter.json2csv(balanceData)

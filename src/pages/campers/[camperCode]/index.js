@@ -1,12 +1,13 @@
 import CamperDetail from "@/components/campers/CamperDetail";
 import clientPromise from "../../../../lib/db";
 import { useRouter } from "next/router";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import Router from "next/router";
 import axios from "axios";
 import Paper from '@mui/material/Paper';
+import transactionBalance from "../../../../lib/helpers";
 
 const CamperOverview = (props) => {
   const { status, data } = useSession();
@@ -40,8 +41,49 @@ const CamperOverview = (props) => {
     });
     const responseData = await response.json();
   };
+
+  const queryClient = useQueryClient();
+
+  // Instant cache synchronization with fresh SSR props
+  useEffect(() => {
+    if (props.trans && camperId) {
+      // Direct cache seeding for transactions
+      queryClient.setQueryData(["transactions", camperId], {
+        data: {
+          data: props.trans
+        }
+      });
+
+      // Direct cache seeding for calculated balance
+      const deposits = (props.trans || []).filter(t => t.type === "Deposit");
+      const payments = (props.trans || []).filter(t => ["Payment", "Adjustment"].includes(t.type));
+      const initialBalanceVal = transactionBalance(deposits, payments);
+
+      queryClient.setQueryData(["balance", camperId], {
+        data: {
+          data: initialBalanceVal
+        }
+      });
+    }
+  }, [props.trans, camperId, queryClient]);
+
+  useEffect(() => {
+    if (props.assignedCampers && camperId) {
+      queryClient.setQueryData(["assignedCampers", camperId], {
+        data: {
+          data: props.assignedCampers
+        }
+      });
+    }
+  }, [props.assignedCampers, camperId, queryClient]);
+
+  // Calculate initial balance from SSR props
+  const deposits = (props.trans || []).filter(t => t.type === "Deposit");
+  const payments = (props.trans || []).filter(t => ["Payment", "Adjustment"].includes(t.type));
+  const initialBalanceVal = transactionBalance(deposits, payments);
+
   const query = useQuery(
-    ["transactions"],
+    ["transactions", camperId],
     () => {
       return axios(apiPath);
     },
@@ -53,11 +95,21 @@ const CamperOverview = (props) => {
       },
     }
   );
-  const balanceQuery = useQuery(["balance"], () => {
-    return axios(apiBalancePath);
-  });
+  const balanceQuery = useQuery(
+    ["balance", camperId],
+    () => {
+      return axios(apiBalancePath);
+    },
+    {
+      initialData: {
+        data: {
+          data: initialBalanceVal,
+        },
+      },
+    }
+  );
   const assignedQuery = useQuery(
-    ["assignedCampers"],
+    ["assignedCampers", camperId],
     () => {
       return axios(`/api/campers/${camperId}/get-assigned`);
     },
@@ -70,6 +122,7 @@ const CamperOverview = (props) => {
     }
   );
   if (status === "authenticated") {
+    const scannedCode = router.query.scannedCode;
     return (
       <Paper elevation={12} sx={{
         width: "100%",
@@ -88,6 +141,7 @@ const CamperOverview = (props) => {
           query={query}
           balance={balanceQuery}
           onAddTransactions={postTransactionsHandler}
+          scannedCode={scannedCode}
         />
       </Paper>
     );

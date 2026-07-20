@@ -207,3 +207,58 @@ To display which rostered campers are mapped to each banking account, we integra
       ```
     * This robust fallback prevents `TypeError: Cannot read properties of undefined (reading 'toString')` crashes during early hydration phases where the router query parameters are not yet populated.
 
+  ---
+
+  ## 14. Including Adjustments in Balance Calculations & Summary Reports
+  **Date:** Monday, 20 July 2026
+  * **Problem:** Account adjustments (`type: "Adjustment"`) entered in teller slips were recorded in MongoDB but skipped in the individual balance calculations, bulk exporters, and the main Bank Summary view.
+  * **API Modifications:**
+    * **get-balance API (`src/pages/api/campers/[camperCode]/get-balance.js`)**: Updated the `payments` query to fetch both `"Payment"` and `"Adjustment"` transaction types, summing them correctly as account deductions.
+    * **getAllCamperBalances API (`src/pages/api/campers/getAllCamperBalances.js`)**: Similarly updated the payments finder to match `{type: { $in: ["Payment", "Adjustment"] }}`.
+    * **Index Page (`src/pages/campers/index.js`)**: Fixed a crucial pre-existing bug where the `getServerSideProps` was querying deposits and payments from the `Campers` (accounts metadata) collection rather than the `Transactions` collection, causing exported CSV balances to download as 0. Corrected the collection mapping and updated payments to include adjustments.
+  * **Summary Dashboard Updates (`src/components/transactions/SummaryComponent.js`)**:
+    * Integrated adjustments into overall bank aggregates (`adjCurrent`) and subtracted them from the total bank balance.
+    * Updated dynamic date grouping to aggregate daily adjustment totals and include them in running cumulative balance calculations.
+    * Upgraded UI with an **ADJUSTMENTS** column on both the *Bank Current Totals* and *Daily Totals* tables.
+    * Embedded row-level daily CSV exporters and bulk CSV exporters with negative-formatted adjustment logs, updating empty table row `colSpan` from 9 to 10.
+
+  ---
+
+  ## 15. Sibling / Family Member Transaction Attribution
+  **Date:** Monday, 20 July 2026
+  * **Goal:** Enable tellers to distinguish which specific family member/sibling (linked or primary) accessed a shared bank account during a purchase and record that attribution in the transaction ledger.
+  * **Scanning Context preservation (`src/components/forms/ScanCamperCode.js`)**:
+    * When a linked account (such as sibling code `"10020"`) is scanned on the home page, it is resolved to the primary financial account `"10010"`.
+    * Added `?scannedCode=...` query parameter to the router redirection so that the scanned member's physical card context is passed to the dashboard page: e.g., `/campers/10010?scannedCode=10020`.
+  * **Route Propagation (`src/pages/campers/[camperCode]/index.js` -> `CamperDetail.js`)**:
+    * Extracted the `scannedCode` from the router query and propagated it down as a prop to the `NewTransForm` component, alongside the active roster `assignedCampers` list.
+  * **Automated Member Selection (`src/components/forms/NewTransForm.js`)**:
+    * Implemented fully hands-free, behind-the-scenes member matching on render to prevent tellers from needing to manually click/select names.
+    * **Auto-Attribution:** Evaluates the active roster against the `scannedCode`. If a sibling's QR code matches the scanned card (e.g. `"10020"`), they are dynamically resolved as the accessing member on render. If the page is accessed directly (no scanned code), it automatically attributes to the primary account holder.
+    * **Payload Enhancement:** Updated all transaction slip submissions to append two new database fields:
+      * `accessedBy`: The full name of the accessing member (e.g. `"Sally Wankhade"`).
+      * `scannedCode`: The physical QR code scanned/assigned to that specific member (e.g. `"10020"`).
+  * **Database Persistence (`src/pages/api/campers/[camperCode]/index.js`)**:
+    * Updated the transaction insertion logic to save `accessedBy` and `scannedCode` directly to the `Transactions` collection in MongoDB.
+  * **Transaction History Ledger upgrades**:
+    * **Account Ledger (`src/components/overview/TransactionTable.js` & `TransactionRow.js`)**: Added an **Accessed By** column in between the Date and Category. Gracefully falls back to the primary account holder's name for older legacy transactions.
+    * **Recent Transactions (`src/components/transactions/AllTransactionsTable.js` & `AllTransRows.js`)**: Upgraded the full recent logs dashboard and the **Download All Transactions CSV** generator to include the `Accessed By` column and fields.
+
+  ---
+
+  ## 16. Inline Roster Transaction History Drawers
+  **Date:** Monday, 20 July 2026
+  * **Goal:** Allow bank operators to toggle and view transaction histories completed by individual siblings/rostered members directly inside the account's "Assigned Campers" roster list without navigating away.
+  * **Implementation (`src/components/overview/AccountSummary.js`)**:
+    * **Expanded States:** Added `useState` to track collapsed/expanded toggle triggers for each individual rostered sibling/member using their unique physical card barcodes (`accountQRCode`).
+    * **Toggle Mechanism:** Inserted a compact control button column (`▶` / `▼`) on the left side of each camper row in the Assigned Campers table.
+    * **Surgical Dynamic Filter:** Filters the full transaction array client-side on toggle to isolate records specifically completed by that member (where `tran.scannedCode` matches `member.accountQRCode`).
+    * **Embed Sub-ledger:** Renders an elegant, collapsible full-width drawer row directly below the active member's row. Features:
+      * Displays the total transaction count for that sibling.
+      * If transactions are found, renders a micro-ledger sub-table displaying Date & Time, Category, Amount (with dynamic color coding: positive Green for deposits, negative Red for payments), Note, and Teller User.
+      * If zero transactions are found, displays a friendly unassigned placeholder state.
+
+
+
+
+

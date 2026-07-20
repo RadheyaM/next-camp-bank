@@ -36,6 +36,7 @@ const AllTransactionsTable = (props) => {
     "ADDED BY": t.user || "",
     "ACCOUNT CODE": t.accountId || "",
     "NAME": t.name || "",
+    "ACCESSED BY": t.accessedBy || t.name || "",
     "DATE & TIME": new Date(t.timeStamp).toLocaleString('en-GB'),
     "TYPE": t.type || "",
     "CATEGORY": t.category || "",
@@ -65,6 +66,7 @@ const AllTransactionsTable = (props) => {
               <th>Added By</th>
               <th>Account Code</th>
               <th>Name</th>
+              <th>Accessed By</th>
               <th>Date</th>
               <th>Type</th>
               <th>Category</th>

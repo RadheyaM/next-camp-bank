@@ -53,6 +53,8 @@ const CamperDetail = (props) => {
               onAddTransactions={addTransactionsHandler}
               camper={props.camper}
               balance={props.balance}
+              scannedCode={props.scannedCode}
+              assignedCampers={props.assignedCampers?.data?.data?.data || []}
             />
           </Paper>
         </Grid>

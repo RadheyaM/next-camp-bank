@@ -18,6 +18,8 @@ export const postCamperTransactions = async (transData) => {
         note: dT.note,
         user: dT.user,
         timeStamp: new Date(),
+        accessedBy: dT.accessedBy || "",
+        scannedCode: dT.scannedCode || "",
       });
       console.log("deposit added");
     }
@@ -31,6 +33,8 @@ export const postCamperTransactions = async (transData) => {
         note: bT.note,
         user: bT.user,
         timeStamp: new Date(),
+        accessedBy: bT.accessedBy || "",
+        scannedCode: bT.scannedCode || "",
       });
       console.log("book added");
     }
@@ -44,6 +48,8 @@ export const postCamperTransactions = async (transData) => {
         note: tT.note,
         user: tT.user,
         timeStamp: new Date(),
+        accessedBy: tT.accessedBy || "",
+        scannedCode: tT.scannedCode || "",
       });
       console.log("tuck added");
     }
@@ -57,6 +63,8 @@ export const postCamperTransactions = async (transData) => {
         note: pT.note,
         user: pT.user,
         timeStamp: new Date(),
+        accessedBy: pT.accessedBy || "",
+        scannedCode: pT.scannedCode || "",
       });
       console.log("tuck added");
     }
@@ -70,6 +78,8 @@ export const postCamperTransactions = async (transData) => {
         note: iT.note,
         user: iT.user,
         timeStamp: new Date(),
+        accessedBy: iT.accessedBy || "",
+        scannedCode: iT.scannedCode || "",
       });
       console.log("tuck added");
     }
@@ -83,6 +93,8 @@ export const postCamperTransactions = async (transData) => {
         note: wT.note,
         user: wT.user,
         timeStamp: new Date(),
+        accessedBy: wT.accessedBy || "",
+        scannedCode: wT.scannedCode || "",
       });
       console.log("withdrawal added");
     }
@@ -96,6 +108,8 @@ export const postCamperTransactions = async (transData) => {
         note: aT.note,
         user: aT.user,
         timeStamp: new Date(),
+        accessedBy: aT.accessedBy || "",
+        scannedCode: aT.scannedCode || "",
       });
       console.log("adjustment added");
     }

@@ -6,7 +6,7 @@ import { Box, Typography } from '@mui/material';
 
 const TransactionsTable = props => {
   const { query, trans } = props;
-  const sortByDate = sortBy(props.query.data.data.data, tran => -new Date(tran.timeStamp));
+  const sortByDate = sortBy([...props.query.data.data.data], tran => -new Date(tran.timeStamp));
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
@@ -18,6 +18,7 @@ const TransactionsTable = props => {
             <tr>
               <th>Added By</th>
               <th>Date</th>
+              <th>Accessed By</th>
               <th>Category</th>
               <th>Amount</th>
               <th>Note</th>
