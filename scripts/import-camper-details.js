@@ -39,19 +39,22 @@ async function main() {
     console.log(`Cleared ${deleteResult.deletedCount} existing details documents.`);
 
     const workbook = xlsx.readFile(excelFilePath);
-    const sheetName = workbook.SheetNames[0];
+    const sheetName = 'all';
     const sheet = workbook.Sheets[sheetName];
+    if (!sheet) {
+      throw new Error(`Sheet named '${sheetName}' was not found in the Excel workbook.`);
+    }
     const rows = xlsx.utils.sheet_to_json(sheet);
 
-    console.log(`Processing ${rows.length} rows from Excel sheet...`);
+    console.log(`Processing ${rows.length} rows from Excel sheet '${sheetName}'...`);
     const camperDetails = [];
     const now = new Date();
 
     for (const row of rows) {
       const fullName = (row.Name || "").toString().trim();
       
-      // Split the full name by space
-      const nameParts = fullName.split(/\s+/);
+      // Split the full name by space delimiter " "
+      const nameParts = fullName.split(" ");
       const firstName = nameParts[0] || "";
       const lastName = nameParts.slice(1).join(" ") || "";
 
@@ -61,7 +64,7 @@ async function main() {
         camp: row.Camp || "",
         camperLeader: row["Camper/Leader"] || "",
         group: row.Group || "",
-        room: "",
+        room: row.Room || "",
         accountQRCode: "",
         linkedQRCode: "",
         dateTimeCreated: now,
