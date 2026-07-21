@@ -561,17 +561,23 @@ const SummaryComponent = (props) => {
                         {dayData.dateText}
                       </td>
                       <td style={{ fontSize: "0.95rem", textAlign: "center", padding: "12px 6px" }}>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          size="small"
-                          onClick={() => downloadEndOfDaySummary(dayData)}
-                          disabled={downloadingDay !== null}
-                          sx={{ fontWeight: "bold", fontSize: "0.78rem" }}
-                          startIcon={isProcessing ? <CircularProgress size={14} color="inherit" /> : null}
-                        >
-                          {isProcessing ? "Generating ZIP..." : "Download End of Day Summary"}
-                        </Button>
+                        {processedDailyTotals.length > 1 && idx < processedDailyTotals.length - 1 ? (
+                          <Box sx={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.25rem", color: "#d32f2f", fontWeight: "bold", fontSize: "0.82rem" }}>
+                            <span>🔒 Locked</span>
+                          </Box>
+                        ) : (
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            size="small"
+                            onClick={() => downloadEndOfDaySummary(dayData)}
+                            disabled={downloadingDay !== null}
+                            sx={{ fontWeight: "bold", fontSize: "0.78rem" }}
+                            startIcon={isProcessing ? <CircularProgress size={14} color="inherit" /> : null}
+                          >
+                            {isProcessing ? "Generating ZIP..." : "Download End of Day Summary"}
+                          </Button>
+                        )}
                       </td>
                       <td style={{ fontSize: "0.95rem", textAlign: "center", padding: "12px 6px", fontWeight: logTimestamp ? "bold" : "normal", color: logTimestamp ? "#2e7d32" : "#9e9e9e" }}>
                         {logTimestamp ? `✅ ${logTimestamp}` : "-"}
