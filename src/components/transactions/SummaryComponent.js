@@ -442,14 +442,14 @@ const SummaryComponent = (props) => {
               </thead>
               <tbody>
                 <tr>
-                  <td className={styles.totalsDataAdd} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(bankBalance)}</td>
-                  <td className={styles.totalsDataAdd} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(depCurrent)}</td>
-                  <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-tuckCurrent)}</td>
-                  <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-iceCurrent)}</td>
-                  <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-(popCurrent + candyCurrent))}</td>
-                  <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-bookCurrent)}</td>
-                  <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-outCurrent)}</td>
-                  <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-adjCurrent)}</td>
+                  <td className={styles.totalsDataAdd} style={{ fontSize: "0.95rem", textAlign: "center", color: "#1976d2", fontWeight: "bold" }}>{euro.format(bankBalance)}</td>
+                  <td className={styles.totalsDataAdd} style={{ fontSize: "0.95rem", textAlign: "center", color: "#2e7d32" }}>{euro.format(depCurrent)}</td>
+                  <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center", color: "#d32f2f" }}>{euro.format(-tuckCurrent)}</td>
+                  <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center", color: "#d32f2f" }}>{euro.format(-iceCurrent)}</td>
+                  <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center", color: "#d32f2f" }}>{euro.format(-(popCurrent + candyCurrent))}</td>
+                  <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center", color: "#d32f2f" }}>{euro.format(-bookCurrent)}</td>
+                  <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center", color: "#d32f2f" }}>{euro.format(-outCurrent)}</td>
+                  <td className={styles.totalsDataSub} style={{ fontSize: "0.95rem", textAlign: "center", color: "#d32f2f" }}>{euro.format(-adjCurrent)}</td>
                 </tr>
               </tbody>
             </Table>
@@ -500,14 +500,14 @@ const SummaryComponent = (props) => {
                   return (
                     <tr key={idx}>
                       <td className={styles.headers} style={{ whiteSpace: "nowrap", fontSize: "0.95rem", textAlign: "center" }}>{dayData.dateText}</td>
-                      <td className={styles.additions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(dayData.runningBalance)}</td>
-                      <td className={styles.additions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(dayData.dep)}</td>
-                      <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-dayData.tuck)}</td>
-                      <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-dayData.ice)}</td>
-                      <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-dayData.popCandy)}</td>
-                      <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-dayData.book)}</td>
-                      <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-dayData.out)}</td>
-                      <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center" }}>{euro.format(-dayData.adj)}</td>
+                      <td className={styles.additions} style={{ fontSize: "0.95rem", textAlign: "center", color: "#1976d2", fontWeight: "bold" }}>{euro.format(dayData.runningBalance)}</td>
+                      <td className={styles.additions} style={{ fontSize: "0.95rem", textAlign: "center", color: "#2e7d32" }}>{euro.format(dayData.dep)}</td>
+                      <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center", color: "#d32f2f" }}>{euro.format(-dayData.tuck)}</td>
+                      <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center", color: "#d32f2f" }}>{euro.format(-dayData.ice)}</td>
+                      <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center", color: "#d32f2f" }}>{euro.format(-dayData.popCandy)}</td>
+                      <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center", color: "#d32f2f" }}>{euro.format(-dayData.book)}</td>
+                      <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center", color: "#d32f2f" }}>{euro.format(-dayData.out)}</td>
+                      <td className={styles.subtractions} style={{ fontSize: "0.95rem", textAlign: "center", color: "#d32f2f" }}>{euro.format(-dayData.adj)}</td>
                       <td style={{ fontSize: "0.95rem", textAlign: "center", padding: "8px 6px" }}>
                         <CSVLink
                           data={singleDayCSVData}
