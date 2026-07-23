@@ -295,6 +295,16 @@ To display which rostered campers are mapped to each banking account, we integra
     * **Calendar Suffixes & Parser (`addDay`)**: Tests calendar formatting accuracy by converting transactional datetime timestamps into corresponding weekday index properties.
   * **Validation Result:** Runs **7 complex unit tests** across helper algorithms, passing in under **500ms** to guarantee flawless mathematical calculations and absolute safety against regression bugs.
 
+  ---
+
+  ## 20. Forced Server-Side Redirection for Secondary Accounts
+  **Date:** Thursday, 23 July 2026
+  * **Goal:** Ensure secondary linked accounts can never be accessed directly via their own transaction creation / detail pages. All access paths (manual URL entry, clicking roster links in "Account By Name", clicking feed links in "Recent Transactions", etc.) must load the corresponding primary account.
+  * **Implementation (`src/pages/campers/[camperCode]/index.js`)**:
+    * Added a server-side redirect guard inside `getServerSideProps`.
+    * If the requested `camperCode` is assigned as a secondary linked account (having a non-empty `linkedQRCode` in `CamperDetails`), the server issues an HTTP 302 Redirect to the primary account path.
+    * Preserves the accessing context by appending `?scannedCode=[SecondaryCode]` to the destination URL, ensuring that sibling/family transaction auto-attribution continues to work seamlessly.
+
 
 
 

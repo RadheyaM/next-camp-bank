@@ -151,14 +151,28 @@ const CamperOverview = (props) => {
 export default CamperOverview;
 
 export const getServerSideProps = async (context) => {
-  const camperId = context.query.camperCode || context.params?.camperCode;
+  const camperId = (context.query.camperCode || context.params?.camperCode || "").toString().trim();
   const client = await clientPromise;
   const db = client.db("Campers");
+  const camperDetailsCol = db.collection("CamperDetails");
+
+  // If this requested ID is actually assigned as a secondary linked account, perform a server-side redirect
+  const requestedDetail = await camperDetailsCol.findOne({ accountQRCode: camperId });
+  if (requestedDetail && requestedDetail.linkedQRCode && requestedDetail.linkedQRCode.trim() !== "") {
+    const primaryCode = requestedDetail.linkedQRCode.trim();
+    console.log(`Server-side Redirect: Resolving secondary account ${camperId} to primary ${primaryCode}`);
+    return {
+      redirect: {
+        destination: `/campers/${primaryCode}?scannedCode=${camperId}`,
+        permanent: false,
+      },
+    };
+  }
+
   const col = db.collection("Campers");
   const trans = db.collection("Transactions");
   const camper = await col.findOne({ accountId: camperId });
   const camperTrans = await trans.find({ accountId: camperId }).toArray();
-  const camperDetailsCol = db.collection("CamperDetails");
   const assignedCampers = await camperDetailsCol.find({
     $or: [
       { accountQRCode: camperId },
