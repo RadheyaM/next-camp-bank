@@ -21,6 +21,7 @@ const ScanCamperCode = () => {
   const router = useRouter();
   const [enteredCode, setEnteredCode] = useState("");
   const [alert, setAlert] = useState(false);
+  const [isResolving, setIsResolving] = useState(false);
 
   const codeInputHandler = (event) => {
     setEnteredCode(event.target.value);
@@ -40,18 +41,21 @@ const ScanCamperCode = () => {
 
   const submitHandler = async (event) => {
     event.preventDefault();
-    if (!enteredCode.trim()) return;
+    if (!enteredCode.trim() || isResolving) return;
+    setIsResolving(true);
     try {
       const response = await fetch(`/api/campers/resolve-code?code=${enteredCode.trim()}`);
       if (response.ok) {
         const result = await response.json();
-        router.push(`/campers/${result.targetCode}?scannedCode=${enteredCode.trim()}`);
+        await router.push(`/campers/${result.targetCode}?scannedCode=${enteredCode.trim()}`);
       } else {
-        router.push(`/campers/${enteredCode.trim()}?scannedCode=${enteredCode.trim()}`);
+        await router.push(`/campers/${enteredCode.trim()}?scannedCode=${enteredCode.trim()}`);
       }
     } catch (err) {
       console.error("Error resolving scan code:", err);
-      router.push(`/campers/${enteredCode.trim()}?scannedCode=${enteredCode.trim()}`);
+      await router.push(`/campers/${enteredCode.trim()}?scannedCode=${enteredCode.trim()}`);
+    } finally {
+      setIsResolving(false);
     }
     setAlert(false);
   };
@@ -85,11 +89,12 @@ const ScanCamperCode = () => {
               variant="standard"
               autoFocus={true}
               fullWidth
+              disabled={isResolving}
             />
           </div>
           <div className={styles.findBtnDiv} style={{ marginTop: "1rem" }}>
-            <Button size="large" variant="contained" type="submit">
-              Find
+            <Button size="large" variant="contained" type="submit" disabled={isResolving}>
+              {isResolving ? <CircularProgress size={24} sx={{ color: "white" }} /> : "Find"}
             </Button>
           </div>
         </form>

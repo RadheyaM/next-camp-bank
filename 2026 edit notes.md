@@ -330,6 +330,19 @@ To display which rostered campers are mapped to each banking account, we integra
     * Implemented matching validation constraints in the POST API handler.
     * Checks the `CamperDetails` database collection to confirm the provided `linkedQRCode` is already associated with another camper's `accountQRCode` record, and strictly verifies that the matched target account holder does not have a non-empty `linkedQRCode` (which would signify they are a secondary linked account, creating an invalid chain of links). If either check fails, rejects the transaction with an HTTP 400 Bad Request and an explicit diagnostic error message.
 
+  ---
+
+  ## 23. Inline Search By Code Navigation Loader
+  **Date:** Friday, 24 July 2026
+  * **Goal:** Add subtle, non-intrusive loading feedback during homepage barcode scanning or manual search code submissions.
+  * **Implementation (`src/components/forms/ScanCamperCode.js`)**:
+    * Declared a new `isResolving` React state tracker.
+    * Updated `submitHandler` to run asynchronously, setting `isResolving` to `true` on submission and `await`-ing Next.js router transitions so that the loading sequence stays active while database SSR rendering occurs on the target profile page.
+    * Integrated safe exception handling using a `finally` block to guarantee the form is gracefully unlocked if navigation fails.
+    * Upgraded JSX inputs to disable the `TextField` and "Find" `Button` components during resolution, completely preventing double-submissions or duplicate scanner inputs.
+    * Swapped out the static button label `"Find"` with an inline white MUI `CircularProgress` loader to provide visual transition feedback without layout shifting.
+
+
 
 
 
