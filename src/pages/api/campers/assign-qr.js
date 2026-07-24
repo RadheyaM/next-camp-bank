@@ -71,6 +71,24 @@ const handler = async (req, res) => {
       }
     }
 
+    // 3b. Linked account validation (cannot link unless target is an active primary account for another camper)
+    if (newLinkedQR !== "") {
+      const primaryAccountCamper = await camperDetailsCol.findOne({
+        accountQRCode: newLinkedQR,
+        _id: { $ne: camperObjId }
+      });
+      if (!primaryAccountCamper) {
+        return res.status(400).json({
+          message: `Linked Account QR Code ${newLinkedQR} is not assigned as a primary account for any camper.`
+        });
+      }
+      if (primaryAccountCamper.linkedQRCode && primaryAccountCamper.linkedQRCode.trim() !== "") {
+        return res.status(400).json({
+          message: `Linked Account QR Code ${newLinkedQR} is a secondary account. You can only link to a primary account.`
+        });
+      }
+    }
+
     // 4. Update the CamperDetails record
     const oldAccountQR = (camper.accountQRCode || "").toString().trim();
     

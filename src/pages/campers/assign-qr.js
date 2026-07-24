@@ -151,6 +151,28 @@ const AssignQRCodes = () => {
       return;
     }
 
+    if (cleanLinkedQR !== "") {
+      const targetCamper = campers.find(
+        (c) => c.accountQRCode === cleanLinkedQR && c._id !== selectedCamper._id
+      );
+
+      if (!targetCamper) {
+        showNotification(
+          "error",
+          `Linked Account QR Code ${cleanLinkedQR} is not assigned as a primary account for any camper.`
+        );
+        return;
+      }
+
+      if (targetCamper.linkedQRCode && targetCamper.linkedQRCode.trim() !== "") {
+        showNotification(
+          "error",
+          `Linked Account QR Code ${cleanLinkedQR} is a secondary account. You can only link to a primary account.`
+        );
+        return;
+      }
+    }
+
     if (cleanAccountQR !== "" && cleanAccountQR === cleanLinkedQR) {
       showNotification("error", "Primary Account QR and Linked Account QR cannot be the exact same code.");
       return;
@@ -366,13 +388,6 @@ const AssignQRCodes = () => {
             )}
 
             {/* Inputs & Scanning Area */}
-            <Grid item xs={12}>
-              <Box sx={{ p: 2, border: "1px dashed #90caf9", borderRadius: "4px", backgroundColor: "#e3f2fd", mb: 2 }}>
-                <Typography variant="body2" color="primary" align="center" sx={{ fontWeight: "medium" }}>
-                  💡 Physical QR barcode scanners mimic a keyboard. Focus a text box and scan a code to fill it instantly!
-                </Typography>
-              </Box>
-            </Grid>
 
             {/* Primary Account QR Input */}
             <Grid item xs={12} sm={6}>

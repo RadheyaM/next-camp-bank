@@ -317,6 +317,20 @@ To display which rostered campers are mapped to each banking account, we integra
     * **CamperDetails Collection:** Built standard non-unique indices on `{ accountQRCode: 1 }` and `{ linkedQRCode: 1 }`. Standard index modeling was chosen deliberately to support empty/unassigned blank states and duplicate family linkages without throwing uniqueness constraint errors.
   * **Performance Result:** Lookups are optimized from O(N) linear collection scans to O(log N) indexed search times, providing sub-millisecond, instant page loads and rapid barcode scan resolution.
 
+  ---
+
+  ## 22. Linked Account Validations and UI Cleanup in QR Code Assignments
+  **Date:** Friday, 24 July 2026
+  * **Goal:** Clean up superfluous guidance on the Assign QR Code scanning page and add robust checks preventing users from linking an account to a secondary/sibling card unless that target card is already assigned as a primary account for another camper.
+  * **UI Cleanup (`src/pages/campers/assign-qr.js`)**:
+    * Removed the redundant dashed scanner tip box (*"💡 Physical QR barcode scanners mimic a keyboard. Focus a text box and scan a code to fill it instantly!"*) to maximize screen layout space.
+  * **Interactive Frontend Validation (`src/pages/campers/assign-qr.js`)**:
+    * Added a client-side check in `submitHandler` to ensure that if a non-empty Linked Account QR (`cleanLinkedQR`) is supplied, it matches an existing `accountQRCode` (primary account) among other campers in the loaded roster state AND ensures that the target camper's profile does not have a linked account code of their own (meaning they are not themselves a secondary account holder). Displays an immediate inline alert error if invalid.
+  * **Bulletproof Backend Validation (`src/pages/api/campers/assign-qr.js`)**:
+    * Implemented matching validation constraints in the POST API handler.
+    * Checks the `CamperDetails` database collection to confirm the provided `linkedQRCode` is already associated with another camper's `accountQRCode` record, and strictly verifies that the matched target account holder does not have a non-empty `linkedQRCode` (which would signify they are a secondary linked account, creating an invalid chain of links). If either check fails, rejects the transaction with an HTTP 400 Bad Request and an explicit diagnostic error message.
+
+
 
 
 
