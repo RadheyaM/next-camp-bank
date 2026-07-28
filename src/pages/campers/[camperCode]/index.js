@@ -23,23 +23,42 @@ const CamperOverview = (props) => {
   const apiBalancePath = `/api/campers/${camperId}/get-balance`;
   const apiAddBalancePath = `/api/campers/${camperId}/add-balance`;
   const postTransactionsHandler = async (trans) => {
-    // console.log("trans here now: ", trans);
-    setTimeout(() => {Router.replace("/")}, 2000);
-    const response = await fetch(`/api/campers/${camperId}`, {
-      method: "POST",
-      body: JSON.stringify(trans),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const addBalance = await fetch(apiAddBalancePath, {
-      method: "POST",
-      body: JSON.stringify(trans),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const responseData = await response.json();
+    try {
+      const response = await fetch(`/api/campers/${camperId}`, {
+        method: "POST",
+        body: JSON.stringify(trans),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        const msg = errData.message || "Failed to add transactions";
+        Router.replace(`/?error=true&msg=${encodeURIComponent(msg)}`);
+        return;
+      }
+
+      const addBalance = await fetch(apiAddBalancePath, {
+        method: "POST",
+        body: JSON.stringify(trans),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!addBalance.ok) {
+        const errData = await addBalance.json().catch(() => ({}));
+        const msg = errData.message || "Failed to update balance";
+        Router.replace(`/?error=true&msg=${encodeURIComponent(msg)}`);
+        return;
+      }
+
+      Router.replace("/?success=true");
+    } catch (err) {
+      console.error("Transaction API error:", err);
+      Router.replace(`/?error=true&msg=${encodeURIComponent(err.message || "Network error occurred")}`);
+    }
   };
 
   const queryClient = useQueryClient();

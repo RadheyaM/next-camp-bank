@@ -7,7 +7,7 @@ import { verifyPassword } from "../../../../lib/auth";
 const authOptions = {
   session: {
     strategy: "jwt",
-    maxAge: 60 * 15,
+    maxAge: 60 * 60 * 12,
   },
   providers: [
     CredentialsProvider({

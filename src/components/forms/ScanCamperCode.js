@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from "./ScanCamperCode.module.css";
@@ -6,6 +6,7 @@ import Card from "../UI/Card";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
+import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
@@ -66,6 +67,16 @@ const ScanCamperCode = () => {
     .sort((a, b) => new Date(b.timeStamp) - new Date(a.timeStamp))
     .slice(0, 25);
 
+  const successParam = router.query.success;
+  const errorParam = router.query.error;
+  const errorMsg = router.query.msg;
+
+  const handleCloseBanner = () => {
+    router.replace("/", undefined, { shallow: true });
+  };
+
+
+
   return (
     <Paper elevation={6} sx={{
       width: "95%", 
@@ -79,6 +90,27 @@ const ScanCamperCode = () => {
       margin: "0 auto",
       gap: "2rem"
     }}>
+      <Snackbar
+        open={!!successParam}
+        autoHideDuration={2000}
+        onClose={handleCloseBanner}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <Alert severity="success" onClose={handleCloseBanner} sx={{ width: "100%" }}>
+          The transaction was processed and the account balance updated successfully!
+        </Alert>
+      </Snackbar>
+
+      <Snackbar
+        open={!!errorParam}
+        onClose={handleCloseBanner}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <Alert severity="error" onClose={handleCloseBanner} sx={{ width: "100%" }}>
+          <strong>Transaction Failed:</strong> {errorMsg || "An error occurred while processing the transaction."}
+        </Alert>
+      </Snackbar>
+
       <Card sx={{ width: "100%", maxWidth: "800px", padding: "2rem" }}>
         <form onSubmit={submitHandler} className={styles.enterCodeForm}>
           <div className={styles.inputWrapper}>
